@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#091526">
 <meta name="description" content="《今晚拼出路》原创悬疑故事第一章：六幕谜案、三格漫画、分支结局与即时线索奖励。">
-<title>夜楼档案：消失的十三层｜今晚拼出路 G01-E V0.2</title>
+<title>夜楼档案：消失的十三层｜今晚拼出路 G01-E V0.3</title>
 <style>
 :root{color-scheme:dark;font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;--bg:#081421;--panel:#152c44;--line:#37516a;--ink:#f2f7ff;--muted:#b1c4d7;--gold:#f4cb85;--mint:#82e1c7;--safe:#b8f4da}
 *{box-sizing:border-box}html{background:var(--bg)}body{margin:0;background:radial-gradient(ellipse at 20% 0%,#1b3655 0%,transparent 48%),radial-gradient(ellipse at 100% 38%,#183a42 0%,transparent 46%),var(--bg);color:var(--ink);min-height:100svh}
@@ -89,6 +89,24 @@ h1{font-size:clamp(25px,6vw,36px);line-height:1.13;margin:10px 0 4px;letter-spac
 @keyframes reward-appear{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}@keyframes clue-flash{0%{box-shadow:0 0 0 0 #a4ffd788}100%{box-shadow:0 0 0 13px transparent}}@keyframes hall-flicker{0%,93%,97%,100%{opacity:.20}94%,96%{opacity:.65}}
 @media(max-width:420px){.stage-tabs{gap:5px}.stage-tab{min-height:54px;padding:5px 6px}.stage-tab strong{font-size:10px}.stage-tab small{font-size:8px}.journal summary{font-size:11px}.reward-fragment{font-size:14px}.scene-art{height:138px}}
 @media(prefers-reduced-motion:reduce){.reward-fragment,.beat-feedback.flash,.scene-art.is-mystery::after{animation:none!important}}
+
+/* G01-E V0.3: reward-driven mystery actions; hidden until actually available. */
+.relic-panel[hidden],.truth-panel[hidden],.truth-endings[hidden]{display:none!important}
+.relic-panel{margin:10px 0 0;padding:11px 13px;background:linear-gradient(115deg,#263746,#183c42);border:1px solid #ae925b;border-radius:13px;box-shadow:0 5px 18px #0002}
+.relic-panel strong{color:#ffdfa0;font-size:14px}.relic-panel p{color:#dcebf0;font-size:13px;line-height:1.5;margin:5px 0 8px}
+.relic-buttons{display:flex;flex-wrap:wrap;gap:7px}.relic-buttons button,.truth-choices button,.truth-endings button{min-height:44px;border:1px solid #bca06f;background:#3b3b37;color:#fff0d0;border-radius:10px;padding:9px 12px;font-weight:750;font-size:13px}
+.relic-buttons button:disabled{opacity:.65}.relic-panel .relic-response{margin:7px 0 0;color:#aef2cf;font-size:12px;line-height:1.5}
+.truth-panel{border:1px solid #9a834d;background:#142b3b;margin:9px 0 12px;border-radius:13px;overflow:hidden}
+.truth-panel summary{cursor:pointer;min-height:48px;padding:12px 13px;color:#ffdd9e;font-weight:850;font-size:14px}
+.truth-content{padding:0 12px 14px;font-size:13px;line-height:1.6;color:#dce5ef}.truth-content p{margin:7px 0}
+.truth-evidence{display:grid;gap:6px;margin:9px 0}.truth-evidence span{border-left:3px solid #91c9bd;background:#203c4d;padding:8px 10px;border-radius:0 8px 8px 0}
+.truth-choices,.truth-endings{display:grid;gap:7px;margin-top:10px}
+.truth-choices button,.truth-endings button{text-align:left;background:#1e4352;border-color:#54788a;min-height:46px}
+.truth-choices button:disabled{opacity:.65}.truth-endings button.primary{background:#c39b58;color:#1b2433;border-color:#e6c88c}
+.truth-feedback,.truth-ending-text{border-radius:8px;margin:10px 0 0;padding:9px 10px;background:#213d4b;color:#c2e9df;font-size:13px;line-height:1.7;white-space:pre-line}
+.truth-feedback.good,.truth-ending-text.good{background:#215245;color:#e7ffe8}
+.truth-feedback.warn{background:#4b3b30;color:#ffe6c3}
+@media(max-width:420px){.relic-panel{padding:10px}.relic-panel p,.truth-content{font-size:13px}.truth-panel summary{font-size:13px}}
 </style>
 </head>
 <body>
@@ -98,7 +116,7 @@ h1{font-size:clamp(25px,6vw,36px);line-height:1.13;margin:10px 0 4px;letter-spac
     <span class="top-badge">G01-E · 第一章 / 六幕</span>
   </header>
   <h1>夜楼档案，<em>消失的十三层</em></h1>
-  <p class="intro">一条匿名短信，一层不存在的楼。每闯过一幕，获得线索碎片与专属徽章；三格顺序决定不同结局；每次调查都会留下自己的痕迹。</p>
+  <p class="intro">一条匿名短信，一层不存在的楼。每闯过一幕都能收集线索；有些线索能在后续派上用场，六块碎片还可开启隐藏真相。</p>
   <nav id="stageTabs" class="stage-tabs" aria-label="第一章六幕"></nav>
   <section class="scene-prologue" id="scenePrologue" aria-label="故事剧情开场与进展">
     <div class="scene-art" id="sceneArt" aria-hidden="true">
@@ -114,6 +132,30 @@ h1{font-size:clamp(25px,6vw,36px);line-height:1.13;margin:10px 0 4px;letter-spac
   </section>
   <section class="progress" aria-label="章节线索进度"><strong id="achCount">已发现线索 0 / 6</strong><span id="achLabels">已获得 0 项结局徽章</span></section>
   <details class="journal" id="journalPanel"><summary>◈ 档案袋 · 已收集的调查线索 <span id="journalCount">0/6</span></summary><div id="journalBody" class="journal-body"></div></details>
+  <details class="truth-panel" id="truthPanel" hidden>
+    <summary id="truthSummary">◈ 六块档案碎片：隐藏真相推演已解锁</summary>
+    <div class="truth-content">
+      <p>找出三条记录之间的共同规律，判断十三层究竟发生了什么。答错可以重选，不扣除碎片。</p>
+      <div class="truth-evidence">
+        <span>① 00:17 的广播被人为循环播放。</span>
+        <span>② 未来署名的名册存在两种字迹。</span>
+        <span>③ 镜面录像被剪接，刻意提前播放主角的行动。</span>
+      </div>
+      <strong>你认为最有证据支持哪种解释？</strong>
+      <div class="truth-choices" id="truthChoices">
+        <button type="button" data-truth="accident">停电导致设备同时失常</button>
+        <button type="button" data-truth="ghost">镜中人拥有预测未来的超自然能力</button>
+        <button type="button" data-truth="experiment">有人控制广播、门禁和录像，观察并预测受困者的选择</button>
+      </div>
+      <p id="truthFeedback" class="truth-feedback" role="status">尚未完成推演。</p>
+      <div id="truthEndings" class="truth-endings" hidden>
+        <strong>决定如何处理最后一份记录：</strong>
+        <button type="button" data-ending="witness">保留日志，反向追踪观察者</button>
+        <button type="button" data-ending="breaker" class="primary">使用时间索引＋镜后口令，切断循环协议</button>
+      </div>
+      <p id="truthEndingText" class="truth-ending-text" hidden role="status"></p>
+    </div>
+  </details>
   <section class="panel" aria-labelledby="storyTitle">
     <div class="section-head"><h2 id="storyTitle">① 改写三格故事</h2><span class="tag" id="storyTag">故事机关</span></div>
     <p id="storyIntro" class="brief"></p>
@@ -125,6 +167,12 @@ h1{font-size:clamp(25px,6vw,36px);line-height:1.13;margin:10px 0 4px;letter-spac
     <div class="picker-heading"><span>相同三件事，先做哪件决定剧情；点画格可撤回</span><button class="mini" type="button" id="clearStory">清空三格</button></div>
     <div class="story-cards" id="storyChoices" aria-label="可选择的故事事件"></div>
     <div class="story-effect" id="storyEffect" aria-live="polite"><span class="effect-icon">☾</span><div><strong>尚未改写故事</strong><small>安排三格后，看看机关有什么变化。</small></div></div>
+  </section>
+  <section id="relicPanel" class="relic-panel" aria-label="使用已获得的线索" hidden>
+    <strong id="relicTitle">可使用的档案道具</strong>
+    <p id="relicDesc"></p>
+    <div class="relic-buttons" id="relicButtons"></div>
+    <p class="relic-response" id="relicResponse" role="status"></p>
   </section>
   <section class="panel" aria-labelledby="mapTitle">
     <div class="section-head"><h2 id="mapTitle">② 选择房间拼出路</h2><span class="tag" id="mapTag">单张房卡</span></div>
@@ -323,6 +371,11 @@ const BRANCH_IMPACT={
  alarm:'上一幕触发的异常警报尚未解除。系统仍在暗中改写你本来应该走的门。'
 };
 const KEY='g01-story-chapter.v0.1',OLD_KEY='g01-story-lab.v0.1';
+const EXTRA_KEY='g01-story-relics.v0.3';
+const REUSABLE_CLUES=Object.freeze({1:{from:0,title:'旧楼检修记录',intro:'从第一幕带来的检修记录可以申请临时通行；原路线不会被关闭。',button:'出示检修记录 · 开启备用路线'},
+ 3:{from:2,title:'双署名名册',intro:'把第三幕的名册与本幕钟表对照。哪个时间才是重播触发点？'},
+ 5:{from:4,title:'镜后观察口令',intro:'第五幕发现的镜后口令，可以读取第十三层的观察者日志。',button:'使用镜后口令 · 查看观察者日志'}});
+
 const $=id=>document.getElementById(id);
 const readLocal=(key)=>{try{return JSON.parse(localStorage.getItem(key)||'null')}catch(_){return null}};
 const prior=readLocal(KEY),legacy=readLocal(OLD_KEY);
@@ -334,6 +387,16 @@ for(const l of levels)for(const p of l.patterns){
  for(const mode of BRANCH_MODES){const k=`${p.badge}_${mode}`;achievements[k]=!!prior?.achievements?.[k];}
 }
 const decisions=Array.isArray(prior?.decisions)?prior.decisions.slice(0,levels.length):[];
+// The original V0.1 save key is untouched; new rewards live in a separate optional record.
+const rawExtra=readLocal(EXTRA_KEY);
+const extra={schema:1,
+ used:Array.from({length:6},(_,i)=>rawExtra?.used?.[i]===true),
+ secret:{maintenance:rawExtra?.secret?.maintenance===true,timestamp:rawExtra?.secret?.timestamp===true,observer:rawExtra?.secret?.observer===true},
+ truthSolved:rawExtra?.truthSolved===true,
+ truthBadges:{witness:rawExtra?.truthBadges?.witness===true,breaker:rawExtra?.truthBadges?.breaker===true}
+};
+function saveExtra(){try{localStorage.setItem(EXTRA_KEY,JSON.stringify(extra))}catch(_){} }
+
 const stageComplete=i=>levels[i].patterns.some(p=>achievements[p.badge]||BRANCH_MODES.some(mode=>achievements[`${p.badge}_${mode}`]));
 const unlocked=i=>i===0 || stageComplete(i-1) || (i===1&&(achievements.lift||achievements.stairs));
 const defaultStage=()=>{for(let j=0;j<levels.length;j++)if(!stageComplete(j)&&unlocked(j))return j;return 5;};
@@ -357,13 +420,76 @@ function resolveStory(stage,selection){
 }
 const effect=()=>resolveStory(current(),selected);
 const clueCount=()=>levels.filter((_,i)=>stageComplete(i)).length;
-const badgeCount=()=>Object.values(achievements).filter(Boolean).length;
+const badgeCount=()=>Object.values(achievements).filter(Boolean).length+Object.values(extra.secret).filter(Boolean).length+Object.values(extra.truthBadges).filter(Boolean).length;
 function save(){try{localStorage.setItem(KEY,JSON.stringify({schema:1,stage:index,achievements,decisions}))}catch(_){} }
 function message(t,type=''){$('status').textContent=t;$('status').className='message'+(type?' '+type:'');}
 function beat(text,type=''){lastBeat={text,type};const el=$('beatFeedback');el.textContent=text;el.className='beat-feedback'+(type?' '+type+' flash':'');}
 // Accept any order of three events on the same route; order determines the narrative.
 function validPrefix(){return current().patterns.some(p=>selected.every(id=>p.order.includes(id)));}
-function scoreState(){return {clues:clueCount(),badges:badgeCount(),completed:levels.map((x,i)=>stageComplete(i)),achievementKeys:Object.keys(achievements).filter(x=>achievements[x]),decisions:decisions.map(d=>d?{gate:d.gate,variant:d.variant}:null)};}
+function scoreState(){return {clues:clueCount(),badges:badgeCount(),completed:levels.map((x,i)=>stageComplete(i)),achievementKeys:Object.keys(achievements).filter(x=>achievements[x]),relicsUsed:[...extra.used],hiddenEndingKeys:Object.keys(extra.truthBadges).filter(k=>extra.truthBadges[k]),truthSolved:extra.truthSolved,decisions:decisions.map(d=>d?{gate:d.gate,variant:d.variant}:null)};}
+
+function renderRelic(){
+ const panel=$('relicPanel'),cfg=REUSABLE_CLUES[index];
+ if(!cfg||!stageComplete(cfg.from)){panel.hidden=true;return;}
+ panel.hidden=false;
+ $('relicTitle').textContent=`◈ 这次可用：${cfg.title}`;
+ $('relicDesc').textContent=cfg.intro;
+ const buttons=$('relicButtons');buttons.replaceChildren();
+ const btn=(label,handler,disabled=false)=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.disabled=disabled;b.addEventListener('click',handler);buttons.append(b);};
+ const used=extra.used[index];
+ if(index===1){
+  btn(used?'✓ 备用路线已开启':cfg.button,()=>{
+   extra.used[1]=true;saveExtra();render();beat('✦ 用上上一幕的检修记录！当前两扇出口都可通行。','good');message('现在可以选择北侧电梯或东侧消防门，房间方向由你决定。','good');
+  },used);
+  $('relicResponse').textContent=used?'从第一幕保留下来的检修记录已经生效：两条路线都能试，首次走备用路线会获得额外徽章。':'使用后可让两扇门同时可通行，不会扣掉档案碎片。';
+ }else if(index===3){
+  if(!used){
+   btn('00:17',()=>{
+    extra.used[3]=true;extra.secret.timestamp=true;saveExtra();render();beat('✦ 名册和广播记录对上了：00:17是人为重播的触发点！','good');message('获得隐藏校时记录，已记入档案。','good');
+   });
+   btn('23:47',()=>{beat('◈ 23:47只是短信时间，检查名册与循环广播重合的时刻。','bad');$('relicResponse').textContent='未解锁记录；线索仍在，可重新选择。';});
+  }
+  $('relicResponse').textContent=used?'✓ 已取得“00:17原始校时索引”，第十三层的真相推演可以使用它。':'选择一个时间尝试解码；错误选择不会消耗线索。';
+ }else{
+  btn(used?'✓ 观察日志已经打开':cfg.button,()=>{
+   extra.used[5]=true;extra.secret.observer=true;saveExtra();render();beat('✦ 镜后口令有效！发现观察日志：系统正在预测你的下一步。','good');message('你已获得隐藏观察者记录，六片档案归位后可用于切断协议。','good');
+  },used);
+  $('relicResponse').textContent=used?'✓ 日志发现：观察者正在记录你每一次三格选择；此口令可在真相推演中使用。':'这是第五幕获得的线索，使用后可以读取普通逃生路线之外的隐藏记录。';
+ }
+}
+function renderTruth(){
+ const panel=$('truthPanel');panel.hidden=clueCount()<6;
+ if(panel.hidden)return;
+ $('truthSummary').textContent=extra.truthSolved?'◈ 真相已破译 · 查看两种隐藏结局':'◈ 六块档案碎片已归位 · 开启真相推演';
+ $('truthEndings').hidden=!extra.truthSolved;
+ $('truthFeedback').textContent=extra.truthSolved?'✓ 推断成立：楼里有人操纵广播、门禁与录像，记录阿岚的选择。':'';
+ if(!extra.truthSolved)$('truthFeedback').textContent='三条记录已经收集完毕，请选择最有证据支持的解释。';
+ for(const b of $('truthChoices').querySelectorAll('button'))b.disabled=extra.truthSolved;
+ const breaker=$('truthEndings').querySelector('[data-ending="breaker"]');breaker.disabled=!(extra.used[3]&&extra.used[5]);
+ breaker.title=breaker.disabled?'需先使用第四幕的校时索引及第六幕的镜后口令':'';
+}
+function chooseTruth(id){
+ if(clueCount()<6||extra.truthSolved)return;
+ if(id==='experiment'){
+  extra.truthSolved=true;saveExtra();renderTruth();$('truthPanel').open=true;
+  $('truthFeedback').textContent='✓ 推演成功！十三层是一套被隐藏的行为实验装置。真正的谜团是：谁在选择下一位观察者？';
+  $('truthFeedback').className='truth-feedback good';
+ }else{
+  $('truthFeedback').textContent=id==='ghost'?'镜像和广播都有剪接证据，超自然解释无法解释人为编辑。':'电梯门禁被远程切换、镜像被剪接，普通停电不能解释这些线索。';
+  $('truthFeedback').className='truth-feedback warn';
+ }
+}
+function pickTruthEnding(key){
+ if(clueCount()<6||!extra.truthSolved)return;
+ if(key==='breaker'&&!(extra.used[3]&&extra.used[5]))return;
+ const first=!extra.truthBadges[key];extra.truthBadges[key]=true;saveExtra();renderProgress();renderTruth();
+ const el=$('truthEndingText');el.hidden=false;el.className='truth-ending-text good';
+ el.textContent=key==='witness'
+ ?`◈ ${first?'新解锁':'已收集'}【第十三位见证者】
+阿岚留下日志，在记录末尾找到自己的签名：观察者编号13。她不知道是有人冒名，还是自己的未来已经来过。下一章将追问：谁拥有这份名单？`
+ :`◈ ${first?'新解锁':'已收集'}【循环终止者】
+阿岚把00:17索引与镜后口令同时输入，控制台第一次显示“下一步：无法预测”。走廊传来第二个人的脚步声。循环停止了，但观察者仍然存在。`;
+}
 function renderProgress(){const n=clueCount(),m=badgeCount();$('achCount').textContent=`档案碎片 ${n} / 6`;
  $('achLabels').textContent=n===6?`第一章通关 · 夜楼追踪者 · ${m}枚徽章`:n>=3?`已解锁“午夜调查员” · ${m}枚徽章`:`已探索 ${m} 种故事结局`;
  $('journalCount').textContent=n+'/6';
@@ -380,16 +506,24 @@ const dirs=[{bit:N,other:S,delta:-3,name:'n'},{bit:E,other:W,delta:1,name:'e'},{
 const turn=(doors,r)=>{let v=doors;for(let i=0;i<((r%4)+4)%4;i++)v=((v<<1)&15)|((v&8)>>3);return v};
 function tileInfo(pos){if(pos===3)return {type:'start',name:'入口',icon:'🏃',doors:E,open:true};
  if(pos===4)return placed?{type:'slot placed',name:ROOM_TYPES.find(x=>x.id===placed.kind).name,icon:ROOM_TYPES.find(x=>x.id===placed.kind).icon,doors:turn(ROOM_TYPES.find(x=>x.id===placed.kind).doors,placed.rotation),open:true}:{type:'slot',name:'放入房间',icon:'＋',doors:0,open:true};
- const ex=current().exits.find(x=>x.index===pos);if(ex)return {type:'exit',name:ex.name,icon:ex.icon,doors:ex.doors,open:effect()?.key===ex.gate};
+ const ex=current().exits.find(x=>x.index===pos);if(ex)return {type:'exit',name:ex.name,icon:ex.icon,doors:ex.doors,open:effect()?.key===ex.gate||(index===1&&extra.used[1]&&!!effect())};
  return {type:'wall',name:'',icon:'',doors:0,open:false};}
 function connected(a,b){const left=tileInfo(a),right=tileInfo(b);if(!left.open||!right.open)return false;
  const d=dirs.find(o=>a+o.delta===b && !(o.bit===E&&a%3===2)&&!(o.bit===W&&a%3===0));
  return !!d && (left.doors&d.bit)!==0&&(right.doors&d.other)!==0;}
-function getPath(){const ex=current().exits.find(x=>x.gate===effect()?.key);if(!ex)return null;
- const q=[{pos:3,path:[3]}],seen=new Set([3]);for(let i=0;i<q.length;i++){const v=q[i];if(v.pos===ex.index)return v.path;
-  for(const d of dirs){const n=v.pos+d.delta;if(n<0||n>8)continue;if(d.bit===E&&v.pos%3===2||d.bit===W&&v.pos%3===0)continue;
-   if(connected(v.pos,n)&&!seen.has(n)){seen.add(n);q.push({pos:n,path:[...v.path,n]})}}}
- return null;}
+function getRoute(){const p=effect();if(!p)return null;
+ const primary=current().exits.find(x=>x.gate===p.key);if(!primary)return null;
+ const candidates=[primary,...(index===1&&extra.used[1]?current().exits.filter(x=>x.gate!==p.key):[])];
+ for(const ex of candidates){
+  const q=[{pos:3,path:[3]}],seen=new Set([3]);
+  for(let i=0;i<q.length;i++){const v=q[i];if(v.pos===ex.index)return {path:v.path,gate:ex.gate};
+   for(const d of dirs){const n=v.pos+d.delta;if(n<0||n>8)continue;if(d.bit===E&&v.pos%3===2||d.bit===W&&v.pos%3===0)continue;
+    if(connected(v.pos,n)&&!seen.has(n)){seen.add(n);q.push({pos:n,path:[...v.path,n]})}}
+  }
+ }
+ return null;
+}
+function getPath(){return getRoute()?.path||null;}
 function renderNarrative(){const sc=current().scene,p=effect(),last=current().events.find(e=>e.id===selected.at(-1));const art=$('sceneArt');art.className='scene-art'+(p?' is-solved':' is-mystery');
  const past=index>0?decisions[index-1]:null;
  $('sceneEpisode').textContent=sc.episode;$('sceneClock').textContent=sc.clock;$('sceneAmbient').textContent=p?`故事分支：${p.variant==='canonical'?'按计划调查':p.medal} · 门禁改变`:sc.ambience;
@@ -426,7 +560,7 @@ function renderRooms(){const place=$('roomChoices');place.replaceChildren();for(
  b.innerHTML=`<b><span class="room-symbol" style="transform:rotate(${choice===r.id?rotation*90:0}deg)">${r.icon}</span> ${r.name}</b><small>${r.note}${choice===r.id?' · '+rotation*90+'°':''}</small>`;
  b.addEventListener('click',()=>{choice=r.id;rotation=0;renderRooms();message('已选择房卡，旋转后点击地图中央的“＋”。')});place.append(b)}
  $('rotate').disabled=!choice||!!placed;$('undo').disabled=!placed;}
-function render(){renderProgress();renderTabs();renderStory();renderBoard();renderRooms();$('mapIntro').textContent=current().description;const p=effect();$('mapTag').textContent=p?'出口已解锁 · '+current().exits.find(x=>x.gate===p.key).name:'出口尚未解锁';}
+function render(){renderProgress();renderTabs();renderStory();renderBoard();renderRooms();renderRelic();renderTruth();$('mapIntro').textContent=current().description;const p=effect();$('mapTag').textContent=p?'出口已解锁 · '+current().exits.find(x=>x.gate===p.key).name:'出口尚未解锁';}
 function placeRoom(){if(placed){message('房间已经放入中央，需要改变请先撤销。','bad');return}
  if(!choice){message('先从下方选择一张房卡。','bad');return}
  placed={kind:choice,rotation};winPath=[];render();
@@ -437,15 +571,20 @@ function resetStage(target=index){if(!unlocked(target)){message('前一幕尚未
  index=target;selected=[];choice=null;rotation=0;placed=null;winPath=[];lastBeat={text:'◈ 故事从一条线索开始，每一次正确推理都有反馈。',type:''};$('successOverlay').hidden=true;save();render();message(`第${target+1}幕开启：${current().scene.title}`);}
 function getNext(){for(let n=index+1;n<levels.length;n++)if(unlocked(n))return n;return index;}
 function win(p,path){const firstStage=!stageComplete(index),firstBadge=!achievements[p.badge];achievements[p.badge]=true;
- decisions[index]={variant:p.variant||'canonical',badge:p.badge,gate:p.key,clue:p.clue};
- save();renderProgress();renderTabs();
+ const route=getRoute(),bonusRoute=index===1&&extra.used[1]&&route&&route.gate!==p.key;
+ const firstBonus=bonusRoute&&!extra.secret.maintenance;
+ if(bonusRoute){extra.secret.maintenance=true;saveExtra();}
+ decisions[index]={variant:p.variant||'canonical',badge:p.badge,gate:route?.gate||p.key,clue:p.clue};
+ save();renderProgress();renderTabs();renderTruth();
  const n=clueCount();$('winTitle').textContent=`第${index+1}幕 · 真相前进一步！`;
- $('winDetails').textContent=`成功逃出 · 路线经过${path.length}间房 · ${firstBadge?'发现新结局！':'再次成功通关！'} · ${p.variant==='canonical'?'原定调查':'选择改变了剧情'}`;
- const r=$('rewardFragment');r.className='reward-fragment'+(firstStage?'':' replay');r.textContent=firstStage?`✦ 线索碎片 +1 · 已收集${n}/6`:(firstBadge?'✦ 解锁另一条故事分支 +1枚徽章':'✦ 再次成功逃出 · 已有奖励保留');
+ $('winDetails').textContent=`成功逃出 · 路线经过${path.length}间房 · ${firstBadge?'发现新结局！':'再次成功通关！'} · ${bonusRoute?'使用旧检修记录打开备用出口':p.variant==='canonical'?'原定调查':'选择改变了剧情'}`;
+ const r=$('rewardFragment');r.className='reward-fragment'+(firstStage?'':' replay');
+ const carryLabels={0:' · 下一幕可使用检修记录',2:' · 第四幕可使用名册校时',4:' · 第六幕可使用镜后口令'};
+ r.textContent=firstStage?`✦ 线索碎片 +1 · 已收集${n}/6${carryLabels[index]||''}`:(firstBadge?'✦ 解锁另一条故事分支 +1枚徽章':'✦ 再次成功逃出 · 已有奖励保留');
  const tale=$('endingTale');tale.replaceChildren();const h=document.createElement('strong');h.textContent=`${current().scene.episode} · ${p.medal}`;const body=document.createElement('span');body.textContent=p.ending;tale.append(h,body);
- $('winBadge').textContent=(firstBadge?'新徽章：':'徽章已收集：')+p.medal+(n===6?' · 第一章称号「夜楼追踪者」':n>=3?' · 阶段称号「午夜调查员」':'');
- $('nextHook').textContent='悬念 · '+p.hook;
- $('winNext').textContent=index===5?'第一章完 · 查看开场':'下一幕 · 继续追查 →';$('successOverlay').hidden=false;$('winNext').focus();
+ $('winBadge').textContent=(firstBadge?'新徽章：':'徽章已收集：')+p.medal+(firstBonus?' · 额外获得「暗道探路者」':bonusRoute?' · 已发现备用暗道':'')+(n===6?' · 第一章称号「夜楼追踪者」':n>=3?' · 阶段称号「午夜调查员」':'');
+ $('nextHook').textContent='悬念 · '+p.hook+(n===6?'  六块档案碎片已经归位，隐藏真相推演现已开放。':'');
+ $('winNext').textContent=index===5&&n===6?'推演隐藏真相 →':index===5?'第一章完 · 查看开场':'下一幕 · 继续追查 →';$('successOverlay').hidden=false;$('winNext').focus();
 }
 function tryEscape(){const p=effect();if(selected.length!==3){message('先完成三格事件推理，才能解锁出口。','bad');return}
  if(!p){message('你触发了两条线索的冲突剧情。撤回一格，继续追查同一条调查路线。','bad');return}
@@ -465,10 +604,14 @@ $('undo').addEventListener('click',()=>{placed=null;winPath=[];render();message(
 $('escape').addEventListener('click',tryEscape);$('restart').addEventListener('click',()=>resetStage(index));$('hint').addEventListener('click',hint);
 $('share').addEventListener('click',share);$('resetStory').addEventListener('click',()=>{selected=[];placed=null;choice=null;rotation=0;winPath=[];render();message('已重置本幕，可以重新追查不同结局。')});
 $('winBack').addEventListener('click',()=>{$('successOverlay').hidden=true;});
-$('winNext').addEventListener('click',()=>{const next=index===5?0:index+1;resetStage(next)});
+$('winNext').addEventListener('click',()=>{if(index===5&&clueCount()===6){$('successOverlay').hidden=true;$('truthPanel').open=true;renderTruth();$('truthPanel').scrollIntoView({behavior:'auto',block:'start'});return;}const next=index===5?0:index+1;resetStage(next)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('successOverlay').hidden)$('successOverlay').hidden=true;});
 // Read-only diagnostics for local acceptance tests: no data is sent to a server.
-window.G01Chapter=Object.freeze({totalStages:levels.length,stageNumber:()=>index+1,summary:scoreState,route:()=>{const p=effect();return p?{gate:p.key,variant:p.variant,badge:p.badge}:null;}});
+window.G01Chapter=Object.freeze({totalStages:levels.length,stageNumber:()=>index+1,summary:scoreState,
+ route:()=>{const p=effect();return p?{gate:p.key,variant:p.variant,badge:p.badge,actualGate:getRoute()?.gate||null}:null;},
+ relics:()=>({used:[...extra.used],secret:{...extra.secret},truthSolved:extra.truthSolved,truthBadges:{...extra.truthBadges}})});
+for(const b of $('truthChoices').querySelectorAll('button'))b.addEventListener('click',()=>chooseTruth(b.dataset.truth));
+for(const b of $('truthEndings').querySelectorAll('button'))b.addEventListener('click',()=>pickTruthEnding(b.dataset.ending));
 render();message(`第${index+1}幕开启：${current().scene.title}`);
 })();
 
