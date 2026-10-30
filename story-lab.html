@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#091526">
-<meta name="description" content="《今晚拼出路》原创故事机关实验室：排列三格故事，让不同结局改变真实逃脱路线。两个独立试玩关卡。">
-<title>今晚拼出路｜故事机关实验室 G01-D V0.1</title>
+<meta name="description" content="《今晚拼出路》故事机关实验室V0.2：看见角色、剧情与漫画分镜，排列事件改变房门，解锁不同的逃生结局。">
+<title>今晚拼出路｜真正的三格故事 G01-D V0.2</title>
 <style>
 :root{color-scheme:dark;font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;--bg:#081421;--panel:#152c44;--line:#37516a;--ink:#f2f7ff;--muted:#b1c4d7;--gold:#f4cb85;--mint:#82e1c7;--safe:#b8f4da}
 *{box-sizing:border-box}html{background:var(--bg)}body{margin:0;background:radial-gradient(ellipse at 20% 0%,#1b3655 0%,transparent 48%),radial-gradient(ellipse at 100% 38%,#183a42 0%,transparent 46%),var(--bg);color:var(--ink);min-height:100svh}
@@ -22,6 +22,56 @@ h1{font-size:clamp(25px,6vw,36px);line-height:1.13;margin:10px 0 4px;letter-spac
 .overlay[hidden]{display:none!important}.overlay{position:fixed;inset:0;z-index:50;background:rgba(3,10,20,.83);backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px}.success-card{max-width:390px;width:100%;background:linear-gradient(155deg,#385c63,#1b314e 72%);border:1px solid #e4ca8e;border-radius:24px;padding:23px 20px;text-align:center;box-shadow:0 20px 70px #0009}.success-card .trophy{font-size:52px;display:block;filter:drop-shadow(0 4px 12px #ead38766)}.success-card h2{font-size:26px;color:#fff0cb;margin:6px 0 5px}.success-card p{font-size:13px;line-height:1.6;color:#d2e2e5}.success-card .achievement{background:#52462c;border:1px solid #d9b96d;border-radius:11px;padding:10px;color:#ffedbd;font-weight:800;font-size:14px;margin:14px 0}.success-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.success-buttons button{min-height:45px;border:1px solid #7c9b9b;border-radius:10px;background:#1d4b5a;color:#e8f8ff;font-weight:800;font-size:12px}.success-buttons .primary{background:#f1cc8b;color:#273546;border-color:#fff0bd}
 @media(max-width:420px){.shell{padding:9px 10px calc(19px + env(safe-area-inset-bottom))}.panel{padding:10px;margin:9px 0}.intro{font-size:11px;margin-bottom:9px}.progress{margin-bottom:8px;padding:8px 9px}.frame{min-height:88px}.story-choice{min-height:66px}.story-choice .emoji{font-size:20px}.story-choice strong{font-size:10px}.game-map{max-width:min(272px,85vw)}.section-head h2{font-size:15px}.rooms{gap:6px}.room-card{min-height:60px}.brief{margin-bottom:7px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important}}
+
+/* G01-D V0.2 — visibly tell a story, rather than only listing three actions. */
+.scene-prologue{border:1px solid #8c7658;border-radius:17px;overflow:hidden;margin:0 0 10px;background:#192d3c;box-shadow:0 12px 30px #0004}
+.scene-art{height:162px;position:relative;overflow:hidden;background:linear-gradient(180deg,#0c1931 0%,#14283a 53%,#1b3545 100%);isolation:isolate}
+.scene-art::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(100deg,transparent 0 37px,#ffffff06 39px 40px),radial-gradient(ellipse at 70% 54%,#0b0f1d 1%,transparent 65%);opacity:.8}
+.scene-art::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,#ffffff12,transparent);opacity:0;pointer-events:none}
+.scene-art.is-powered{background:linear-gradient(180deg,#20394c 0%,#37575d 55%,#5b5f4e 100%)}
+.scene-art.is-powered::after{opacity:1;animation:light-up .75s ease-out}
+.scene-art.is-lift{background:linear-gradient(180deg,#152342,#28526b 55%,#285747 100%)}
+.scene-art.is-stairs{background:linear-gradient(180deg,#203149,#536b67 55%,#406d5c 100%)}
+.scene-hall{position:absolute;bottom:-20px;left:12%;right:12%;height:98px;clip-path:polygon(33% 0,67% 0,100% 100%,0 100%);background:linear-gradient(#4c5860,#26313d);border-top:2px solid #74828b;opacity:.74}
+.scene-hall::before,.scene-hall::after{content:'';position:absolute;inset:0 48% 0 auto;width:2px;background:#ffe6a429;transform:skewX(-8deg)}
+.scene-room{position:absolute;right:18%;top:24px;width:87px;height:116px;background:#202b37;border:3px solid #60717b;border-radius:4px 4px 0 0;box-shadow:0 0 35px #0007;display:grid;place-items:center;transition:.25s}
+.scene-art.is-powered .scene-room,.scene-art.is-lift .scene-room,.scene-art.is-stairs .scene-room{background:#38584c;border-color:#b2e3bf;box-shadow:0 0 34px #f5e6a555}
+.scene-room-label{position:absolute;top:8px;left:4px;right:4px;text-align:center;color:#d5dbe1;font-size:11px;font-weight:850;letter-spacing:.06em}
+.scene-room-icon{font-size:34px;transform:translateY(12px)}
+.scene-beam{position:absolute;right:6%;top:-26px;width:180px;height:190px;transform:skewX(-12deg);clip-path:polygon(30% 0,80% 0,100% 100%,0 100%);background:linear-gradient(180deg,#f6d28e35,transparent);opacity:0;transition:opacity .35s}
+.scene-art.is-powered .scene-beam,.scene-art.is-lift .scene-beam,.scene-art.is-stairs .scene-beam{opacity:1}
+.scene-person{position:absolute;left:20%;bottom:9px;width:65px;height:101px;filter:drop-shadow(0 6px 5px #0007)}
+.scene-person .head{position:absolute;left:20px;top:4px;width:33px;height:35px;border-radius:48% 48% 45% 45%;background:#e9ae88;border:2px solid #cb9476;z-index:2}
+.scene-person .hair{position:absolute;top:0;left:16px;width:41px;height:21px;border-radius:64% 52% 35% 40%;background:#262b39;z-index:3;transform:rotate(-12deg)}
+.scene-person .coat{position:absolute;left:7px;bottom:0;width:53px;height:65px;border-radius:20px 19px 7px 7px;background:linear-gradient(110deg,#e5b35c,#a66d46 72%);border:2px solid #81614b}
+.scene-person .backpack{position:absolute;left:0;bottom:19px;width:15px;height:36px;border-radius:9px;background:#384a62;border:2px solid #242e42;z-index:1}
+.scene-time{position:absolute;top:11px;left:13px;border:1px solid #ffffff3d;background:#081521ba;padding:5px 8px;border-radius:7px;color:#e5ecf0;font-size:10px;letter-spacing:.08em;font-weight:850}
+.scene-ambient{position:absolute;top:47px;left:13px;color:#a7b8c7;font-size:11px;max-width:28%;line-height:1.5}
+.scene-copy{padding:11px 14px 13px}
+.scene-eyebrow{font-size:10px;letter-spacing:.13em;color:#d3b37c;font-weight:850}
+.scene-copy h2{font-size:16px;line-height:1.35;margin:4px 0 4px;color:#fff0c9}
+.scene-copy p{font-size:12px;line-height:1.7;color:#d5e2e8;margin:0 0 9px}
+.scene-dialogue{background:#e9edf0;color:#23374a;padding:10px 13px;border-radius:8px 13px 13px 13px;line-height:1.55;font-size:12px;font-weight:700;position:relative}
+.scene-dialogue::before{content:'';position:absolute;top:-7px;left:19px;border-width:0 0 8px 9px;border-style:solid;border-color:transparent transparent #e9edf0 transparent}
+.story-frames .frame{min-height:156px;padding:5px 5px 8px;justify-content:flex-start;gap:3px;background:linear-gradient(180deg,#253e50,#15293a);border:1px solid #45667a}
+.story-frames .frame.filled{background:linear-gradient(180deg,#50635c,#253c40);border:1px solid #e0be84}
+.comic-picture{position:relative;margin:19px auto 2px;display:flex;align-items:center;justify-content:center;width:90%;height:54px;border-radius:7px;background:linear-gradient(#22384d,#344855);overflow:hidden}
+.comic-picture::after{content:'';position:absolute;bottom:0;left:0;right:0;height:6px;background:#172a3d88}
+.comic-hero{position:absolute;left:5px;bottom:3px;font-size:30px;filter:drop-shadow(0 2px 1px #0006)}
+.comic-object{position:absolute;right:6px;bottom:6px;font-size:26px;filter:drop-shadow(0 2px 1px #0004)}
+.comic-empty{font-size:25px;color:#a2b7c5}
+.frame .comic-name{font-size:10px;color:#f9ead0;min-height:12px}
+.frame .comic-line{display:block;font-size:10px;font-weight:750;color:#fff8e5;line-height:1.35;background:#162b38b8;border-radius:5px;padding:5px 3px;margin-top:2px;min-height:29px;width:100%}
+.frame .comic-line.placeholder{color:#95aabc;font-weight:600}
+.frame.frame-error{border-color:#e1956b!important}
+.story-interlude{font-size:11px;line-height:1.5;margin-top:9px;border-radius:9px;background:#2a4050;border:1px solid #5d8294;padding:9px 10px;color:#d9eff1}
+.story-interlude[hidden]{display:none}
+.story-interlude.good{background:#194c40;border-color:#85caa7;color:#dcffe7}
+.story-interlude.bad{background:#56392c;border-color:#ba8067;color:#ffdfc5}
+.ending-tale{background:linear-gradient(145deg,#1d3a46,#204c46);border:1px solid #8bbdac;border-radius:12px;padding:12px;margin:11px 0 0;font-size:13px;line-height:1.7;text-align:left;color:#edf9ef}
+.ending-tale strong{color:#ffe0a0;display:block;margin-bottom:3px}
+@keyframes light-up{from{opacity:0}35%{opacity:.9}55%{opacity:.1}100%{opacity:1}}
+@media(max-width:420px){.scene-art{height:133px}.scene-room{width:69px;height:98px;right:20%;top:20px}.scene-room-icon{font-size:29px}.scene-person{left:18%;transform:scale(.85);transform-origin:bottom left}.scene-copy{padding:9px 11px 11px}.scene-copy h2{font-size:15px}.scene-copy p{font-size:11px}.scene-dialogue{font-size:11px}.story-frames .frame{min-height:141px}.comic-picture{height:48px;margin-top:17px}.comic-hero{font-size:25px}.comic-object{font-size:23px}.frame .comic-line{font-size:9px;padding:4px 2px}.frame .comic-name{font-size:9px}}
 </style>
 </head>
 <body>
@@ -36,12 +86,25 @@ h1{font-size:clamp(25px,6vw,36px);line-height:1.13;margin:10px 0 4px;letter-spac
     <button id="stage0" type="button" class="stage-tab active" aria-pressed="true"><strong>01 · 停电的楼层</strong><small>恢复供电 · 打开出口</small></button>
     <button id="stage1" type="button" class="stage-tab" aria-pressed="false"><strong>02 · 两条逃生路</strong><small>双结局 · 两种路线</small></button>
   </nav>
+  <section class="scene-prologue" id="scenePrologue" aria-label="故事剧情开场与进展">
+    <div class="scene-art" id="sceneArt" aria-hidden="true">
+      <div class="scene-hall"></div><div class="scene-beam"></div>
+      <div class="scene-room"><span class="scene-room-label" id="sceneDoorLabel">逃生门 · 锁住</span><span class="scene-room-icon" id="sceneDoorIcon">🚪</span></div>
+      <div class="scene-person"><span class="backpack"></span><span class="coat"></span><span class="head"></span><span class="hair"></span></div>
+      <span class="scene-time" id="sceneClock">23:47 · 停电</span><span class="scene-ambient" id="sceneAmbient">灯灭了，门也锁了</span>
+    </div>
+    <div class="scene-copy"><div class="scene-eyebrow" id="sceneEpisode">原创短篇 · 第一幕</div>
+      <h2 id="sceneHeading">深夜，整栋楼突然停电</h2><p id="sceneNarration"></p>
+      <div class="scene-dialogue" id="sceneDialogue" aria-live="polite"></div>
+    </div>
+  </section>
   <section class="progress" aria-label="故事成就进度"><strong id="achCount">剧情成就 0 / 3</strong><span id="achLabels">尚未解锁</span></section>
   <section class="panel" aria-labelledby="storyTitle">
     <div class="section-head"><h2 id="storyTitle">① 安排三格故事</h2><span class="tag" id="storyTag">故事机关</span></div>
     <p id="storyIntro" class="brief"></p>
     <div class="hint-box" id="storyHint"></div>
     <div class="story-frames" id="storyFrames" aria-label="三格漫画事件顺序"></div>
+    <div class="story-interlude" id="storyInterlude" role="status" aria-live="polite">故事开始了。选出下一步会发生的事，亲手改变结局。</div>
     <div class="picker-heading"><span>点击事件卡片依次填入三格；点击已选画格可移除</span><button class="mini" type="button" id="clearStory">清空三格</button></div>
     <div class="story-cards" id="storyChoices" aria-label="可选择的故事事件"></div>
     <div class="story-effect" id="storyEffect" aria-live="polite"><span class="effect-icon">☾</span><div><strong>尚未改写故事</strong><small>安排三格后，看看机关有什么变化。</small></div></div>
@@ -66,7 +129,7 @@ h1{font-size:clamp(25px,6vw,36px);line-height:1.13;margin:10px 0 4px;letter-spac
 </main>
 <div class="overlay" id="successOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="winTitle">
   <section class="success-card"><span class="trophy" aria-hidden="true">🏆</span><div style="font-size:11px;letter-spacing:.12em;color:#f3d296;font-weight:800">STORY UNLOCKED</div>
-    <h2 id="winTitle">故事改写成功！</h2><p id="winDetails"></p><div class="achievement" id="winBadge"></div>
+    <h2 id="winTitle">故事改写成功！</h2><p id="winDetails"></p><div id="endingTale" class="ending-tale" aria-label="故事结局"></div><div class="achievement" id="winBadge"></div>
     <div class="success-buttons"><button type="button" id="winBack">查看自己的路线</button><button type="button" id="winNext" class="primary">下一关 →</button></div>
   </section>
 </div>
@@ -77,12 +140,12 @@ const N=1,E=2,S=4,W=8;
 const ROOM_TYPES=[{id:'straight',name:'直通房',icon:'┃',doors:N|S,note:'两侧对门'},{id:'corner',name:'转角房',icon:'┗',doors:N|E,note:'相邻两门'},{id:'tee',name:'三岔房',icon:'┳',doors:N|E|W,note:'三向开门'}];
 const levels=[
  {name:'停电的楼层',brief:'走廊一片漆黑。想从东边的出口离开，必须先恢复电力。',hint:'顺序线索：先找替换件，再完成维修，最后启动设备。',
-  events:[{id:'fuse',icon:'🔩',name:'找到保险丝',note:'准备材料'},{id:'repair',icon:'🧰',name:'维修配电箱',note:'恢复线路'},{id:'power',icon:'💡',name:'启动总开关',note:'接通电源'}],
+  events:[{id:'fuse',icon:'🔩',name:'找到保险丝',note:'准备材料',line:'工具箱里，真的还有备用件！'},{id:'repair',icon:'🧰',name:'维修配电箱',note:'恢复线路',line:'这根烧断的线，要先接好……'},{id:'power',icon:'💡',name:'启动总开关',note:'接通电源',line:'三、二、一……合闸！'}],
   patterns:[{key:'power',order:['fuse','repair','power'],title:'走廊恢复供电！',details:'东侧出口变亮；现在把中间的房门与入口、出口连起来。',medal:'夜楼修复师',badge:'power'}],
   exits:[{index:5,gate:'power',name:'亮灯出口',icon:'🚪',doors:W}],start:3,description:'入口在左侧，出口在右侧；中间只能放置一张房卡。'},
  {name:'两条逃生路',brief:'楼里有两条可能的逃生路：北侧电梯或东侧安全门。三格故事会决定哪条路打开。',hint:'两组事件各有因果顺序：修好电梯需要备用电池；打开安全门要先处理警报和门闩。',
-  events:[{id:'battery',icon:'🔋',name:'找到备用电池',note:'电梯线索'},{id:'connect',icon:'🔌',name:'接通电路',note:'电梯线索'},{id:'lift',icon:'🛗',name:'启动电梯',note:'电梯结局'},
-          {id:'alarm',icon:'🔔',name:'触发消防警报',note:'安全门线索'},{id:'latch',icon:'🔧',name:'卸下门闩',note:'安全门线索'},{id:'stair',icon:'🚪',name:'推开安全门',note:'安全门结局'}],
+  events:[{id:'battery',icon:'🔋',name:'找到备用电池',note:'电梯线索',line:'电池还亮着，电梯有救了。'},{id:'connect',icon:'🔌',name:'接通电路',note:'电梯线索',line:'先把备用线路接上。'},{id:'lift',icon:'🛗',name:'启动电梯',note:'电梯结局',line:'叮！电梯真的回来了！'},
+          {id:'alarm',icon:'🔔',name:'触发消防警报',note:'安全门线索',line:'启动应急模式，试试消防通道。'},{id:'latch',icon:'🔧',name:'卸下门闩',note:'安全门线索',line:'卡住的门闩终于松动了！'},{id:'stair',icon:'🚪',name:'推开安全门',note:'安全门结局',line:'门开了！我能走消防楼梯！'}],
   patterns:[{key:'lift',order:['battery','connect','lift'],title:'电梯重新启动！',details:'北侧电梯门打开了；需要转角房或三岔房把入口接到北门。',medal:'电梯逃脱者',badge:'lift'},
             {key:'stairs',order:['alarm','latch','stair'],title:'安全门打开！',details:'东侧安全出口已打开；需要横向通道连接入口。',medal:'安全门逃脱者',badge:'stairs'}],
   exits:[{index:1,gate:'lift',name:'电梯出口',icon:'🛗',doors:S},{index:5,gate:'stairs',name:'安全出口',icon:'🚪',doors:W}],start:3,description:'同一张3×3地图，有两个可选出口，只有故事决定的出口才会打开。'}
@@ -103,6 +166,37 @@ function message(t,type=''){lastMessage=t;const x=$('status');x.textContent=t;x.
 function renderProgress(){const n=Object.values(achievements).filter(Boolean).length;$('achCount').textContent=`剧情成就 ${n} / 3`;
  const names=[achievements.power?'夜楼修复师':null,achievements.lift?'电梯逃脱者':null,achievements.stairs?'安全门逃脱者':null].filter(Boolean);
  $('achLabels').textContent=n===3?'隐藏称号：故事改写者！':names.length?names.join(' · '):'尚未解锁';}
+
+const STORY_SCENES = [
+ {clock:'23:47 · 停电',episode:'原创短篇 · 第一幕',title:'深夜，整栋楼突然停电',
+  intro:'阿岚只是下楼取快递，却被困在一段没有照明的走廊。她的手机仅剩3%电量，东侧安全门也失去供电。',
+  speech:'阿岚：别慌……先让配电箱恢复供电，再想办法走到出口。',ambience:'楼道里一片漆黑'},
+ {clock:'00:12 · 两条出路',episode:'原创短篇 · 第二幕',title:'电梯和消防门，只能先救一条路',
+  intro:'楼里的备用电源又跳闸了。电梯停在楼上，右侧消防门也被卡住。阿岚发现两组不同的工具，她必须选择一个结局。',
+  speech:'阿岚：是冒险修好电梯，还是打开消防楼梯？我来决定。',ambience:'走廊尽头出现两个方向'}
+];
+const STORY_ENDINGS = {
+ power:{title:'第一幕 · 逃出黑暗',text:'灯光“啪”地亮起来，东侧安全门传来轻轻一声解锁。阿岚穿过自己拼好的走廊，推开门，终于看见楼下便利店的灯光。'},
+ lift:{title:'第二幕 · 电梯结局',text:'备用电池接通后，电梯缓缓下降。门重新打开时，阿岚看见清晨的第一缕光落在地面上。她选择了一条勇敢但未知的路。'},
+ stairs:{title:'第二幕 · 消防楼梯结局',text:'警报响起，门闩松开。阿岚推开安全门，沿楼梯一路向下。冷风吹在脸上，她知道自己选了一条踏实的路。'}
+};
+function renderNarrative(){
+ const scene=STORY_SCENES[index],p=effect(), last=current().events.find(e=>e.id===selected[selected.length-1]);
+ const art=$('sceneArt');art.className='scene-art'+(p?' is-'+p.key:'');
+ $('sceneEpisode').textContent=scene.episode;
+ $('sceneClock').textContent=scene.clock;
+ $('sceneAmbient').textContent=p?'故事改变了建筑状态':scene.ambience;
+ $('sceneHeading').textContent=p?(p.key==='power'?'灯亮了！东侧出口开启':p.key==='lift'?'叮！北侧电梯恢复运转':'咔哒！右侧消防门开启'):scene.title;
+ $('sceneNarration').textContent=p?(p.key==='power'?'阿岚把配电箱修好，楼道的灯依次亮起。出口已开，但还差一块能通行的房间。':p.key==='lift'?'电梯灯亮起，阿岚决定冒险走北边。她还要把中间房间连通。':'消防通道的门闩松了，阿岚决定走右侧安全出口。房间路线还需要自己拼。'):scene.intro;
+ $('sceneDialogue').textContent=p?(p.key==='power'?'阿岚：灯亮了！现在只差把走廊接起来。':p.key==='lift'?'阿岚：电梯回来了！快把北边的路拼通。':'阿岚：安全门开了！把路接到东边就行。'):last?`阿岚：${last.line}`:scene.speech;
+ $('sceneDoorLabel').textContent=p?(p.key==='power'?'出口 · 已通电':p.key==='lift'?'电梯 · 已启动':'消防门 · 已打开'):index===0?'东侧出口 · 锁住':'电梯／消防门 · 关闭';
+ $('sceneDoorIcon').textContent=p?.key==='lift'?'🛗':'🚪';
+ const info=$('storyInterlude');const bad=selected.length===3&&!p;
+ info.className='story-interlude'+(p?' good':bad?' bad':'');
+ info.textContent=p?`剧情反转：${p.title} 阿岚改变了楼内机关，现在轮到你拼接逃生路线。`:
+   bad?'剧情还没接上：事件次序不合理，楼内机关没有变化。点上方画格撤回重排。':
+   selected.length?`漫画进行到第${selected.length}格：${last?.line||''} 再选下一步。`:'请从下方选择事件，填进三格漫画。你的选择将决定阿岚的下一步。';
+}
 function renderStory(){
  $('storyIntro').textContent=current().brief;$('storyHint').textContent=current().hint;
  $('storyTag').textContent=index===0?'新手实验':'双结局实验';
@@ -110,7 +204,7 @@ function renderStory(){
  for(let i=0;i<3;i++){
    const card=current().events.find(x=>x.id===selected[i]);const b=document.createElement('button');b.type='button';b.className='frame'+(card?' filled':'');
    b.setAttribute('aria-label',card?`第${i+1}格：${card.name}，点击移除`:`第${i+1}格，等待选择故事事件`);
-   b.innerHTML=`<span class="frame-number">${i+1} / 3</span><span class="ico">${card?.icon||'＋'}</span><strong>${card?.name||'等待事件'}</strong><small>${card?'点击可撤回':'点下方事件卡'}</small>`;
+   b.innerHTML=`<span class="frame-number">第 ${i+1} 格</span><span class="comic-picture"><span class="comic-hero">${card?'🧑':'🌙'}</span><span class="comic-object">${card?.icon||'···'}</span></span><strong class="comic-name">${card?.name||'未发生的剧情'}</strong><span class="comic-line${card?'':' placeholder'}">${card?card.line:'等待你安排下一幕'}</span>`;
    b.disabled=!card;b.addEventListener('click',()=>{selected.splice(i,1);winPath=[];render();message('已移除该画格，可重新安排事件。')});$('storyFrames').append(b);
  }
  $('storyChoices').replaceChildren();
@@ -120,6 +214,7 @@ function renderStory(){
      if(p)message(`${p.title} 可以继续拼房间了！`,'good');
      else if(selected.length===3)message('这个顺序没能改变机关，点击任意画格调整故事顺序。','bad');
      else message(`已安排第${selected.length}格，再选下一件事。`)});$('storyChoices').append(b)});
+ renderNarrative();
  const p=effect();const effectEl=$('storyEffect');effectEl.className='story-effect'+(p?' active':'');
  effectEl.innerHTML=p?`<span class="effect-icon">✨</span><div><strong>${p.title}</strong><small>${p.details}</small></div>`:
  `<span class="effect-icon">☾</span><div><strong>${selected.length===3?'故事顺序未能触发机关':'故事机关待启动'}</strong><small>${selected.length===3?'请调整事件顺序，找到另一种结局。':`已放入${selected.length}/3个事件。完成三格后将真实改变楼里的出口。`}</small></div>`;
@@ -160,6 +255,7 @@ function placeRoom(){if(placed){message('中央已经放置了房间，需要换
 function resetStage(newIndex=index){index=newIndex;selected=[];choice=null;rotation=0;placed=null;winPath=[];lastHint=false;save();render();message(index===0?'从三格故事开始，恢复走廊供电。':'试着选电梯路线或安全门路线，发现不同结局。')}
 function showWin(p,path){const was=!!achievements[p.badge];achievements[p.badge]=true;save();renderProgress();
  $('winTitle').textContent=p.title;$('winDetails').textContent=`路线通过${path.length}间房。${index===1?'这只是两条结局之一，换另一组三格事件，可能会找到不同出口。':'你用故事改写了机关，再用房间拼出了逃生路线。'}`;
+ $('endingTale').innerHTML=`<strong>${STORY_ENDINGS[p.key].title}</strong>${STORY_ENDINGS[p.key].text}`;
  $('winBadge').textContent=(was?'已获得：':'解锁新成就：')+p.medal+(Object.values(achievements).every(Boolean)?' · 追加称号「故事改写者」':'');
  $('winNext').textContent=index===0?'进入第二关 →':'换一种结局 →';$('successOverlay').hidden=false;$('winNext').focus();}
 function tryEscape(){const p=effect();if(selected.length!==3){message('还差三格故事，先把故事事件按因果顺序排好。','bad');return}
