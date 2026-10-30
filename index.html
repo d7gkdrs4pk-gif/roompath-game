@@ -72,13 +72,35 @@ h1{font-size:clamp(28px,6vw,42px);margin:6px 0 7px;letter-spacing:-.05em;line-he
   .cell-symbol{font-size:17px}.cell-label{font-size:9px}.deck-title{margin:6px 0 4px}
 }
 
+/* G01-B V0.3: achievement feedback and cosmetic-only unlocks. */
+.mode.star-hud{background:#3e3326;border-color:#ad8457;color:#ffe0a4}
+.reward-dialog[hidden]{display:none!important}
+.reward-dialog{position:fixed;z-index:2000;inset:0;display:grid;place-items:center;padding:16px;background:rgba(4,13,27,.78);backdrop-filter:blur(5px)}
+.reward-card{width:min(100%,410px);border:1px solid #eac68a;border-radius:22px;background:linear-gradient(165deg,#283d58,#132539 85%);box-shadow:0 24px 85px rgba(0,0,0,.55);padding:26px 22px 22px;text-align:center;color:#fff5df}
+.reward-eyebrow{font-size:12px;font-weight:850;letter-spacing:.16em;color:#f5cc85}
+.reward-card h2{margin:9px 0 4px;font-size:27px}
+.reward-stars{font-size:43px;letter-spacing:.05em;color:#ffd47e;margin:5px 0 12px;min-height:55px;white-space:nowrap}
+.reward-stars span{display:inline-block;animation:reward-pop .55s both;animation-delay:calc(var(--n) * .12s)}
+.reward-stars span.empty{color:#6b7685}
+.reward-total{font-weight:800;font-size:17px;margin:8px 0}
+.reward-detail{font-size:12px;line-height:1.65;color:#c9dbea;margin:3px 0 12px}
+.reward-unlock{background:#254e4d;border:1px solid #64bca5;border-radius:11px;padding:9px;margin:12px 0;color:#c9ffe9;font-weight:800;font-size:13px;line-height:1.5}
+.reward-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}
+.reward-actions button{min-height:48px;font-weight:850;font-size:13px;border-radius:11px;border:1px solid #648497;background:#1b3b50;color:#e3f3ff}
+.reward-actions button.primary{background:#f4ca86;color:#253045;border-color:#ffe3ac}
+.shell.theme-warm .board-wrap{box-shadow:0 0 23px rgba(250,183,101,.22);border-color:#ad895d}
+.shell.theme-warm .cell.room:not(.start):not(.exit){box-shadow:inset 0 -3px rgba(75,43,15,.35),0 0 8px rgba(239,174,83,.18)}
+.shell.theme-starlight .board-wrap{box-shadow:0 0 30px rgba(133,159,255,.4);border-color:#9bb0f4}
+.shell.theme-starlight .cell.route{background:#51808d;border-color:#b8f4fe;box-shadow:0 0 9px rgba(173,229,255,.44)}
+@keyframes reward-pop{0%{opacity:0;transform:translateY(14px) scale(.5)}75%{opacity:1;transform:translateY(-3px) scale(1.15)}100%{transform:translateY(0) scale(1);opacity:1}}
+@media(max-width:470px){.reward-card{padding:22px 15px 17px}.reward-stars{font-size:38px}.reward-card h2{font-size:25px}.mode.star-hud{font-size:10px}}
 </style>
 </head>
 <body>
   <main class="shell">
     <header class="top">
       <div class="brand-mark"><div class="moon" aria-hidden="true">☾</div><span>ROOM PATH · G01-B</span></div>
-      <span class="mode">手机试玩 · 5关</span>
+      <span class="mode star-hud" id="starHud" aria-label="累计过关星星">★ 0/15 · 5关试玩</span>
     </header>
     <h1>今晚，<span>拼出路。</span></h1>
     <p class="subtitle">从三张房卡中选一张，旋转、放置、连接通道。<br>不必跑得快，只需要选得对。</p>
@@ -138,8 +160,22 @@ h1{font-size:clamp(28px,6vw,42px);margin:6px 0 7px;letter-spacing:-.05em;line-he
         <p class="test-message" id="testMessage" role="status"></p>
       </div>
     </details>
-    <footer class="foot">原创玩法测试 V0.2 · 不主动上传游戏进度和反馈数据、无账号 · 仅在当前设备保存测试进度<br><span class="kbd">电脑快捷键：R 旋转 · Ctrl/⌘+Z 撤销</span></footer>
+    <footer class="foot">原创玩法测试 V0.3 · 不主动上传游戏进度和反馈数据、无账号 · 仅在当前设备保存测试进度<br><span class="kbd">电脑快捷键：R 旋转 · Ctrl/⌘+Z 撤销</span></footer>
   </main>
+  <div id="rewardDialog" class="reward-dialog" role="dialog" aria-modal="true" aria-labelledby="rewardTitle" hidden>
+    <section class="reward-card">
+      <div class="reward-eyebrow">★ ROOM CLEARED ★</div>
+      <h2 id="rewardTitle">成功逃出！</h2>
+      <div id="rewardStars" class="reward-stars" aria-label="本关星级"></div>
+      <p id="rewardTotal" class="reward-total"></p>
+      <p id="rewardDetail" class="reward-detail"></p>
+      <p id="rewardUnlock" class="reward-unlock" hidden></p>
+      <div class="reward-actions">
+        <button id="rewardStay" type="button">查看本关路线</button>
+        <button id="rewardContinue" class="primary" type="button">继续下一关 →</button>
+      </div>
+    </section>
+  </div>
   <script>
 /* G01-A: original standalone game engine, no third-party code. */
 (function (root, factory) {
@@ -357,12 +393,16 @@ h1{font-size:clamp(28px,6vw,42px);margin:6px 0 7px;letter-spacing:-.05em;line-he
     board: $('#board'), boardMeta: $('#boardMeta'), deck: $('#deck'), deckCount: $('#deckCount'),
     needs: $('#requirements'), status: $('#feedback'), rotate: $('#rotate'), undo: $('#undo'),
     retry: $('#retry'), hint: $('#hint'), check: $('#check'), next: $('#nextWrap'), nextBtn: $('#nextBtn'),
-    guide: $('#guide'), coach: $('#coach'),
+    guide: $('#guide'), coach: $('#coach'), stars: $('#starHud'),
+    rewardDialog: $('#rewardDialog'), rewardTitle: $('#rewardTitle'), rewardStars: $('#rewardStars'),
+    rewardTotal: $('#rewardTotal'), rewardDetail: $('#rewardDetail'), rewardUnlock: $('#rewardUnlock'),
+    rewardStay: $('#rewardStay'), rewardContinue: $('#rewardContinue'),
     copyReport: $('#copyReport'), downloadReport: $('#downloadReport'),
     testMessage: $('#testMessage'), obstacle: $('#obstacle'), feedbackText: $('#feedbackText')
   };
   const SAVE_KEY = 'g01-a.roompath.prototype.v0.1'; // preserve G01-A progress on same origin
   const TEST_KEY = 'g01-b.local-trial.v0.2';
+  const REWARD_KEY = 'g01-b.reward.v0.3';
   let completed = [];
   let state = core.create(0);
   let chosen = 0;
@@ -373,6 +413,9 @@ h1{font-size:clamp(28px,6vw,42px);margin:6px 0 7px;letter-spacing:-.05em;line-he
   let lastMessage = '';
   let lastKind = '';
   let cardTouched = false;
+  let usedHintThisLevel = false;
+  let failedChecksThisLevel = 0;
+  let rewards = { schema: 1, best: [0, 0, 0, 0, 0] };
   function newMetrics() {
     return { schema: 1, openedAt: new Date().toISOString(), visitDates: [], firstPlacementSeconds: null,
       firstWinSeconds: null, actions: {}, levelWins: [], completedAt: null };
@@ -438,6 +481,8 @@ h1{font-size:clamp(28px,6vw,42px);margin:6px 0 7px;letter-spacing:-.05em;line-he
     try {
       const obj = JSON.parse(localStorage.getItem(SAVE_KEY) || '{}');
       completed = Array.isArray(obj.completed) ? obj.completed.filter(x => Number.isInteger(x) && x >= 0 && x < core.levels.length) : [];
+      usedHintThisLevel = obj.usedHint === true;
+      failedChecksThisLevel = Number.isInteger(obj.failedChecks) && obj.failedChecks >= 0 ? obj.failedChecks : 0;
       if (!Number.isInteger(obj.levelIndex) || obj.levelIndex < 0 || obj.levelIndex >= core.levels.length) return;
       let reconstructed = core.create(obj.levelIndex);
       if (Array.isArray(obj.moves)) {
@@ -458,6 +503,8 @@ h1{font-size:clamp(28px,6vw,42px);margin:6px 0 7px;letter-spacing:-.05em;line-he
         version: 1,
         completed,
         levelIndex: state.levelIndex,
+        usedHint: usedHintThisLevel,
+        failedChecks: failedChecksThisLevel,
         moves: state.placements.map((p, turn) => ({
           cardIndex: level.offers[turn].indexOf(p.kind), cellIndex: p.index, rotation: p.rotation
         }))
@@ -491,6 +538,70 @@ h1{font-size:clamp(28px,6vw,42px);margin:6px 0 7px;letter-spacing:-.05em;line-he
     }
     return el;
   }
+  // Best-of-level stars prevent farming by replay and preserve previous V0.2 clears.
+  function readRewards() {
+    let stored = null;
+    try { stored = JSON.parse(localStorage.getItem(REWARD_KEY) || 'null'); } catch (e) { /* unavailable */ }
+    const oldBest = (stored && stored.schema === 1 && Array.isArray(stored.best)) ? stored.best : [];
+    rewards = { schema: 1, best: core.levels.map((_, i) => {
+      const v = oldBest[i];
+      return Number.isInteger(v) && v >= 0 && v <= 3 ? Math.max(v, completed.includes(i) ? 1 : 0) : (completed.includes(i) ? 1 : 0);
+    }) };
+    for (let i = 0; i < rewards.best.length; i++) {
+      if (rewards.best[i] && !completed.includes(i)) completed.push(i);
+    }
+    completed.sort((a,b) => a - b);
+    storeRewards();
+  }
+  function storeRewards() {
+    try { localStorage.setItem(REWARD_KEY, JSON.stringify(rewards)); } catch (e) { /* session only */ }
+  }
+  function totalStars() { return rewards.best.reduce((a, b) => a + b, 0); }
+  function themeTier(points) { return points >= 10 ? 2 : (points >= 5 ? 1 : 0); }
+  function updateRewardHud() {
+    const total = totalStars();
+    els.stars.textContent = `★ ${total}/15 · 5关试玩`;
+    els.stars.setAttribute('aria-label', `累计获得${total}颗星，最多15颗`);
+    const tier = themeTier(total);
+    const shell = $('.shell');
+    shell.classList.toggle('theme-warm', tier === 1);
+    shell.classList.toggle('theme-starlight', tier === 2);
+  }
+  function openReward(stars, added, oldTotal, pathLength) {
+    const total = totalStars();
+    const levelName = core.levels[state.levelIndex].name;
+    els.rewardTitle.textContent = `第${state.levelIndex + 1}关 · ${levelName}`;
+    els.rewardStars.replaceChildren();
+    for (let i = 0; i < 3; i++) {
+      const mark = document.createElement('span');
+      mark.textContent = i < stars ? '★' : '☆';
+      if (i >= stars) mark.className = 'empty';
+      mark.style.setProperty('--n', String(i));
+      els.rewardStars.appendChild(mark);
+    }
+    els.rewardStars.setAttribute('aria-label', `本次获得${stars}星，最多3星`);
+    els.rewardTotal.textContent = `本次 ${stars}★ · 新增 ${added}★ · 累计 ${total}/15★`;
+    els.rewardDetail.textContent = `路线经过${pathLength}间房。奖励按每关历史最高星级累计：过关1星，不用提示再加1星，且一次成功再加1星。重复通关不重复领取，提升成绩可补领差额。`;
+    const oldTier = themeTier(oldTotal), newTier = themeTier(total);
+    const unlocked = newTier > oldTier;
+    els.rewardUnlock.hidden = false;
+    if (unlocked) {
+      els.rewardUnlock.textContent = newTier === 2 ? '新装扮解锁：星夜通道！房间已自动切换星光效果。' : '新装扮解锁：暖光房间！地图已自动点亮。';
+    } else if (total < 5) {
+      els.rewardUnlock.textContent = `再收集${5-total}★，解锁「暖光房间」装扮。`;
+    } else if (total < 10) {
+      els.rewardUnlock.textContent = `已解锁暖光房间！再收集${10-total}★，解锁「星夜通道」。`;
+    } else {
+      els.rewardUnlock.textContent = '星夜通道已解锁！挑战每关3星，收集满15★。';
+    }
+    els.rewardContinue.textContent = state.levelIndex === core.levels.length - 1 ? '重温第一关 →' : '继续下一关 →';
+    els.rewardDialog.hidden = false;
+    els.rewardContinue.focus();
+  }
+  function closeReward() {
+    els.rewardDialog.hidden = true;
+    els.nextBtn.focus();
+  }
   function renderLevels() {
     els.levels.replaceChildren();
     core.levels.forEach((level, i) => {
@@ -501,7 +612,7 @@ h1{font-size:clamp(28px,6vw,42px);margin:6px 0 7px;letter-spacing:-.05em;line-he
       b.textContent = `0${i + 1}`;
       if (completed.includes(i)) {
         const span = document.createElement('span');
-        span.className = 'tiny-check'; span.textContent = '✓'; b.appendChild(span);
+        span.className = 'tiny-check'; span.textContent = rewards.best[i] ? `${rewards.best[i]}★` : '✓'; b.appendChild(span);
       }
       b.addEventListener('click', () => startLevel(i));
       els.levels.appendChild(b);
@@ -577,6 +688,7 @@ h1{font-size:clamp(28px,6vw,42px);margin:6px 0 7px;letter-spacing:-.05em;line-he
   function render() {
     const level = core.levels[state.levelIndex];
     renderLevels();
+    updateRewardHud();
     els.title.textContent = level.name;
     els.desc.textContent = level.description;
     els.teaching.textContent = level.teaching;
@@ -609,28 +721,39 @@ h1{font-size:clamp(28px,6vw,42px);margin:6px 0 7px;letter-spacing:-.05em;line-he
     if (completed.includes(index)) track('revisitCompleted');
     track('startLevel');
     state = core.create(index); chosen = 0; rotation = 0; cardTouched = false; hintCell = null; won = false; winningPath = [];
+    usedHintThisLevel = false; failedChecksThisLevel = 0; els.rewardDialog.hidden = true;
     persist(); render();
     explain(index === 0 ? '选择一张房卡，可以顺时针旋转，再点击带「＋」的空位放置。' : '房卡每轮只能选择一张。注意房门必须两端对齐，过关条件都需要满足。');
   }
   function tryEscape() {
+    if (won) return;
     track('tryEscape');
     const res = core.check(state);
     if (res.win) {
+      const oldTotal = totalStars();
+      const earned = usedHintThisLevel ? 1 : (failedChecksThisLevel ? 2 : 3);
+      const oldBest = rewards.best[state.levelIndex];
+      const added = Math.max(0, earned - oldBest);
+      rewards.best[state.levelIndex] = Math.max(oldBest, earned);
+      storeRewards();
       won = true; winningPath = res.path;
       if (!completed.includes(state.levelIndex)) completed.push(state.levelIndex);
       if (!metrics.levelWins.includes(state.levelIndex + 1)) metrics.levelWins.push(state.levelIndex + 1);
       if (metrics.firstWinSeconds === null) metrics.firstWinSeconds = firstElapsed();
       if (completed.length === 5 && !metrics.completedAt) metrics.completedAt = new Date().toISOString();
       track('levelWin');
-      persist(); render(); explain(`成功逃出！路线经过 ${res.path.length} 间房。${state.levelIndex === 4 ? '五关全部完成，恭喜！' : '下一关有新机制。'}`, 'good');
+      persist(); render(); explain(`成功逃出！本次${earned}星，累计${totalStars()}/15星。${state.levelIndex === 4 ? '五关全部完成！' : '继续探索下一关。'}`, 'good');
+      openReward(earned, added, oldTotal, res.path.length);
     } else {
       track('failedEscape');
+      failedChecksThisLevel++; persist();
       const level = core.levels[state.levelIndex];
       const suffix = state.turn >= level.budget ? ' 本轮已经放完房卡；可以撤销修改或重玩。' : ' 还可以放置房间或使用提示。';
       explain(res.cause + suffix, 'warn');
     }
   }
   function giveHint() {
+    usedHintThisLevel = true; persist();
     track('hint');
     const found = core.solutions(state, 1);
     if (!found.length) { hintCell = null; render(); explain('当前摆法已经无法满足通关条件。请点击「撤销」调整上一张房卡。', 'warn'); return; }
@@ -650,7 +773,11 @@ h1{font-size:clamp(28px,6vw,42px);margin:6px 0 7px;letter-spacing:-.05em;line-he
   els.hint.addEventListener('click', giveHint);
   els.check.addEventListener('click', tryEscape);
   els.nextBtn.addEventListener('click', () => startLevel((state.levelIndex+1)%5));
+  els.rewardContinue.addEventListener('click', () => startLevel((state.levelIndex+1)%5));
+  els.rewardStay.addEventListener('click', closeReward);
   document.addEventListener('keydown', (event) => {
+    if (!els.rewardDialog.hidden && event.key === 'Escape') { event.preventDefault(); closeReward(); return; }
+    if (!els.rewardDialog.hidden) return;
     if (event.key.toLowerCase() === 'r' && !els.rotate.disabled) els.rotate.click();
     if (event.key.toLowerCase() === 'z' && (event.ctrlKey || event.metaKey) && !els.undo.disabled) { event.preventDefault(); els.undo.click(); }
   });
@@ -660,7 +787,8 @@ h1{font-size:clamp(28px,6vw,42px);margin:6px 0 7px;letter-spacing:-.05em;line-he
       product: '今晚拼出路 G01-B V0.2', exportedAt: new Date().toISOString(),
       trial: { firstOpened: metrics.openedAt, visitDates: [...metrics.visitDates], firstPlacementSeconds: metrics.firstPlacementSeconds,
         firstWinSeconds: metrics.firstWinSeconds, levelsWon: [...metrics.levelWins].sort(),
-        actions: { ...metrics.actions }, allFiveCompleted: Boolean(metrics.completedAt) },
+        actions: { ...metrics.actions }, allFiveCompleted: Boolean(metrics.completedAt),
+        bestStars: [...rewards.best], totalStars: totalStars(), unlockedTheme: themeTier(totalStars()) },
       feedback: { understoodIn30Seconds: selected('understood'), wantsMoreLevels: selected('continue'),
         biggestObstacle: els.obstacle.value, note: els.feedbackText.value.trim().slice(0,250) },
       environment: { viewport: `${window.innerWidth}x${window.innerHeight}`, urlProtocol: location.protocol },
@@ -685,6 +813,7 @@ h1{font-size:clamp(28px,6vw,42px);margin:6px 0 7px;letter-spacing:-.05em;line-he
     catch (e) { els.testMessage.textContent = '复制被浏览器阻止，请使用“保存体验报告”。'; }
   });
   safeLoad();
+  readRewards();
   render();
   explain('点击下方房卡选择房间 → 旋转 → 点击地图「＋」放置。放好后试逃脱。');
 })();
