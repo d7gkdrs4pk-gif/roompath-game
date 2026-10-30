@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#091526">
+<meta name="description" content="《今晚拼出路》原创悬疑故事第一章：六幕谜案、三格漫画、分支结局与即时线索奖励。">
+<title>夜楼档案：消失的十三层｜今晚拼出路 G01-E V0.1</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;--bg:#081421;--panel:#152c44;--line:#37516a;--ink:#f2f7ff;--muted:#b1c4d7;--gold:#f4cb85;--mint:#82e1c7;--safe:#b8f4da}
+*{box-sizing:border-box}html{background:var(--bg)}body{margin:0;background:radial-gradient(ellipse at 20% 0%,#1b3655 0%,transparent 48%),radial-gradient(ellipse at 100% 38%,#183a42 0%,transparent 46%),var(--bg);color:var(--ink);min-height:100svh}
+button,a{font:inherit;-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid #fce7ba;outline-offset:3px}button:disabled{cursor:default;opacity:.56}
+.shell{max-width:750px;margin:auto;padding:16px 14px calc(28px + env(safe-area-inset-bottom))}.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.back{display:inline-flex;align-items:center;gap:5px;text-decoration:none;color:#c9e4f2;background:#18354a;border:1px solid #46667b;border-radius:10px;padding:9px 11px;font-weight:750;font-size:12px;min-height:42px}.top-badge{border:1px solid #90794a;background:#393324;color:#ffe4aa;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:800;white-space:nowrap}
+h1{font-size:clamp(25px,6vw,36px);line-height:1.13;margin:10px 0 4px;letter-spacing:-.045em;color:#fff4d9}h1 em{font-style:normal;color:var(--gold)}.intro{font-size:12px;line-height:1.65;margin:0 0 13px;color:var(--muted)}
+.stage-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:11px}.stage-tab{min-height:58px;text-align:left;padding:9px 11px;color:#a9c6d7;background:#10273a;border:1px solid #3a5870;border-radius:13px;display:flex;flex-direction:column;justify-content:center;gap:4px}.stage-tab.active{background:#3b4540;color:#ffe4ab;border-color:#e6bf77;box-shadow:0 0 0 1px #e6bf7733}.stage-tab strong{font-size:13px}.stage-tab small{font-size:10px;opacity:.85}.progress{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid #315e5c;border-radius:12px;padding:9px 12px;margin-bottom:12px;background:#103632;color:#c2fae7;font-size:12px}.progress strong{font-size:13px}.progress span:last-child{font-size:11px;color:#9bd6c8}
+.panel{background:linear-gradient(151deg,rgba(25,49,73,.97),rgba(12,29,48,.97));border:1px solid #3c5773;border-radius:17px;padding:14px;margin:11px 0;box-shadow:0 8px 22px #0003}.section-head{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-bottom:7px}.section-head h2{font-size:16px;letter-spacing:-.015em;margin:0;color:#fff2d4}.section-head .tag{font-size:10px;border-radius:7px;background:#39362d;color:#f5ca83;padding:5px 7px;white-space:nowrap}.brief{margin:4px 0 11px;font-size:12px;color:var(--muted);line-height:1.7}.hint-box{background:#152f3a;border-left:3px solid #6cd4c3;color:#d4ece6;padding:8px 10px;border-radius:0 9px 9px 0;font-size:12px;line-height:1.55;margin:0 0 10px}
+.story-frames{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.frame{min-height:104px;border:1px dashed #637e95;border-radius:12px;background:#183249;color:#b8d0e5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-align:center;padding:6px 3px;position:relative}.frame.filled{border:1px solid #eac17b;background:linear-gradient(160deg,#4d4742,#304d51);color:#fff2cd}.frame .frame-number{position:absolute;top:5px;left:7px;color:#99adbc;font-size:9px}.frame .ico{font-size:25px;line-height:1.2}.frame strong{font-size:11px;line-height:1.28}.frame small{font-size:9px;color:#bfd7de}.story-frames .frame.filled small{color:#ffe6b5}
+.picker-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:12px 0 7px;color:#b7cddb;font-size:11px;font-weight:750}.mini{border:1px solid #577688;background:#193b50;border-radius:8px;color:#d5f1ef;padding:5px 9px;font-size:11px;min-height:32px}.story-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.story-choice{display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;text-align:center;min-height:77px;padding:7px 4px;background:#12354a;border:1px solid #53738a;border-radius:11px;color:#eff8ff}.story-choice[disabled]{opacity:.36}.story-choice .emoji{font-size:23px}.story-choice strong{font-size:11px;line-height:1.3}.story-choice small{font-size:10px;line-height:1.25;color:#9eb8c6}.story-effect{display:flex;gap:9px;align-items:flex-start;background:#112b3b;border:1px solid #406175;border-radius:10px;padding:9px 10px;margin-top:11px;min-height:56px}.story-effect.active{background:#173f38;border-color:#65bfa2}.story-effect .effect-icon{font-size:20px;line-height:1.2}.story-effect strong{font-size:12px}.story-effect small{display:block;color:#acc6d6;font-size:10px;line-height:1.6;margin-top:2px}
+.game-map{max-width:328px;margin:8px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;aspect-ratio:1}.tile{position:relative;border:1px solid #304d66;border-radius:13px;min-width:0;min-height:0;background:#163149;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;overflow:hidden;color:#f3f9fe;padding:0}.tile.wall{background:repeating-linear-gradient(45deg,#0d253a,#0d253a 8px,#162d42 8px,#162d42 16px);opacity:.7}.tile.start{background:#24594f;border-color:#6cc8ab}.tile.exit{background:#514351;border-color:#c288a3}.tile.exit.open{background:#295c4a;border-color:#7ee3ab;box-shadow:inset 0 0 0 2px #a5df9730}.tile.slot{border:2px dashed #7897b5;background:#29455d}.tile.slot.placed{border:1px solid #dfbd87;background:#35556d}.tile.win-path{box-shadow:inset 0 0 0 2px #e6f19c,inset 0 0 15px #79d7a850}.tile .tile-icon{font-size:24px;line-height:1.18}.tile .tile-label{font-size:11px;font-weight:750}.tile .tile-mini{font-size:9px;color:#b0cbdb}.tile .door{position:absolute;background:#ffde9f;box-shadow:0 0 6px #ffdea455;z-index:2}.tile .door.n{top:0;left:33%;height:12%;width:34%;border-radius:0 0 4px 4px}.tile .door.e{right:0;top:33%;width:12%;height:34%;border-radius:4px 0 0 4px}.tile .door.s{bottom:0;left:33%;height:12%;width:34%;border-radius:4px 4px 0 0}.tile .door.w{left:0;top:33%;width:12%;height:34%;border-radius:0 4px 4px 0}.tile.exit:not(.open) .door{background:#b46d70}.board-legend{font-size:10px;color:#a5bccb;text-align:center;margin:10px 0 6px}
+.rooms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}.room-card{min-height:72px;border:1px solid #57738b;background:#12344a;border-radius:11px;color:#dfeefa;display:flex;flex-direction:column;gap:5px;align-items:center;justify-content:center}.room-card.selected{border-color:#ffdf9c;background:#4c443b;color:#fff3da;box-shadow:inset 0 0 0 1px #f1d7a561}.room-card b{font-size:12px}.room-symbol{display:inline-block;min-width:17px;transition:transform .18s}.room-card small{color:#b0cbdb;font-size:10px}.controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin:10px 0}.game-btn{background:#22445a;border:1px solid #54758b;color:#eef8ff;font-weight:750;padding:9px 5px;min-height:44px;border-radius:10px;font-size:12px}.game-btn.primary{background:linear-gradient(120deg,#eec783,#f9dda7);color:#293443;border-color:#f5d79a;grid-column:span 2;font-size:14px}.game-btn.secondary{background:#17524f;border-color:#5faaa0}.message{font-size:12px;line-height:1.6;border-radius:11px;background:#0e2b3b;border:1px solid #3c6774;color:#c5e7ee;padding:10px 11px;min-height:43px}.message.good{background:#18483c;border-color:#69bfa0;color:#d7ffe6}.message.bad{background:#473226;border-color:#b27b58;color:#ffe0b0}
+.bottom{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:13px}.bottom button{padding:10px 12px;min-height:42px;font-size:12px;border:1px solid #527483;border-radius:10px;background:#16394f;color:#dceff3}.disclaimer{font-size:10px;color:#92a9b9;line-height:1.7;text-align:center;margin:14px 4px}
+.overlay[hidden]{display:none!important}.overlay{position:fixed;inset:0;z-index:50;background:rgba(3,10,20,.83);backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px}.success-card{max-width:390px;width:100%;background:linear-gradient(155deg,#385c63,#1b314e 72%);border:1px solid #e4ca8e;border-radius:24px;padding:23px 20px;text-align:center;box-shadow:0 20px 70px #0009}.success-card .trophy{font-size:52px;display:block;filter:drop-shadow(0 4px 12px #ead38766)}.success-card h2{font-size:26px;color:#fff0cb;margin:6px 0 5px}.success-card p{font-size:13px;line-height:1.6;color:#d2e2e5}.success-card .achievement{background:#52462c;border:1px solid #d9b96d;border-radius:11px;padding:10px;color:#ffedbd;font-weight:800;font-size:14px;margin:14px 0}.success-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.success-buttons button{min-height:45px;border:1px solid #7c9b9b;border-radius:10px;background:#1d4b5a;color:#e8f8ff;font-weight:800;font-size:12px}.success-buttons .primary{background:#f1cc8b;color:#273546;border-color:#fff0bd}
+@media(max-width:420px){.shell{padding:9px 10px calc(19px + env(safe-area-inset-bottom))}.panel{padding:10px;margin:9px 0}.intro{font-size:11px;margin-bottom:9px}.progress{margin-bottom:8px;padding:8px 9px}.frame{min-height:88px}.story-choice{min-height:66px}.story-choice .emoji{font-size:20px}.story-choice strong{font-size:10px}.game-map{max-width:min(272px,85vw)}.section-head h2{font-size:15px}.rooms{gap:6px}.room-card{min-height:60px}.brief{margin-bottom:7px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important}}
+
+/* G01-D V0.2 — visibly tell a story, rather than only listing three actions. */
+.scene-prologue{border:1px solid #8c7658;border-radius:17px;overflow:hidden;margin:0 0 10px;background:#192d3c;box-shadow:0 12px 30px #0004}
+.scene-art{height:162px;position:relative;overflow:hidden;background:linear-gradient(180deg,#0c1931 0%,#14283a 53%,#1b3545 100%);isolation:isolate}
+.scene-art::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(100deg,transparent 0 37px,#ffffff06 39px 40px),radial-gradient(ellipse at 70% 54%,#0b0f1d 1%,transparent 65%);opacity:.8}
+.scene-art::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,#ffffff12,transparent);opacity:0;pointer-events:none}
+.scene-art.is-powered{background:linear-gradient(180deg,#20394c 0%,#37575d 55%,#5b5f4e 100%)}
+.scene-art.is-powered::after{opacity:1;animation:light-up .75s ease-out}
+.scene-art.is-lift{background:linear-gradient(180deg,#152342,#28526b 55%,#285747 100%)}
+.scene-art.is-stairs{background:linear-gradient(180deg,#203149,#536b67 55%,#406d5c 100%)}
+.scene-hall{position:absolute;bottom:-20px;left:12%;right:12%;height:98px;clip-path:polygon(33% 0,67% 0,100% 100%,0 100%);background:linear-gradient(#4c5860,#26313d);border-top:2px solid #74828b;opacity:.74}
+.scene-hall::before,.scene-hall::after{content:'';position:absolute;inset:0 48% 0 auto;width:2px;background:#ffe6a429;transform:skewX(-8deg)}
+.scene-room{position:absolute;right:18%;top:24px;width:87px;height:116px;background:#202b37;border:3px solid #60717b;border-radius:4px 4px 0 0;box-shadow:0 0 35px #0007;display:grid;place-items:center;transition:.25s}
+.scene-art.is-powered .scene-room,.scene-art.is-lift .scene-room,.scene-art.is-stairs .scene-room{background:#38584c;border-color:#b2e3bf;box-shadow:0 0 34px #f5e6a555}
+.scene-room-label{position:absolute;top:8px;left:4px;right:4px;text-align:center;color:#d5dbe1;font-size:11px;font-weight:850;letter-spacing:.06em}
+.scene-room-icon{font-size:34px;transform:translateY(12px)}
+.scene-beam{position:absolute;right:6%;top:-26px;width:180px;height:190px;transform:skewX(-12deg);clip-path:polygon(30% 0,80% 0,100% 100%,0 100%);background:linear-gradient(180deg,#f6d28e35,transparent);opacity:0;transition:opacity .35s}
+.scene-art.is-powered .scene-beam,.scene-art.is-lift .scene-beam,.scene-art.is-stairs .scene-beam{opacity:1}
+.scene-person{position:absolute;left:20%;bottom:9px;width:65px;height:101px;filter:drop-shadow(0 6px 5px #0007)}
+.scene-person .head{position:absolute;left:20px;top:4px;width:33px;height:35px;border-radius:48% 48% 45% 45%;background:#e9ae88;border:2px solid #cb9476;z-index:2}
+.scene-person .hair{position:absolute;top:0;left:16px;width:41px;height:21px;border-radius:64% 52% 35% 40%;background:#262b39;z-index:3;transform:rotate(-12deg)}
+.scene-person .coat{position:absolute;left:7px;bottom:0;width:53px;height:65px;border-radius:20px 19px 7px 7px;background:linear-gradient(110deg,#e5b35c,#a66d46 72%);border:2px solid #81614b}
+.scene-person .backpack{position:absolute;left:0;bottom:19px;width:15px;height:36px;border-radius:9px;background:#384a62;border:2px solid #242e42;z-index:1}
+.scene-time{position:absolute;top:11px;left:13px;border:1px solid #ffffff3d;background:#081521ba;padding:5px 8px;border-radius:7px;color:#e5ecf0;font-size:10px;letter-spacing:.08em;font-weight:850}
+.scene-ambient{position:absolute;top:47px;left:13px;color:#a7b8c7;font-size:11px;max-width:28%;line-height:1.5}
+.scene-copy{padding:11px 14px 13px}
+.scene-eyebrow{font-size:10px;letter-spacing:.13em;color:#d3b37c;font-weight:850}
+.scene-copy h2{font-size:16px;line-height:1.35;margin:4px 0 4px;color:#fff0c9}
+.scene-copy p{font-size:12px;line-height:1.7;color:#d5e2e8;margin:0 0 9px}
+.scene-dialogue{background:#e9edf0;color:#23374a;padding:10px 13px;border-radius:8px 13px 13px 13px;line-height:1.55;font-size:12px;font-weight:700;position:relative}
+.scene-dialogue::before{content:'';position:absolute;top:-7px;left:19px;border-width:0 0 8px 9px;border-style:solid;border-color:transparent transparent #e9edf0 transparent}
+.story-frames .frame{min-height:156px;padding:5px 5px 8px;justify-content:flex-start;gap:3px;background:linear-gradient(180deg,#253e50,#15293a);border:1px solid #45667a}
+.story-frames .frame.filled{background:linear-gradient(180deg,#50635c,#253c40);border:1px solid #e0be84}
+.comic-picture{position:relative;margin:19px auto 2px;display:flex;align-items:center;justify-content:center;width:90%;height:54px;border-radius:7px;background:linear-gradient(#22384d,#344855);overflow:hidden}
+.comic-picture::after{content:'';position:absolute;bottom:0;left:0;right:0;height:6px;background:#172a3d88}
+.comic-hero{position:absolute;left:5px;bottom:3px;font-size:30px;filter:drop-shadow(0 2px 1px #0006)}
+.comic-object{position:absolute;right:6px;bottom:6px;font-size:26px;filter:drop-shadow(0 2px 1px #0004)}
+.comic-empty{font-size:25px;color:#a2b7c5}
+.frame .comic-name{font-size:10px;color:#f9ead0;min-height:12px}
+.frame .comic-line{display:block;font-size:10px;font-weight:750;color:#fff8e5;line-height:1.35;background:#162b38b8;border-radius:5px;padding:5px 3px;margin-top:2px;min-height:29px;width:100%}
+.frame .comic-line.placeholder{color:#95aabc;font-weight:600}
+.frame.frame-error{border-color:#e1956b!important}
+.story-interlude{font-size:11px;line-height:1.5;margin-top:9px;border-radius:9px;background:#2a4050;border:1px solid #5d8294;padding:9px 10px;color:#d9eff1}
+.story-interlude[hidden]{display:none}
+.story-interlude.good{background:#194c40;border-color:#85caa7;color:#dcffe7}
+.story-interlude.bad{background:#56392c;border-color:#ba8067;color:#ffdfc5}
+.ending-tale{background:linear-gradient(145deg,#1d3a46,#204c46);border:1px solid #8bbdac;border-radius:12px;padding:12px;margin:11px 0 0;font-size:13px;line-height:1.7;text-align:left;color:#edf9ef}
+.ending-tale strong{color:#ffe0a0;display:block;margin-bottom:3px}
+@keyframes light-up{from{opacity:0}35%{opacity:.9}55%{opacity:.1}100%{opacity:1}}
+@media(max-width:420px){.scene-art{height:133px}.scene-room{width:69px;height:98px;right:20%;top:20px}.scene-room-icon{font-size:29px}.scene-person{left:18%;transform:scale(.85);transform-origin:bottom left}.scene-copy{padding:9px 11px 11px}.scene-copy h2{font-size:15px}.scene-copy p{font-size:11px}.scene-dialogue{font-size:11px}.story-frames .frame{min-height:141px}.comic-picture{height:48px;margin-top:17px}.comic-hero{font-size:25px}.comic-object{font-size:23px}.frame .comic-line{font-size:9px;padding:4px 2px}.frame .comic-name{font-size:9px}}
+
+/* G01-E first chapter: reveal story and reward cadence without modifying the original 20-stage game. */
+.stage-tabs{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.stage-tab{min-height:59px;padding:7px 7px}.stage-tab strong{font-size:11px}.stage-tab small{font-size:9px}.stage-tab.locked{opacity:.60;background:#0d1e2f;border-style:dashed}.stage-tab.cleared{border-color:#65bda0;color:#dbfff0}.stage-tab.active{border-color:#ffd797;color:#fff4d5;opacity:1}.stage-tab .stage-mini{font-size:9px;opacity:.8}
+.journal{background:#112d40;border:1px solid #496883;border-radius:12px;margin:0 0 11px}.journal summary{padding:11px 13px;min-height:43px;font-size:12px;color:#f5ddb3;font-weight:800;cursor:pointer;display:flex;justify-content:space-between;gap:9px}.journal-body{padding:0 11px 12px;display:grid;gap:7px}.journal-entry{padding:9px 10px;border-radius:9px;background:#20374b;border-left:3px solid #e9bc75;font-size:11px;line-height:1.65;color:#e0eff8}.journal-entry.missing{opacity:.48;border-color:#526a7d}.journal-entry strong{color:#ffe3a2;display:block;margin-bottom:1px}
+.beat-feedback{min-height:31px;margin-top:7px;padding:8px 10px;border:1px solid #426779;background:#153046;border-radius:9px;color:#b8d8eb;font-size:11px;line-height:1.5;transition:background .2s}.beat-feedback.good{background:#17483e;border-color:#77d0a6;color:#ddfff1}.beat-feedback.bad{background:#403027;border-color:#997255;color:#f5d6b0}.beat-feedback.flash{animation:clue-flash .6s both}
+.scene-art{transition:background .45s}.scene-art.is-solved{background:linear-gradient(150deg,#31465e,#4b705f 70%,#394e55)}.scene-art.is-solved .scene-beam{opacity:.85}.scene-art.is-solved .scene-room{background:#375c51;border-color:#cde7bb;box-shadow:0 0 30px #e3d89b55}
+.scene-art::before{background:repeating-linear-gradient(95deg,transparent 0 35px,#ffffff0b 36px 38px),radial-gradient(ellipse at 64% 35%,#8fb2e319,transparent 66%)}
+.scene-art.is-mystery::after{opacity:.45;background:linear-gradient(90deg,transparent,#b9e7e726,transparent);animation:hall-flicker 5s infinite}
+.story-choice{min-height:79px}.frame .comic-line{min-height:29px}.frame.mystery-beat{border-color:#f4d28d}
+.success-card{max-height:min(91svh,740px);overflow:auto}.reward-fragment{font-size:16px;font-weight:900;color:#ffdc92;padding:10px 12px;margin:11px 0 0;border-radius:11px;background:#493b28;border:1px solid #d9aa64;animation:reward-appear .45s ease-out}.next-hook{font-size:12px!important;line-height:1.65!important;color:#ffdb95!important;background:#192a39;padding:9px 10px;border:1px dashed #937857;border-radius:9px}.reward-fragment.replay{color:#d2e8f2;background:#234355;border-color:#628ca3}
+@keyframes reward-appear{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}@keyframes clue-flash{0%{box-shadow:0 0 0 0 #a4ffd788}100%{box-shadow:0 0 0 13px transparent}}@keyframes hall-flicker{0%,93%,97%,100%{opacity:.20}94%,96%{opacity:.65}}
+@media(max-width:420px){.stage-tabs{gap:5px}.stage-tab{min-height:54px;padding:5px 6px}.stage-tab strong{font-size:10px}.stage-tab small{font-size:8px}.journal summary{font-size:11px}.reward-fragment{font-size:14px}.scene-art{height:138px}}
+@media(prefers-reduced-motion:reduce){.reward-fragment,.beat-feedback.flash,.scene-art.is-mystery::after{animation:none!important}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <header class="top">
+    <a class="back" href="./" aria-label="返回今晚拼出路20关主游戏">← 返回20关主游戏</a>
+    <span class="top-badge">G01-E · 第一章 / 六幕</span>
+  </header>
+  <h1>夜楼档案，<em>消失的十三层</em></h1>
+  <p class="intro">一条匿名短信，一层不存在的楼。每闯过一幕，获得线索碎片与专属徽章；故事谜团会随着你的决定改变。</p>
+  <nav id="stageTabs" class="stage-tabs" aria-label="第一章六幕"></nav>
+  <section class="scene-prologue" id="scenePrologue" aria-label="故事剧情开场与进展">
+    <div class="scene-art" id="sceneArt" aria-hidden="true">
+      <div class="scene-hall"></div><div class="scene-beam"></div>
+      <div class="scene-room"><span class="scene-room-label" id="sceneDoorLabel">逃生门 · 锁住</span><span class="scene-room-icon" id="sceneDoorIcon">🚪</span></div>
+      <div class="scene-person"><span class="backpack"></span><span class="coat"></span><span class="head"></span><span class="hair"></span></div>
+      <span class="scene-time" id="sceneClock">23:47 · 停电</span><span class="scene-ambient" id="sceneAmbient">灯灭了，门也锁了</span>
+    </div>
+    <div class="scene-copy"><div class="scene-eyebrow" id="sceneEpisode">原创短篇 · 第一幕</div>
+      <h2 id="sceneHeading">深夜，整栋楼突然停电</h2><p id="sceneNarration"></p>
+      <div class="scene-dialogue" id="sceneDialogue" aria-live="polite"></div>
+    </div>
+  </section>
+  <section class="progress" aria-label="章节线索进度"><strong id="achCount">已发现线索 0 / 6</strong><span id="achLabels">已获得 0 项结局徽章</span></section>
+  <details class="journal" id="journalPanel"><summary>◈ 档案袋 · 已收集的调查线索 <span id="journalCount">0/6</span></summary><div id="journalBody" class="journal-body"></div></details>
+  <section class="panel" aria-labelledby="storyTitle">
+    <div class="section-head"><h2 id="storyTitle">① 安排三格故事</h2><span class="tag" id="storyTag">故事机关</span></div>
+    <p id="storyIntro" class="brief"></p>
+    <div class="hint-box" id="storyHint"></div>
+    <div class="story-frames" id="storyFrames" aria-label="三格漫画事件顺序"></div>
+    <div class="story-interlude" id="storyInterlude" role="status" aria-live="polite">故事开始了。你的每一步选择，都可能改变下一幕。</div>
+    <div class="beat-feedback" id="beatFeedback" role="status" aria-live="polite">◈ 先寻找线索，再拼出逃生路线。</div>
+    <div class="picker-heading"><span>点击事件卡片依次填入三格；点击已选画格可移除</span><button class="mini" type="button" id="clearStory">清空三格</button></div>
+    <div class="story-cards" id="storyChoices" aria-label="可选择的故事事件"></div>
+    <div class="story-effect" id="storyEffect" aria-live="polite"><span class="effect-icon">☾</span><div><strong>尚未改写故事</strong><small>安排三格后，看看机关有什么变化。</small></div></div>
+  </section>
+  <section class="panel" aria-labelledby="mapTitle">
+    <div class="section-head"><h2 id="mapTitle">② 选择房间拼出路</h2><span class="tag" id="mapTag">单张房卡</span></div>
+    <p class="brief" id="mapIntro">房门相互对齐，且目标出口已被故事解锁，才能逃出。</p>
+    <div class="game-map" id="board" aria-label="可交互的三乘三房间地图"></div>
+    <div class="board-legend" id="boardLegend">绿色＝可通行出口 · 红色＝被故事锁住的出口 · 黄色＝房门</div>
+    <div class="rooms" id="roomChoices" aria-label="选择三张房卡之一"></div>
+    <div class="controls">
+      <button class="game-btn" type="button" id="rotate">↻ 旋转90°</button>
+      <button class="game-btn" type="button" id="undo">↶ 撤销房间</button>
+      <button class="game-btn secondary" type="button" id="hint">提示</button>
+      <button class="game-btn primary" type="button" id="escape">尝试逃脱 →</button>
+      <button class="game-btn" type="button" id="restart">重玩本关</button>
+    </div>
+    <div class="message" id="status" role="status" aria-live="polite">先排列三格故事，然后选择房卡放入中间空位。</div>
+  </section>
+  <div class="bottom"><button type="button" id="share">复制夜楼挑战地址</button><button type="button" id="resetStory">重排剧情探索分支</button></div>
+  <p class="disclaimer">原创悬疑故事第一章 · 独立本机存档；过关获得线索与徽章，重复通关不重复发放。不会修改原有20关、60星成绩、好友榜及海报。<br>不收集姓名、聊天资料或联系方式；当前无广告、无收费功能。</p>
+</main>
+<div class="overlay" id="successOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="winTitle">
+  <section class="success-card"><span class="trophy" aria-hidden="true">🏆</span><div style="font-size:11px;letter-spacing:.12em;color:#f3d296;font-weight:800">STORY UNLOCKED</div>
+    <h2 id="winTitle">新的真相出现了！</h2><p id="winDetails"></p>
+    <div class="reward-fragment" id="rewardFragment">◈ 发现一块档案碎片</div>
+    <div id="endingTale" class="ending-tale" aria-label="故事结局"></div>
+    <div class="achievement" id="winBadge"></div><p class="next-hook" id="nextHook"></p>
+    <div class="success-buttons"><button type="button" id="winBack">查看自己的路线</button><button type="button" id="winNext" class="primary">继续下一幕 →</button></div>
+  </section>
+</div>
+<script>
+(() => {
+'use strict';
+// Original six-stage mystery chapter. Uses general ideas, not code or artwork from any licensed third-party game.
+const N=1,E=2,S=4,W=8;
+const ROOM_TYPES=[
+ {id:'straight',name:'直通房',icon:'┃',doors:N|S,note:'两侧对门'},
+ {id:'corner',name:'转角房',icon:'┗',doors:N|E,note:'相邻两门'},
+ {id:'tee',name:'三岔房',icon:'┳',doors:N|E|W,note:'三向开门'}
+];
+const levels=[
+ {
+  id:'S01',name:'停电的楼层',brief:'深夜23:47，阿岚收到匿名短信：“不要去十三层。”楼里突然停电，出口上锁。',
+  hint:'从工具箱里找备用零件，先修好线路，最后才可以合闸。',
+  scene:{clock:'23:47 · 来自陌生号码',episode:'第一章 · 第一幕',title:'短信发出时，整栋楼熄灯了',intro:'阿岚刚走进公寓，手机弹出一条没有号码的短信：“不要去十三层。”接着所有灯同时熄灭，东侧的门紧紧锁住。',speech:'阿岚：十三层？这栋楼的电梯明明只到十二层……',ambience:'走廊尽头传来三声轻响。'},
+  events:[{id:'fuse',icon:'🔩',name:'找到保险丝',note:'第一件事',line:'工具箱内有一枚温热的备用保险丝。'},
+    {id:'repair',icon:'🧰',name:'维修配电箱',note:'第二件事',line:'烧黑的接线处印着一个小小的“13”。'},
+    {id:'power',icon:'💡',name:'启动总开关',note:'第三件事',line:'灯一盏盏亮起来，却比平常慢了一秒。'}],
+  patterns:[{key:'power',order:['fuse','repair','power'],title:'电力恢复，门禁解除！',details:'东侧门开启，连接中间的通道才能逃出这一层。',badge:'power',medal:'夜楼修复师',
+    narration:'阿岚看到配电箱内侧贴着一张发黄的检修卡，上面写着：十三层，暂停使用。',quote:'阿岚：这栋楼真的有十三层？',clue:'检修卡写着“十三层，暂停使用”，但楼层表只有十二层。',
+    ending:'阿岚跨过被点亮的走廊，捡起一张旧检修卡。卡片背面的日期竟是明天。',hook:'下一幕：电梯屏幕闪了一下，显示出从未存在的楼层号码。'}],
+  exits:[{index:5,gate:'power',name:'东侧门',icon:'🚪',doors:W}],start:3,
+  description:'三格事件先恢复电力，再用一张房卡连通左右两侧。'
+ },
+ {
+  id:'S02',name:'两条逃生路',brief:'电梯与消防门同时亮起，却传出两段不同的广播：“别相信它”。你只能先救一条路。',
+  hint:'修电梯：备用电池→接通电路→启动电梯；走楼梯：触发警报→卸下门闩→推开安全门。',
+  scene:{clock:'00:03 · 两段互相矛盾的广播',episode:'第一章 · 第二幕',title:'两个出口，两个说法',intro:'电梯广播说“消防门已封锁”，消防门喇叭却说“电梯禁止使用”。阿岚必须决定相信哪一边。',speech:'阿岚：谁在故意让我选路？',ambience:'两边的指示灯交替闪烁。'},
+  events:[{id:'battery',icon:'🔋',name:'找到备用电池',note:'电梯路线',line:'电池还在发热，像刚被人拿起过。'},
+    {id:'connect',icon:'🔌',name:'接通电路',note:'电梯路线',line:'电梯屏幕亮了：12、13、14……'},
+    {id:'lift',icon:'🛗',name:'启动电梯',note:'电梯路线',line:'“叮”的一声，轿厢里没有人。'},
+    {id:'alarm',icon:'🔔',name:'触发消防警报',note:'楼梯路线',line:'警报声刚响，走廊尽头就传来脚步。'},
+    {id:'latch',icon:'🔧',name:'卸下门闩',note:'楼梯路线',line:'门闩上有一截不属于这里的红线。'},
+    {id:'stair',icon:'🚪',name:'推开安全门',note:'楼梯路线',line:'墙上的层号从12跳到了14。'}],
+  patterns:[{key:'lift',order:['battery','connect','lift'],title:'电梯重新启动！',details:'北侧电梯已开启，房间要向西和向北开门。',badge:'lift',medal:'电梯逃脱者',
+    narration:'电梯镜面里，阿岚看见一个“13”的倒影；转身时，按钮上却没有13。',quote:'阿岚：有人把按钮卸掉了。',clue:'电梯显示过13，但按钮上这个数字被拆掉。',
+    ending:'电梯运行了不到一层，就突然停在“13”。门开时，走廊里只有一份被涂黑的住户名册。',hook:'下一幕：名册最底下一行，竟写着阿岚的名字。'},
+   {key:'stairs',order:['alarm','latch','stair'],title:'消防门解除封锁！',details:'东侧安全门已开启，房间要同时连通西门与东门。',badge:'stairs',medal:'楼梯逃脱者',
+    narration:'消防楼梯墙上的楼层指示，从“12”直接跳到“14”。中间有一块新刷的白漆。',quote:'阿岚：为什么偏偏跳过十三？',clue:'消防楼梯的数字从12直接跳到14，中间留着一块新漆。',
+    ending:'阿岚沿楼梯下行，却在转角找到一扇没有标号的门。门缝里塞着一张被涂黑的住户名册。',hook:'下一幕：那张名册上出现了一个不该在这里的名字。'}],
+  exits:[{index:1,gate:'lift',name:'北侧电梯',icon:'🛗',doors:S},{index:5,gate:'stairs',name:'消防门',icon:'🚪',doors:W}],start:3,
+  description:'选择电梯路线或消防路线，两条故事都能成功，但拼房间的方向不同。'
+ },
+ {
+  id:'S03',name:'被划掉的名字',brief:'名册里有一个被划掉的住户——阿岚。登记时间居然是明天早晨。是谁替她登记？',
+  hint:'档案室路线：访客卡→翻看名册→刷开档案室。对讲门路线：接通对讲→核对值班员→解锁对讲门。',
+  scene:{clock:'00:07 · 名册上有明天的名字',episode:'第一章 · 第三幕',title:'被划掉的，是我自己的名字',intro:'阿岚翻开住户名册，发现姓名栏写着“阿岚”，入住时间却在明天。纸页边缘残留着一股墨水味。',speech:'阿岚：不可能……我根本没登记过。',ambience:'翻页声在走廊里回响。'},
+  events:[{id:'guest',icon:'🪪',name:'找到访客卡',note:'档案线索',line:'卡背面只有一个被划掉的13。'},
+    {id:'list',icon:'📋',name:'翻看住户名册',note:'档案线索',line:'“阿岚”后面，签名不是我的字。'},
+    {id:'archive',icon:'🗄️',name:'刷开档案室',note:'档案结局',line:'档案柜里传来机械翻页声。'},
+    {id:'wire',icon:'☎️',name:'接通楼内对讲',note:'对讲线索',line:'话筒里传来一声轻咳。'},
+    {id:'verify',icon:'🧑‍💼',name:'核对值班身份',note:'对讲线索',line:'值班表写着：今晚无人值守。'},
+    {id:'intercom',icon:'🔓',name:'解锁对讲门',note:'对讲结局',line:'灯刚亮，里面的声音就停了。'}],
+  patterns:[{key:'archive',order:['guest','list','archive'],title:'档案室已解锁！',details:'北侧档案室通行，选择向西与向北开门的房间。',badge:'archive',medal:'名册调查员',
+    narration:'一张转录纸上留着阿岚的笔迹，纸角却印着“尚未发生”。',quote:'阿岚：是谁替我写下了未来？',clue:'住户名册出现阿岚明天的签名，旁边盖着“尚未发生”的印章。',
+    ending:'档案柜里只有一段被剪掉结尾的录音。最后一秒，有人念出“零点十七分”。',hook:'下一幕：所有钟表都开始朝同一个时间跳动。'},
+   {key:'intercom',order:['wire','verify','intercom'],title:'对讲门已开启！',details:'东侧值班门通行，选择向西与向东开门的房间。',badge:'intercom',medal:'夜间接线员',
+    narration:'对讲机的呼叫日志只有同一个时间：00:17。值班员却说这一晚没有人接过电话。',quote:'阿岚：那刚才回答我的，是谁？',clue:'无人值班的对讲机留下多次00:17的呼叫记录。',
+    ending:'阿岚推开对讲门。桌上热茶还冒着气，挂钟却停在00:17。',hook:'下一幕：楼里所有时钟，都卡在同一分钟。'}],
+  exits:[{index:1,gate:'archive',name:'档案室',icon:'🗄️',doors:S},{index:5,gate:'intercom',name:'对讲门',icon:'☎️',doors:W}],start:3,
+  description:'名册和对讲机提供两条调查路线；选择的事件决定可进入的房间。'
+ },
+ {
+  id:'S04',name:'永远的00:17',brief:'所有挂钟都在00:17停止，监控里的影子却在继续走动。时间真的暂停了吗？',
+  hint:'校钟：找到停摆的钟→比对备用时间→开启钟室。录音：接上旧录音机→调取磁带→打开维修门。',
+  scene:{clock:'00:17 · 同一分钟重复出现',episode:'第一章 · 第四幕',title:'00:17，为什么不再往前？',intro:'手机时间已经来到00:19，楼内时钟却反复跳回00:17。监控屏幕上的阿岚比现实中的她慢了一步。',speech:'阿岚：不是时间停了，是有人在重复播放什么。',ambience:'广播里响起同一段脚步声。'},
+  events:[{id:'clock',icon:'🕰️',name:'找到异常挂钟',note:'校钟路线',line:'指针被人固定在00:17。'},
+    {id:'compare',icon:'⌚',name:'比对备用时间',note:'校钟路线',line:'备用表还在走，只有楼里的钟停了。'},
+    {id:'tower',icon:'⚙️',name:'开启钟室',note:'校钟结局',line:'钟室控制台亮起了“循环播放”。'},
+    {id:'recorder',icon:'📼',name:'接通旧录音机',note:'录音路线',line:'磁带机上还残留新的指纹。'},
+    {id:'tape',icon:'🎞️',name:'回放00:17磁带',note:'录音路线',line:'录音里出现了阿岚的脚步声。'},
+    {id:'service',icon:'🔧',name:'打开维修门',note:'录音结局',line:'门后的扬声器正在循环播放。'}],
+  patterns:[{key:'tower',order:['clock','compare','tower'],title:'钟室已开启！',details:'北侧钟室解锁，向西与向北连接。',badge:'tower',medal:'时间校准员',
+    narration:'控制台显示：广播每60秒重启一次。时钟并未停摆，只是被统一覆盖。',quote:'阿岚：有人造出一个永远不结束的午夜。',clue:'楼内广播设置了每60秒重播，时钟被人为固定在00:17。',
+    ending:'钟室里的监控时间在跳，可一切提示音都从00:17重新开始。屏幕上出现一张镜子照片。',hook:'下一幕：镜子里，为什么比现实多了一道影子？'},
+   {key:'service',order:['recorder','tape','service'],title:'维修通道已打开！',details:'东侧维修门解锁，向西与向东连接。',badge:'service',medal:'录音追索者',
+    narration:'磁带被剪接了多次，阿岚听到自己尚未说出口的一句话：“别看镜子。”',quote:'阿岚：录音是谁做的？为什么有我的声音？',clue:'00:17的录音被人为剪接，里面出现阿岚尚未说过的台词。',
+    ending:'维修门后是一排扬声器。它们正把同一句话传向整栋楼：“别看镜子。”',hook:'下一幕：镜面背后，似乎站着另一个阿岚。'}],
+  exits:[{index:1,gate:'tower',name:'钟室',icon:'🕰️',doors:S},{index:5,gate:'service',name:'维修门',icon:'🔧',doors:W}],start:3,
+  description:'校准时钟或解开录音，两条办法会揭示不同证据。'
+ },
+ {
+  id:'S05',name:'镜子里的第二人',brief:'阿岚看见镜中有人提前抬手。那个身影真的在模仿她吗？',
+  hint:'镜面路线：观察影像→打开顶灯→检查镜面监控。脚印路线：寻找脚印→跟随铃声→打开暗门。',
+  scene:{clock:'00:21 · 镜面上的多余身影',episode:'第一章 · 第五幕',title:'镜子里的她，先我一步转头',intro:'走廊尽头的镜子突然亮起：阿岚还没抬手，镜中人已经做完动作。地上还有一串通向墙里的脚印。',speech:'阿岚：它在预演我的动作……还是有人在监视我？',ambience:'镜面上传来低低的电流声。'},
+  events:[{id:'glass',icon:'🪞',name:'观察镜面影像',note:'镜面线索',line:'镜中画面有微弱的扫描条纹。'},
+    {id:'lamp',icon:'🔦',name:'打开顶灯',note:'镜面线索',line:'灯下，镜面露出隐藏摄像头。'},
+    {id:'monitor',icon:'📺',name:'检查监控线路',note:'镜面结局',line:'画面来自三分钟前的录像。'},
+    {id:'footprints',icon:'👣',name:'查看地上脚印',note:'脚印线索',line:'脚印一直延伸到一面封死的墙。'},
+    {id:'bell',icon:'🔔',name:'循着铃声寻找',note:'脚印线索',line:'墙里传来小小的值班铃声。'},
+    {id:'hidden',icon:'🚪',name:'推开隐藏暗门',note:'暗门结局',line:'门后是一间布满屏幕的小房间。'}],
+  patterns:[{key:'monitor',order:['glass','lamp','monitor'],title:'镜面监控已破解！',details:'北侧控制室通行，向西与向北连接。',badge:'monitor',medal:'镜像破译者',
+    narration:'所谓镜中人，是三分钟前的录像。播放的不是未来，却被剪得像能预言她。',quote:'阿岚：他们想让我相信自己正在被追赶。',clue:'镜中的第二人是经过延迟剪辑的监控画面，并非另一个真人。',
+    ending:'阿岚取出硬盘。最后一段文件名写着“13层·演练区域”。',hook:'下一幕：一张不存在的楼层平面图，终于露出了角落。'},
+   {key:'hidden',order:['footprints','bell','hidden'],title:'隐藏暗门已开启！',details:'东侧暗门通行，向西与向东连接。',badge:'hidden',medal:'暗门发现者',
+    narration:'暗门后是一间控制室，墙上有楼层模型，第十三层被贴了不透明胶纸。',quote:'阿岚：十三层一直都在，只是被藏起来了。',clue:'墙后的控制室保存着第十三层模型，并连接楼内全部扬声器。',
+    ending:'阿岚掀起胶纸。模型上写着“十三层·内部测试区”。她听到自己手机又振动了一次。',hook:'下一幕：匿名短信的发送位置，竟就在十三层。'}],
+  exits:[{index:1,gate:'monitor',name:'监控室',icon:'📺',doors:S},{index:5,gate:'hidden',name:'隐藏暗门',icon:'🚪',doors:W}],start:3,
+  description:'看穿镜面假象，或沿脚印找到密室；两条路线都接近真相。'
+ },
+ {
+  id:'S06',name:'消失的十三层',brief:'第十三层被封存在施工图之外。匿名短信究竟是谁发出的？有两条最后的调查路线。',
+  hint:'调查楼层：取出旧平面图→核验门禁记录→开启十三层。追踪短信：接入信号台→恢复通话记录→打开值班室。',
+  scene:{clock:'00:27 · 最后一条匿名短信',episode:'第一章 · 终幕',title:'不存在的十三层，真的存在',intro:'旧图纸显示：楼层在十二与十四之间藏着一整层。最后一条匿名短信出现：“你终于找到门了。”',speech:'阿岚：我想知道，是谁在引我走到这里。',ambience:'墙后的门锁响起了最后一次。'},
+  events:[{id:'blueprint',icon:'🗺️',name:'取出旧平面图',note:'楼层路线',line:'图纸背面印着“第十三层，仅内部使用”。'},
+    {id:'access',icon:'🔐',name:'核验门禁记录',note:'楼层路线',line:'门禁在今晚反复被远程开启。'},
+    {id:'floor13',icon:'🚪',name:'打开十三层入口',note:'楼层结局',line:'门里是被布置成迷宫的试验场。'},
+    {id:'signal',icon:'📡',name:'接通信号台',note:'短信路线',line:'信号源并不在手机网络里。'},
+    {id:'log',icon:'📱',name:'恢复发送记录',note:'短信路线',line:'发送者一栏写着：阿岚。'},
+    {id:'office',icon:'💻',name:'打开值班控制室',note:'短信结局',line:'电脑屏幕上出现一段未来的留言。'}],
+  patterns:[{key:'floor13',order:['blueprint','access','floor13'],title:'第十三层已开启！',details:'北侧隐藏楼层通行，向西与向北连接。',badge:'floor13',medal:'十三层调查员',
+    narration:'“十三层”是一间封闭的模拟逃生区。墙上的摄像机记录着每一位受困者的决策。',quote:'阿岚：所以那些线索，是有人故意留下的？',clue:'十三层是被隐藏的逃生模拟区，迷宫与机关受控制室远程操纵。',
+    ending:'阿岚推门踏进第十三层。第一块屏幕亮起，上面写着：“实验编号01，已成功离开。”紧接着，第二块屏幕显示“实验编号02——正在进入”。',hook:'第一章完：屏幕上有一个新玩家的影子。是谁？下一章尚未开放。'},
+   {key:'office',order:['signal','log','office'],title:'匿名信源已找到！',details:'东侧值班室通行，向西与向东连接。',badge:'office',medal:'匿名信追踪者',
+    narration:'那些短信来自楼内预设程序，却使用了阿岚自己的名字。程序里还有一条从未发送的留言。',quote:'屏幕上的文字：“下一次，别走电梯。”',clue:'匿名短信由楼内控制程序发送，发件人字段被设置为“阿岚”。',
+    ending:'值班室屏幕上的最后一条记录，日期是明天。署名是阿岚：“如果你看到这里，别再重复我的路线。”她伸手去碰屏幕，身后却传来第二声脚步。',hook:'第一章完：未来的留言是真是假？下一章尚未开放。'}],
+  exits:[{index:1,gate:'floor13',name:'十三层',icon:'🚪',doors:S},{index:5,gate:'office',name:'值班室',icon:'💻',doors:W}],start:3,
+  description:'调查隐藏楼层或追踪匿名短信，分别触发第一章两种终局。'
+ }
+];
+const KEY='g01-story-chapter.v0.1',OLD_KEY='g01-story-lab.v0.1';
+const $=id=>document.getElementById(id);
+const readLocal=(key)=>{try{return JSON.parse(localStorage.getItem(key)||'null')}catch(_){return null}};
+const prior=readLocal(KEY),legacy=readLocal(OLD_KEY);
+const achievements={};for(const l of levels)for(const p of l.patterns)achievements[p.badge]=!!(prior?.achievements?.[p.badge] || ((p.badge==='power'||p.badge==='lift'||p.badge==='stairs')&&legacy?.achievements?.[p.badge]));
+const stageComplete=i=>levels[i].patterns.some(p=>achievements[p.badge]);
+const unlocked=i=>i<=1 || stageComplete(i-1);
+const defaultStage=()=>{for(let j=0;j<levels.length;j++)if(!stageComplete(j)&&unlocked(j))return j;return 5;};
+let index=(Number.isInteger(prior?.stage)&&prior.stage>=0&&prior.stage<levels.length&&unlocked(prior.stage))?prior.stage:defaultStage();
+let selected=[],choice=null,rotation=0,placed=null,winPath=[],lastBeat={text:'◈ 有效的线索会亮起；每次过关可获得新徽章。',type:''};
+const current=()=>levels[index];
+const effect=()=>current().patterns.find(p=>p.order.length===selected.length&&p.order.every((x,i)=>x===selected[i]))||null;
+const clueCount=()=>levels.filter((_,i)=>stageComplete(i)).length;
+const badgeCount=()=>Object.values(achievements).filter(Boolean).length;
+function save(){try{localStorage.setItem(KEY,JSON.stringify({schema:1,stage:index,achievements}))}catch(_){} }
+function message(t,type=''){$('status').textContent=t;$('status').className='message'+(type?' '+type:'');}
+function beat(text,type=''){lastBeat={text,type};const el=$('beatFeedback');el.textContent=text;el.className='beat-feedback'+(type?' '+type+' flash':'');}
+function validPrefix(){if(!selected.length)return true;return current().patterns.some(p=>selected.every((v,i)=>v===p.order[i]));}
+function scoreState(){return {clues:clueCount(),badges:badgeCount(),completed:levels.map((x,i)=>stageComplete(i)),achievementKeys:Object.keys(achievements).filter(x=>achievements[x])};}
+function renderProgress(){const n=clueCount(),m=badgeCount();$('achCount').textContent=`档案碎片 ${n} / 6`;
+ $('achLabels').textContent=n===6?`第一章通关 · 夜楼追踪者 · ${m}枚徽章`:n>=3?`已解锁“午夜调查员” · ${m}枚徽章`:`已获得 ${m} 枚结局徽章`;
+ $('journalCount').textContent=n+'/6';
+ const wrap=$('journalBody');wrap.replaceChildren();levels.forEach((s,i)=>{const row=document.createElement('div');row.className='journal-entry'+(stageComplete(i)?'':' missing');const t=document.createElement('strong');t.textContent=`${i+1}. ${stageComplete(i)?s.name:'未解密档案'}`;
+ const p=Object.keys(achievements).find(k=>achievements[k]&&s.patterns.some(o=>o.badge===k));
+ const d=document.createElement('span');d.textContent=p?s.patterns.find(o=>o.badge===p).clue:'先完成上一幕的逃脱，获得线索碎片。';row.append(t,d);wrap.append(row)});
+}
+function renderTabs(){const el=$('stageTabs');el.replaceChildren();levels.forEach((l,i)=>{const b=document.createElement('button');b.type='button';const locked=!unlocked(i);const cleared=stageComplete(i);b.className='stage-tab'+(index===i?' active':'')+(locked?' locked':'')+(cleared?' cleared':'');
+ b.setAttribute('aria-pressed',String(index===i));b.setAttribute('aria-label',`第${i+1}幕${locked?'未解锁':l.name}${cleared?'已通关':''}`);
+ b.innerHTML=`<strong>${String(i+1).padStart(2,'0')} · ${locked?'???':l.name}</strong><small>${locked?'等待上一幕':' '+(cleared?'✓ 已记录':i===0?'故事开始':'解锁剧情')}</small>`;
+ b.addEventListener('click',()=>{if(locked){message('先完成前一幕，才能解开下一张档案。','bad');return}resetStage(i)});el.append(b)});}
+const dirs=[{bit:N,other:S,delta:-3,name:'n'},{bit:E,other:W,delta:1,name:'e'},{bit:S,other:N,delta:3,name:'s'},{bit:W,other:E,delta:-1,name:'w'}];
+const turn=(doors,r)=>{let v=doors;for(let i=0;i<((r%4)+4)%4;i++)v=((v<<1)&15)|((v&8)>>3);return v};
+function tileInfo(pos){if(pos===3)return {type:'start',name:'入口',icon:'🏃',doors:E,open:true};
+ if(pos===4)return placed?{type:'slot placed',name:ROOM_TYPES.find(x=>x.id===placed.kind).name,icon:ROOM_TYPES.find(x=>x.id===placed.kind).icon,doors:turn(ROOM_TYPES.find(x=>x.id===placed.kind).doors,placed.rotation),open:true}:{type:'slot',name:'放入房间',icon:'＋',doors:0,open:true};
+ const ex=current().exits.find(x=>x.index===pos);if(ex)return {type:'exit',name:ex.name,icon:ex.icon,doors:ex.doors,open:effect()?.key===ex.gate};
+ return {type:'wall',name:'',icon:'',doors:0,open:false};}
+function connected(a,b){const left=tileInfo(a),right=tileInfo(b);if(!left.open||!right.open)return false;
+ const d=dirs.find(o=>a+o.delta===b && !(o.bit===E&&a%3===2)&&!(o.bit===W&&a%3===0));
+ return !!d && (left.doors&d.bit)!==0&&(right.doors&d.other)!==0;}
+function getPath(){const ex=current().exits.find(x=>x.gate===effect()?.key);if(!ex)return null;
+ const q=[{pos:3,path:[3]}],seen=new Set([3]);for(let i=0;i<q.length;i++){const v=q[i];if(v.pos===ex.index)return v.path;
+  for(const d of dirs){const n=v.pos+d.delta;if(n<0||n>8)continue;if(d.bit===E&&v.pos%3===2||d.bit===W&&v.pos%3===0)continue;
+   if(connected(v.pos,n)&&!seen.has(n)){seen.add(n);q.push({pos:n,path:[...v.path,n]})}}}
+ return null;}
+function renderNarrative(){const sc=current().scene,p=effect(),last=current().events.find(e=>e.id===selected.at(-1));const art=$('sceneArt');art.className='scene-art'+(p?' is-solved':' is-mystery');
+ $('sceneEpisode').textContent=sc.episode;$('sceneClock').textContent=sc.clock;$('sceneAmbient').textContent=p?'线索已触发 · 房门改变':sc.ambience;
+ $('sceneHeading').textContent=p?p.title:sc.title;$('sceneNarration').textContent=p?p.narration:sc.intro;
+ $('sceneDialogue').textContent=p?p.quote:last?`阿岚：${last.line}`:sc.speech;
+ const door=current().exits.find(x=>x.gate===p?.key);$('sceneDoorLabel').textContent=door?door.name+' · 已解锁':'匿名门禁 · 尚未解除';$('sceneDoorIcon').textContent=door?.icon||'🚪';
+ const b=$('storyInterlude');const bad=selected.length===3&&!p;b.className='story-interlude'+(p?' good':bad?' bad':'');
+ b.textContent=p?`机关解开！${p.title} 但真正的秘密还在门后。现在拼房间继续前进。`:bad?'事件顺序与线索矛盾，机关没有响应。点某一格移除，再尝试新的组合。':selected.length?`第${selected.length}格：${last?.line} · 还差${3-selected.length}格。`:'一条陌生短信，把阿岚带进了这栋楼。选择三个有因果关系的事件，揭开这一幕。';
+}
+function renderStory(){ $('storyIntro').textContent=current().brief;$('storyHint').textContent=current().hint;$('storyTag').textContent=`第${index+1}幕 · 故事机关`;
+ const board=$('storyFrames');board.replaceChildren();for(let i=0;i<3;i++){const c=current().events.find(x=>x.id===selected[i]);const b=document.createElement('button');b.type='button';b.className='frame'+(c?' filled':'');b.disabled=!c;
+ b.setAttribute('aria-label',c?`第${i+1}格：${c.name}，点击撤回`:`第${i+1}格未填写`);
+ b.innerHTML=`<span class="frame-number">第 ${i+1} 格</span><span class="comic-picture"><span class="comic-hero">${c?'🧑':'🌙'}</span><span class="comic-object">${c?.icon||'···'}</span></span><strong class="comic-name">${c?.name||'未知的下一幕'}</strong><span class="comic-line${c?'':' placeholder'}">${c?c.line:'等待你安排下一步'}</span>`;
+ b.addEventListener('click',()=>{selected.splice(i,1);winPath=[];beat('已撤回该事件 · 故事可以重新改写');render();message('可以继续排列事件。')});board.append(b)}
+ const opts=$('storyChoices');opts.replaceChildren();for(const ev of current().events){const b=document.createElement('button');b.type='button';b.className='story-choice';b.disabled=selected.includes(ev.id)||selected.length===3;
+ b.innerHTML=`<span class="emoji">${ev.icon}</span><strong>${ev.name}</strong><small>${ev.note}</small>`;
+ b.addEventListener('click',()=>{selected.push(ev.id);winPath=[];const prefix=validPrefix();const p=effect();
+ if(p)beat('✦ 机关已启动！剧情推进，房门改变。','good');else if(prefix)beat(`✓ 线索吻合！第${selected.length}/3格已破解，继续前进。`,'good');else beat('这条线索暂时对不上，可点上方画格撤回再推理。','bad');
+ render();message(p?'故事触发成功！现在选择房卡，打开通路。':prefix?'选择下一件可能发生的事。':'这组事件没有组成完整因果链。',p||prefix?'good':'bad');});opts.append(b)}
+ const p=effect(),e=$('storyEffect');e.className='story-effect'+(p?' active':'');e.replaceChildren();
+ const icon=document.createElement('span');icon.className='effect-icon';icon.textContent=p?'✦':'☾';const body=document.createElement('div'),head=document.createElement('strong'),detail=document.createElement('small');
+ head.textContent=p?p.title:selected.length===3?'机关未响应':'神秘机关仍在等待';detail.textContent=p?p.details:selected.length===3?'调整事件顺序，找到正确因果链。':`已写下${selected.length}/3格；下一条线索可能揭开一扇门。`;
+ body.append(head,detail);e.append(icon,body);renderNarrative();const bar=$('beatFeedback');bar.textContent=lastBeat.text;bar.className='beat-feedback'+(lastBeat.type?' '+lastBeat.type:'');}
+function renderBoard(){const map=$('board');map.replaceChildren();const path=new Set(winPath);for(let i=0;i<9;i++){const v=tileInfo(i),el=document.createElement(i===4?'button':'div');if(i===4){el.type='button';el.addEventListener('click',placeRoom)}
+ el.className='tile '+v.type+(v.type==='exit'&&v.open?' open':'')+(path.has(i)?' win-path':'');el.setAttribute('aria-label',v.name+(v.type==='exit'?(v.open?'，开启':'，关闭'):'') );
+ el.innerHTML=`<span class="tile-icon">${v.icon}</span>${v.name?`<span class="tile-label">${v.name}</span>`:''}${v.type==='exit'?`<span class="tile-mini">${v.open?'已开启':'未开启'}</span>`:''}`;
+ for(const d of dirs){if(v.doors&d.bit){const mark=document.createElement('i');mark.className='door '+d.name;el.append(mark)}}map.append(el)} }
+function renderRooms(){const place=$('roomChoices');place.replaceChildren();for(const r of ROOM_TYPES){const b=document.createElement('button');b.type='button';b.className='room-card'+(choice===r.id?' selected':'');b.disabled=!!placed;
+ b.innerHTML=`<b><span class="room-symbol" style="transform:rotate(${choice===r.id?rotation*90:0}deg)">${r.icon}</span> ${r.name}</b><small>${r.note}${choice===r.id?' · '+rotation*90+'°':''}</small>`;
+ b.addEventListener('click',()=>{choice=r.id;rotation=0;renderRooms();message('已选择房卡，旋转后点击地图中央的“＋”。')});place.append(b)}
+ $('rotate').disabled=!choice||!!placed;$('undo').disabled=!placed;}
+function render(){renderProgress();renderTabs();renderStory();renderBoard();renderRooms();$('mapIntro').textContent=current().description;const p=effect();$('mapTag').textContent=p?'出口已解锁 · '+current().exits.find(x=>x.gate===p.key).name:'出口尚未解锁';}
+function placeRoom(){if(placed){message('房间已经放入中央，需要改变请先撤销。','bad');return}
+ if(!choice){message('先从下方选择一张房卡。','bad');return}
+ placed={kind:choice,rotation};winPath=[];render();
+ if(effect()&&getPath()){beat('✓ 逃生路线已连通！点击“尝试逃脱”，领取本幕奖励。','good');message('通道已接好，试试逃脱！','good')}
+ else {beat('房间已安放 · 再检查门口方向与故事条件。');message('房间已放置，看看黄色门口是否两两相接。')}
+}
+function resetStage(target=index){if(!unlocked(target)){message('前一幕尚未通关，继续寻找线索。','bad');return}
+ index=target;selected=[];choice=null;rotation=0;placed=null;winPath=[];lastBeat={text:'◈ 故事从一条线索开始，每一次正确推理都有反馈。',type:''};$('successOverlay').hidden=true;save();render();message(`第${target+1}幕开启：${current().scene.title}`);}
+function getNext(){for(let n=index+1;n<levels.length;n++)if(unlocked(n))return n;return index;}
+function win(p,path){const firstStage=!stageComplete(index),firstBadge=!achievements[p.badge];achievements[p.badge]=true;save();renderProgress();renderTabs();
+ const n=clueCount();$('winTitle').textContent=`第${index+1}幕 · 真相前进一步！`;
+ $('winDetails').textContent=`成功逃出 · 路线经过${path.length}间房 · ${firstBadge?'发现新结局！':'再次成功通关！'}`;
+ const r=$('rewardFragment');r.className='reward-fragment'+(firstStage?'':' replay');r.textContent=firstStage?`✦ 线索碎片 +1 · 已收集${n}/6`:(firstBadge?'✦ 新的支线结局 +1枚徽章':'✦ 再次破案成功 · 已有线索保留');
+ const tale=$('endingTale');tale.replaceChildren();const h=document.createElement('strong');h.textContent=`${current().scene.episode} · ${p.medal}`;const body=document.createElement('span');body.textContent=p.ending;tale.append(h,body);
+ $('winBadge').textContent=(firstBadge?'新徽章：':'徽章已收集：')+p.medal+(n===6?' · 第一章称号「夜楼追踪者」':n>=3?' · 阶段称号「午夜调查员」':'');
+ $('nextHook').textContent='悬念 · '+p.hook;
+ $('winNext').textContent=index===5?'第一章完 · 查看开场':'下一幕 · 继续追查 →';$('successOverlay').hidden=false;$('winNext').focus();
+}
+function tryEscape(){const p=effect();if(selected.length!==3){message('先完成三格事件推理，才能解锁出口。','bad');return}
+ if(!p){message('故事因果链还不正确。点击已选画格撤回重排。','bad');return}
+ if(!placed){message('机关已经解锁，但还缺一间连接通道的房间。','bad');return}
+ const path=getPath();if(!path){beat('出口已开，但房间没有对齐。调整房门方向再试。','bad');message('两侧黄门需要正对，才能走到解锁的出口。','bad');return}
+ winPath=path;beat('✓ 找到安全路线！新的档案碎片正在解锁。','good');render();message('逃脱成功！获得结局记录。','good');win(p,path);
+}
+function hint(){const p=effect();if(!p){const expected=current().patterns[0];message('剧情提示：'+expected.order.map(id=>current().events.find(e=>e.id===id).name).join(' → ')+'。部分关卡还有另一个结局。');return}
+ if(!placed){message('出口已开！北侧路线用西＋北门；东侧路线用西＋东门。');return}
+ message(getPath()?'路径已经连通！点击尝试逃脱。':'看中央房间的门，必须同时连接入口和已开启的出口。',getPath()?'good':'bad');}
+function share(){const url=location.origin+location.pathname;const txt=`《今晚拼出路·夜楼档案》悬疑六幕｜我已找到${clueCount()}/6条线索。你能找出消失的十三层吗？\n${url}`;
+ if(navigator.clipboard?.writeText){navigator.clipboard.writeText(txt).then(()=>message('挑战地址与真实线索进度已复制，可发给微信或QQ好友。','good')).catch(()=>message('复制被浏览器限制，请复制当前页面网址。'))}
+ else message('请长按复制当前网页地址，邀请好友破案。');}
+$('clearStory').addEventListener('click',()=>{selected=[];winPath=[];beat('三格已经清空，可以改写故事。');render();message('选择另一组事件。')});
+$('rotate').addEventListener('click',()=>{if(!choice||placed)return;rotation=(rotation+1)%4;renderRooms();message('已旋转'+rotation*90+'°，点击中央格子放入。')});
+$('undo').addEventListener('click',()=>{placed=null;winPath=[];render();message('已撤销房间，可以重新选择和旋转。')});
+$('escape').addEventListener('click',tryEscape);$('restart').addEventListener('click',()=>resetStage(index));$('hint').addEventListener('click',hint);
+$('share').addEventListener('click',share);$('resetStory').addEventListener('click',()=>{selected=[];placed=null;choice=null;rotation=0;winPath=[];render();message('已重置本幕，可以重新追查不同结局。')});
+$('winBack').addEventListener('click',()=>{$('successOverlay').hidden=true;});
+$('winNext').addEventListener('click',()=>{const next=index===5?0:index+1;resetStage(next)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('successOverlay').hidden)$('successOverlay').hidden=true;});
+// Read-only diagnostics for local acceptance tests: no data is sent to a server.
+window.G01Chapter=Object.freeze({totalStages:levels.length,stageNumber:()=>index+1,summary:scoreState});
+render();message(`第${index+1}幕开启：${current().scene.title}`);
+})();
+
+</script>
+</body>
+</html>
