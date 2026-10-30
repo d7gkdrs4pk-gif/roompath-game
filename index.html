@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <meta name="theme-color" content="#07121f"/>
+  <meta name="description" content="《今晚拼出路》原创5关玩法灰盒：三选一房卡、旋转、房门连接、钥匙与机关。"/>
+  <title>今晚拼出路｜手机试玩版 G01-B</title>
+  <style>
+:root{font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;color:#eaf3ff;background:#07121f;font-synthesis:none}
+*{box-sizing:border-box}html{min-height:100%;background:#07121f}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% 0%,#1c3554 0%,transparent 44%),radial-gradient(ellipse at 85% 14%,#1b2d47 0%,transparent 38%),#07121f}
+button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible{outline:3px solid #ffe2a0;outline-offset:3px}button:disabled{cursor:default}
+.shell{width:min(100%,760px);margin:0 auto;padding:22px 16px 48px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:19px}.brand-mark{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.12em;color:#a9c0d8;font-weight:700}.moon{width:30px;height:30px;display:grid;place-items:center;background:#f4d6a2;border-radius:50%;font-size:19px;box-shadow:0 0 27px #facb783d;color:#37435b}.mode{padding:7px 10px;background:#102a38;border:1px solid #2a5a60;color:#9ce5d3;font-size:11px;border-radius:999px;font-weight:800;white-space:nowrap}
+h1{font-size:clamp(28px,6vw,42px);margin:6px 0 7px;letter-spacing:-.05em;line-height:1.15;color:#fff5df}h1 span{color:#f6bc75}.subtitle{color:#adc1d7;line-height:1.7;font-size:13px;margin:0 0 22px}.panel{background:linear-gradient(145deg,rgba(24,43,64,.94),rgba(12,28,48,.98));border:1px solid #314963;border-radius:20px;box-shadow:0 12px 30px #0003;padding:16px}
+.levels{display:flex;justify-content:space-between;gap:8px;margin:0 0 18px}.level-btn{flex:1;height:43px;background:#142a42;color:#aac2d9;border:1px solid #345069;border-radius:11px;font-weight:750;display:flex;align-items:center;justify-content:center;gap:5px;transition:.14s}.level-btn.active{background:#f8c77f;border-color:#fbe0a9;color:#192a3e;box-shadow:0 0 0 2px #f8c77f20}.level-btn.done:not(.active){color:#a8e9d7;border-color:#458b83}.tiny-check{font-size:10px}
+.level-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.step-tag{color:#f5c580;background:#4c382d;padding:5px 9px;border-radius:7px;font-size:11px;font-weight:800;white-space:nowrap}.level-title{font-size:21px;font-weight:800;margin:9px 0 6px;color:#fff5de}.desc{font-size:13px;line-height:1.65;color:#cad9e7;margin:0}.teaching{border-left:3px solid #70d2b7;background:#122d3e;padding:8px 10px;margin:12px 0 14px;color:#cae8e1;font-size:12px;line-height:1.55;border-radius:0 9px 9px 0}
+.board-wrap{background:#0b1e31;border:1px solid #36536d;border-radius:18px;padding:13px 12px 11px;margin:0 auto;max-width:460px}.board-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#91adca;margin-bottom:10px}.board{display:grid;gap:7px;grid-template-columns:repeat(var(--cols),minmax(0,1fr));width:100%;aspect-ratio:var(--cols)/var(--rows)}.cell{position:relative;aspect-ratio:1;min-width:0;min-height:0;padding:0;border-radius:11px;border:1px solid #38526f;background:#223b55;color:#fbf6e6;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -3px #0c1a2c55;transition:background .15s,transform .15s}.cell.blank{background:#203650;border:2px dashed #67809a;color:#afc5d9}.cell.blank:hover,.cell.blank:active{background:#305574}.cell.wall{background:repeating-linear-gradient(45deg,#14263a,#14263a 7px,#162b40 7px,#162b40 14px);border:1px solid #263b55;box-shadow:none;cursor:default}.cell.room{background:#2c4c65}.cell.room.key{background:#614a3f}.cell.room.switch{background:#3e5663}.cell.room.start{background:#194f56;border-color:#66b5ae}.cell.room.exit{background:#5a3f4d;border-color:#a87790}.cell.reachable{background:#2a6466;border-color:#70caba}.cell.route{background:#367f66;border-color:#b3e9a9;box-shadow:0 0 0 2px #9bdfa866 inset}.cell.hintcell{outline:3px solid #f6c779;outline-offset:-3px}.cell-center{z-index:1;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15;gap:4px}.cell-symbol{font-size:clamp(17px,5vw,26px);font-weight:900}.cell-label{font-size:clamp(9px,2.5vw,12px);font-weight:750}.cell.blank .cell-symbol{font-size:23px;font-weight:400}.cell.wall .cell-center{opacity:.2}.door{position:absolute;background:#ffe2a4;border-radius:3px;z-index:2;box-shadow:0 0 4px #f8c87940}.door.n{top:-1px;left:34%;width:32%;height:13%;border-radius:0 0 4px 4px}.door.s{bottom:-1px;left:34%;width:32%;height:13%;border-radius:4px 4px 0 0}.door.e{right:-1px;top:34%;height:32%;width:13%;border-radius:4px 0 0 4px}.door.w{left:-1px;top:34%;height:32%;width:13%;border-radius:0 4px 4px 0}.board-legend{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;color:#a3c3c9;font-size:11px;margin:12px 0 0}.legend-dot{width:8px;height:8px;display:inline-block;border-radius:2px;margin-right:4px}.legend-dot.g{background:#76d4c0}.legend-dot.y{background:#ffe2a4}
+.requirements{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0}.requirement{background:#153047;border:1px solid #3c5a73;border-radius:999px;padding:6px 11px;font-size:12px;color:#afc7d7}.requirement.met{color:#abf6dc;border-color:#47a78f;background:#12483e}
+.deck-title{display:flex;align-items:center;justify-content:space-between;margin:18px 0 10px}.deck-title h2{margin:0;font-size:16px}.counter{font-size:12px;color:#a7bfda}.deck{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.card{border:1px solid #446078;color:#d8e7f4;background:#132b43;border-radius:12px;min-width:0;min-height:122px;padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:7px}.card.selected{border-color:#f6cd89;background:#4b413c;box-shadow:0 0 0 2px #f6cd8920}.card-name{font-size:12px;font-weight:800}.card-note{font-size:10px;color:#b9cbd5}.card.selected .card-note{color:#fff1d9}.card-preview{position:relative;width:54px;height:54px;border-radius:9px;background:#2a4a64;border:1px solid #6c8496;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:850}.card.selected .card-preview{background:#46635a}.card-preview .door{background:#ffdf9b}.empty-deck{padding:25px;text-align:center;border:1px dashed #3b5e73;border-radius:12px;font-size:13px;color:#afc7d7}
+.controls{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0 0}.control-btn{min-height:42px;flex:1 1 100px;border-radius:11px;background:#244158;border:1px solid #48647a;color:#e7f3fd;font-weight:700;font-size:13px;padding:9px}.control-btn:disabled{opacity:.45}.control-btn.primary{background:#f3c47e;border-color:#f4d6a6;color:#1f2b3e;flex:2 1 120px;font-size:15px}.control-btn.secondary{background:#1b424b;border-color:#3e7773;color:#caf7e4}
+.feedback{border-radius:11px;background:#102a3a;border:1px solid #36586b;color:#c4dfec;padding:12px;min-height:49px;font-size:13px;line-height:1.55;margin-top:13px}.feedback.warn{background:#44332b;border-color:#92664c;color:#ffdbab}.feedback.good{background:#164539;border-color:#398c70;color:#c9f7df}.feedback strong{color:#fff}.next-row{display:flex;gap:9px;margin-top:12px}.next-row button{min-height:44px;flex:1;border-radius:11px;background:#4b856a;border:1px solid #7fc3a0;color:#fff;font-weight:800}
+.foot{color:#829bb2;font-size:11px;line-height:1.75;padding:15px 4px;text-align:center}.kbd{font-size:10px;color:#799cb7}
+@media(max-width:470px){.shell{padding:18px 12px 36px}.panel{padding:13px}.board-wrap{padding:9px}.board{gap:5px}.cell{border-radius:9px}.levels{gap:6px}.level-btn{height:42px}.card{min-height:116px}.top{margin-bottom:15px}.subtitle{margin-bottom:16px}.control-btn{flex:1 1 80px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.next-row[hidden]{display:none}
+/* G01-B: first-time instruction, touch targets, and voluntary offline test report. */
+.coach{border:1px solid #bba16d;background:#352f2b;color:#ffe2a6;border-radius:10px;padding:9px 11px;font-size:12px;font-weight:750;line-height:1.5;margin:0 0 10px}
+.coach[hidden]{display:none}
+.coach-target{outline:3px solid #ffcf78;outline-offset:2px;box-shadow:0 0 0 5px rgba(255,207,120,.12)}
+.test-panel{margin-top:16px;border:1px solid #38546b;background:#11283d;border-radius:15px;padding:12px;color:#dcecf8}
+.test-panel summary{cursor:pointer;font-size:14px;font-weight:780;min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.test-panel summary span{font-size:11px;color:#96b7cc;font-weight:400}
+.test-body{padding-top:8px;font-size:13px;line-height:1.65}
+.test-body p{color:#abc0d3;font-size:12px}
+.test-body fieldset{border:1px solid #426079;border-radius:11px;margin:10px 0;padding:10px}
+.test-body legend{color:#f6d7a1;font-weight:700}
+.test-body fieldset label{display:block;padding:7px 0;min-height:35px;cursor:pointer}
+.test-body input[type=radio]{accent-color:#e9b96d;width:17px;height:17px;vertical-align:middle;margin-right:7px}
+.test-select-label{font-weight:750;display:block;margin:12px 0 5px}
+.test-body select,.test-body textarea{display:block;width:100%;border:1px solid #617789;border-radius:9px;background:#0d2133;color:#eef6ff;padding:10px;font:inherit}
+.test-body textarea{resize:vertical}
+.test-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:15px}
+.test-actions button{min-height:44px;border:1px solid #789a9a;border-radius:10px;background:#174651;color:#f5fbfa;font-weight:700}
+.test-message{min-height:18px}
+@media(max-width:470px){
+  .shell{padding:10px 10px max(22px,env(safe-area-inset-bottom))}
+  .top{margin-bottom:6px;align-items:center}.brand-mark{font-size:10px;gap:6px}.moon{width:24px;height:24px;font-size:15px}.mode{padding:5px 7px;font-size:10px}
+  h1{font-size:26px;margin:4px 0}.subtitle{display:none}
+  .levels{margin-bottom:9px}.level-btn{height:44px;border-radius:9px}
+  .panel{border-radius:14px;padding:10px}.level-title{font-size:17px;margin:3px 0}.step-tag{padding:4px 7px;font-size:10px}
+  .desc{font-size:11px;line-height:1.3}.teaching{font-size:11px;line-height:1.3;padding:6px 8px;margin:7px 0}
+  .coach{padding:5px 8px;font-size:11px;line-height:1.3;margin:0 0 8px}
+  .board-wrap{max-width:292px;padding:7px;margin-inline:auto;border-radius:12px}
+  .board-top{font-size:10px;margin-bottom:5px}.board{gap:5px}
+  .cell{border-radius:8px}.cell-symbol{font-size:19px}.cell-label{font-size:10px}.board-legend{font-size:10px;margin:6px 0 0;gap:10px}
+  .requirements{margin-top:8px}.requirement{padding:3px 8px;font-size:10px}
+  .deck-title{margin:9px 0 6px}.deck-title h2{font-size:14px}.counter{font-size:10px}
+  .deck{gap:6px}.card{min-height:78px;gap:3px;border-radius:9px;padding:5px 2px 4px}
+  .card-preview{width:37px;height:37px;font-size:16px;border-radius:6px}.card-name{font-size:11px}.card-note{font-size:9px}
+  .controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:8px}
+  .control-btn{min-height:44px;font-size:11px;padding:7px 4px;flex:none;border-radius:9px}
+  .control-btn.primary{grid-column:span 2;font-size:13px}.control-btn#retry{grid-column:span 1}
+  .feedback{min-height:30px;margin-top:8px;font-size:11px;line-height:1.45;padding:7px 9px}
+  .next-row{margin-top:7px}
+  .test-panel{margin-top:12px}.foot{margin-top:8px;font-size:10px;padding:8px 4px}
+}
+@media(max-width:470px) and (max-height:745px){
+  .board-wrap{max-width:236px}
+  .level-head{gap:5px}.teaching{margin:4px 0}.subtitle{margin-bottom:6px}
+  .card{min-height:69px}.card-preview{width:32px;height:32px}.card-note{font-size:8px}
+  .cell-symbol{font-size:17px}.cell-label{font-size:9px}.deck-title{margin:6px 0 4px}
+}
+
+</style>
+</head>
+<body>
+  <main class="shell">
+    <header class="top">
+      <div class="brand-mark"><div class="moon" aria-hidden="true">☾</div><span>ROOM PATH · G01-B</span></div>
+      <span class="mode">手机试玩 · 5关</span>
+    </header>
+    <h1>今晚，<span>拼出路。</span></h1>
+    <p class="subtitle">从三张房卡中选一张，旋转、放置、连接通道。<br>不必跑得快，只需要选得对。</p>
+    <nav id="levels" class="levels" aria-label="选择关卡"></nav>
+    <section class="panel" aria-label="游戏关卡">
+      <div class="level-head"><div><div id="levelTitle" class="level-title">第一扇门</div><p id="levelDesc" class="desc"></p></div><span class="step-tag" id="guide">第 1 / 5 关</span></div>
+      <div id="teaching" class="teaching"></div>
+      <div id="coach" class="coach" role="status" aria-live="polite"></div>
+      <div class="board-wrap">
+        <div class="board-top"><span id="boardMeta"></span><span>两侧都开门，才可通过</span></div>
+        <div class="board" id="board" aria-label="拼房间地图"></div>
+        <div class="board-legend"><span><i class="legend-dot g"></i>与入口连通</span><span><i class="legend-dot y"></i>房门方向</span></div>
+      </div>
+      <div id="requirements" class="requirements" aria-label="关卡门禁条件"></div>
+      <div class="deck-title"><h2>选择一张房卡</h2><span id="deckCount" class="counter"></span></div>
+      <div id="deck" class="deck"></div>
+      <div class="controls">
+        <button id="rotate" class="control-btn" type="button">↻ 旋转房间</button>
+        <button id="undo" class="control-btn" type="button">↶ 撤销</button>
+        <button id="hint" class="control-btn secondary" type="button">提示</button>
+        <button id="check" class="control-btn primary" type="button">试逃脱 →</button>
+        <button id="retry" class="control-btn" type="button">重玩本关</button>
+      </div>
+      <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+      <div id="nextWrap" class="next-row" hidden><button id="nextBtn" type="button">继续下一关 →</button></div>
+    </section>
+    <details id="testPanel" class="test-panel">
+      <summary>试玩完成后，提交体验反馈 <span>不上传数据，保存或复制结果</span></summary>
+      <div class="test-body">
+        <p>不收集姓名、手机号或设备识别码。以下回答只保存在当前页面，点击按钮后由你自行发送给测试组织者。</p>
+        <fieldset><legend>刚开始30秒，你理解怎么玩了吗？</legend>
+          <label><input type="radio" name="understood" value="yes"> 理解了</label>
+          <label><input type="radio" name="understood" value="partial"> 有点不清楚</label>
+          <label><input type="radio" name="understood" value="no"> 没理解</label>
+        </fieldset>
+        <fieldset><legend>完成5关后，还想玩更多关卡吗？</legend>
+          <label><input type="radio" name="continue" value="yes"> 想</label>
+          <label><input type="radio" name="continue" value="maybe"> 看情况</label>
+          <label><input type="radio" name="continue" value="no"> 不想</label>
+        </fieldset>
+        <label class="test-select-label" for="obstacle">最影响体验的地方</label>
+        <select id="obstacle">
+          <option value="none">没有明显问题</option>
+          <option value="rules">看不懂房门规则</option>
+          <option value="selection">选择房卡不直观</option>
+          <option value="rotate">旋转方向不清楚</option>
+          <option value="scroll">地图与操作区需要来回滚动</option>
+          <option value="difficulty">关卡太难或太简单</option>
+          <option value="other">其他</option>
+        </select>
+        <label class="test-select-label" for="feedbackText">其他建议（选填，不填个人信息）</label>
+        <textarea id="feedbackText" maxlength="250" rows="2" placeholder="哪一关卡住了？为什么？"></textarea>
+        <div class="test-actions">
+          <button type="button" id="downloadReport">保存体验报告</button>
+          <button type="button" id="copyReport">复制体验反馈</button>
+        </div>
+        <p class="test-message" id="testMessage" role="status"></p>
+      </div>
+    </details>
+    <footer class="foot">原创玩法测试 V0.2 · 不主动上传游戏进度和反馈数据、无账号 · 仅在当前设备保存测试进度<br><span class="kbd">电脑快捷键：R 旋转 · Ctrl/⌘+Z 撤销</span></footer>
+  </main>
+  <script>
+/* G01-A: original standalone game engine, no third-party code. */
+(function (root, factory) {
+  const api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  root.G01Core = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  'use strict';
+  const N = 1, E = 2, S = 4, W = 8;
+  const DIRS = [
+    { dr: -1, dc: 0, bit: N, opposite: S, label: '北' },
+    { dr: 0, dc: 1, bit: E, opposite: W, label: '东' },
+    { dr: 1, dc: 0, bit: S, opposite: N, label: '南' },
+    { dr: 0, dc: -1, bit: W, opposite: E, label: '西' }
+  ];
+  const ROOMS = Object.freeze({
+    straight: { label: '直通房', doors: N | S, icon: '通' },
+    corner: { label: '转角房', doors: N | E, icon: '转' },
+    tee: { label: '三岔房', doors: N | E | W, icon: '岔' },
+    cross: { label: '四通房', doors: N | E | S | W, icon: '十' },
+    key: { label: '钥匙房', doors: N | S, icon: '钥' },
+    switch: { label: '开关房', doors: N | S, icon: '机' }
+  });
+  const definitions = [
+    {
+      id: 'G01-01', name: '第一扇门', description: '只差一间房：把入口和出口连接起来。',
+      teaching: '点击房卡、旋转方向，再点击地图中的空格。', rows: 3, cols: 3,
+      start: 3, exit: 5, startDoors: E, exitDoors: W, slots: [4], budget: 1,
+      offers: [['straight', 'corner', 'tee']], required: [], fixed: {}
+    },
+    {
+      id: 'G01-02', name: '两个拐角', description: '房间可旋转；需要让门两两对接。',
+      teaching: '上、右、下、左的房门只有与邻居对齐才能通行。', rows: 3, cols: 3,
+      start: 6, exit: 1, startDoors: N, exitDoors: S, slots: [3, 4], budget: 2,
+      offers: [['corner', 'straight', 'tee'], ['straight', 'corner', 'cross']], required: [], fixed: {}
+    },
+    {
+      id: 'G01-03', name: '锁住的出口', description: '先路过钥匙房，才能开启出口。',
+      teaching: '本关有钥匙条件：路线经过钥匙房才会获得钥匙。', rows: 3, cols: 3,
+      start: 6, exit: 5, startDoors: E, exitDoors: S, slots: [7, 8], budget: 2,
+      offers: [['key', 'corner', 'straight'], ['straight', 'corner', 'tee']], required: ['key'], fixed: {}
+    },
+    {
+      id: 'G01-04', name: '先打开机关', description: '开关房已经在地图上；经过它才能打开出口。',
+      teaching: '房间相邻不代表连通，注意门口方向。', rows: 3, cols: 3,
+      start: 6, exit: 2, startDoors: E, exitDoors: S, slots: [8, 5], budget: 2,
+      offers: [['corner', 'straight', 'tee'], ['straight', 'corner', 'cross']],
+      required: ['switch'], fixed: { 7: { kind: 'switch', doors: E | W } }
+    },
+    {
+      id: 'G01-05', name: '双重门禁', description: '三张房卡、两道条件：带上钥匙并启动机关。',
+      teaching: '三选一有取舍；放错了可以撤销，不必重来。', rows: 4, cols: 4,
+      start: 12, exit: 7, startDoors: E, exitDoors: W, slots: [13, 14, 6], budget: 3,
+      offers: [['key', 'straight', 'tee'], ['corner', 'straight', 'tee'], ['corner', 'cross', 'straight']],
+      required: ['key', 'switch'], fixed: { 10: { kind: 'switch', doors: N | S } }
+    }
+  ];
+
+  function rotate(mask, times) {
+    let m = mask;
+    for (let i = 0; i < ((times % 4) + 4) % 4; i++) {
+      m = ((m << 1) & 15) | ((m & 8) >> 3);
+    }
+    return m;
+  }
+  function roomAt(level, placements, index) {
+    if (index === level.start) return { kind: 'start', doors: level.startDoors, fixed: true };
+    if (index === level.exit) return { kind: 'exit', doors: level.exitDoors, fixed: true };
+    if (Object.prototype.hasOwnProperty.call(level.fixed, index)) return { ...level.fixed[index], fixed: true };
+    const placed = placements.find(p => p.index === index);
+    return placed ? { ...placed, fixed: false } : null;
+  }
+  function create(levelIndex) {
+    const level = definitions[levelIndex];
+    if (!level) throw new Error('找不到关卡');
+    return { levelIndex, placements: [], turn: 0, history: [] };
+  }
+  function place(state, cardIndex, cellIndex, rotation) {
+    const level = definitions[state.levelIndex];
+    if (state.turn >= level.budget) throw new Error('本关房卡已用完，请尝试撤销');
+    if (!level.slots.includes(cellIndex)) throw new Error('这里不能放置房间');
+    if (roomAt(level, state.placements, cellIndex)) throw new Error('这个格子已经有房间');
+    const kind = level.offers[state.turn][cardIndex];
+    if (!kind || !ROOMS[kind]) throw new Error('请选择一张可用的房卡');
+    const p = { kind, doors: rotate(ROOMS[kind].doors, rotation), index: cellIndex, rotation: rotation % 4 };
+    return {
+      ...state,
+      placements: [...state.placements, p],
+      turn: state.turn + 1,
+      history: [...state.history, { placements: state.placements.slice(), turn: state.turn }]
+    };
+  }
+  function undo(state) {
+    if (!state.history.length) return state;
+    const prev = state.history[state.history.length - 1];
+    return { ...state, placements: prev.placements.slice(), turn: prev.turn, history: state.history.slice(0, -1) };
+  }
+  function neighbor(level, index, direction) {
+    const row = Math.floor(index / level.cols), col = index % level.cols;
+    const rr = row + direction.dr, cc = col + direction.dc;
+    return rr >= 0 && rr < level.rows && cc >= 0 && cc < level.cols ? rr * level.cols + cc : -1;
+  }
+  function connectedNeighbors(level, placements, index) {
+    const room = roomAt(level, placements, index);
+    if (!room) return [];
+    const result = [];
+    for (const dir of DIRS) {
+      if (!(room.doors & dir.bit)) continue;
+      const next = neighbor(level, index, dir);
+      if (next === -1) continue;
+      const other = roomAt(level, placements, next);
+      if (other && (other.doors & dir.opposite)) result.push(next);
+    }
+    return result;
+  }
+  function flood(level, placements) {
+    const seen = new Set([level.start]), queue = [level.start];
+    for (let i = 0; i < queue.length; i++) {
+      for (const next of connectedNeighbors(level, placements, queue[i])) {
+        if (!seen.has(next)) { seen.add(next); queue.push(next); }
+      }
+    }
+    return seen;
+  }
+  function check(state) {
+    const level = definitions[state.levelIndex];
+    const reachable = flood(level, state.placements);
+    const needs = level.required.reduce((mask, kind) => mask | (kind === 'key' ? 1 : 2), 0);
+    const queue = [{ cell: level.start, flags: 0, path: [level.start] }];
+    const visited = new Set([`${level.start}:0`]);
+    let bestFlags = 0;
+    for (let i = 0; i < queue.length; i++) {
+      const current = queue[i];
+      bestFlags |= current.flags;
+      if (current.cell === level.exit && (current.flags & needs) === needs) {
+        return { win: true, reachable: [...reachable], path: current.path, key: Boolean(current.flags & 1), switchOn: Boolean(current.flags & 2), cause: '全部条件满足，逃出成功！' };
+      }
+      for (const next of connectedNeighbors(level, state.placements, current.cell)) {
+        const room = roomAt(level, state.placements, next);
+        const flags = current.flags | (room.kind === 'key' ? 1 : 0) | (room.kind === 'switch' ? 2 : 0);
+        const sig = `${next}:${flags}`;
+        if (!visited.has(sig)) {
+          visited.add(sig);
+          queue.push({ cell: next, flags, path: [...current.path, next] });
+        }
+      }
+    }
+    if (!reachable.has(level.exit)) {
+      return { win: false, reachable: [...reachable], key: !!(bestFlags & 1), switchOn: !!(bestFlags & 2), cause: '出口还没有连通，检查房门方向与缺失的房间。' };
+    }
+    const missing = [];
+    if ((needs & 1) && !(bestFlags & 1)) missing.push('钥匙');
+    if ((needs & 2) && !(bestFlags & 2)) missing.push('机关');
+    return { win: false, reachable: [...reachable], key: !!(bestFlags & 1), switchOn: !!(bestFlags & 2), cause: `虽然连到了出口，但还缺少：${missing.join('、')}。` };
+  }
+  function solutions(state, cap = 1) {
+    const level = definitions[state.levelIndex];
+    const found = [];
+    let visitedStates = 0;
+    const seen = new Set();
+    function dfs(placements, turn, moves) {
+      if (found.length >= cap) return;
+      const cur = { levelIndex: state.levelIndex, placements, turn, history: [] };
+      if (check(cur).win) { found.push(moves); return; }
+      if (turn >= level.budget) return;
+      const key = `${turn}:${placements.map(p => `${p.index}-${p.kind}-${p.doors}`).sort().join(';')}`;
+      if (seen.has(key)) return;
+      seen.add(key); visitedStates++;
+      if (visitedStates > 60000) return;
+      for (const cell of level.slots) {
+        if (roomAt(level, placements, cell)) continue;
+        for (let c = 0; c < level.offers[turn].length; c++) {
+          const kind = level.offers[turn][c];
+          const distinct = new Set();
+          for (let rot = 0; rot < 4; rot++) {
+            const doors = rotate(ROOMS[kind].doors, rot);
+            if (distinct.has(doors)) continue;
+            distinct.add(doors);
+            const next = { kind, doors, index: cell, rotation: rot };
+            dfs([...placements, next], turn + 1, [...moves, { kind, cardIndex: c, cellIndex: cell, rotation: rot }]);
+            if (found.length >= cap) return;
+          }
+        }
+      }
+    }
+    dfs(state.placements, state.turn, []);
+    return found;
+  }
+  function validateLevel(levelIndex) {
+    const level = definitions[levelIndex];
+    const allowed = new Set([level.start, level.exit, ...level.slots, ...Object.keys(level.fixed).map(Number)]);
+    if (allowed.size !== level.slots.length + 2 + Object.keys(level.fixed).length) throw new Error('房间位置发生重叠');
+    if (Math.max(...allowed) >= level.rows * level.cols || Math.min(...allowed) < 0) throw new Error('房间位置出界');
+    if (level.offers.length !== level.budget) throw new Error('卡牌轮次与步数不匹配');
+    const solutionsFound = solutions(create(levelIndex), 1);
+    if (solutionsFound.length === 0) throw new Error(`关卡${level.id}无解`);
+    const witness = solutionsFound[0];
+    let state = create(levelIndex);
+    for (const move of witness) state = place(state, move.cardIndex, move.cellIndex, move.rotation);
+    if (!check(state).win) throw new Error('求解回放与判定不一致');
+    return { id: level.id, solved: true, witness };
+  }
+  return { N, E, S, W, DIRS, ROOMS, levels: definitions, rotate, roomAt, neighbor, connectedNeighbors, flood, create, place, undo, check, solutions, validateLevel };
+});
+
+</script>
+  <script>
+/* G01-B mobile trial: no network calls; progress and voluntary tester report remain local. */
+(function () {
+  'use strict';
+  const core = window.G01Core;
+  const $ = (s) => document.querySelector(s);
+  const els = {
+    levels: $('#levels'), title: $('#levelTitle'), desc: $('#levelDesc'), teaching: $('#teaching'),
+    board: $('#board'), boardMeta: $('#boardMeta'), deck: $('#deck'), deckCount: $('#deckCount'),
+    needs: $('#requirements'), status: $('#feedback'), rotate: $('#rotate'), undo: $('#undo'),
+    retry: $('#retry'), hint: $('#hint'), check: $('#check'), next: $('#nextWrap'), nextBtn: $('#nextBtn'),
+    guide: $('#guide'), coach: $('#coach'),
+    copyReport: $('#copyReport'), downloadReport: $('#downloadReport'),
+    testMessage: $('#testMessage'), obstacle: $('#obstacle'), feedbackText: $('#feedbackText')
+  };
+  const SAVE_KEY = 'g01-a.roompath.prototype.v0.1'; // preserve G01-A progress on same origin
+  const TEST_KEY = 'g01-b.local-trial.v0.2';
+  let completed = [];
+  let state = core.create(0);
+  let chosen = 0;
+  let rotation = 0;
+  let hintCell = null;
+  let winningPath = [];
+  let won = false;
+  let lastMessage = '';
+  let lastKind = '';
+  let cardTouched = false;
+  function newMetrics() {
+    return { schema: 1, openedAt: new Date().toISOString(), visitDates: [], firstPlacementSeconds: null,
+      firstWinSeconds: null, actions: {}, levelWins: [], completedAt: null };
+  }
+  function loadMetrics() {
+    try {
+      const stored = JSON.parse(localStorage.getItem(TEST_KEY) || 'null');
+      if (stored && stored.schema === 1 && stored.actions && Array.isArray(stored.levelWins)) return stored;
+    } catch (e) { /* storage may be disabled */ }
+    return newMetrics();
+  }
+  let metrics = loadMetrics();
+  const localDay = () => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  };
+  if (!Array.isArray(metrics.visitDates)) metrics.visitDates = [];
+  if (!metrics.visitDates.includes(localDay())) metrics.visitDates.push(localDay());
+  function persistMetrics() {
+    try { localStorage.setItem(TEST_KEY, JSON.stringify(metrics)); } catch (e) { /* local only */ }
+  }
+  persistMetrics();
+  function track(action) {
+    metrics.actions[action] = (metrics.actions[action] || 0) + 1;
+    persistMetrics();
+  }
+  function firstElapsed() { return Math.max(0, Math.round((Date.now() - Date.parse(metrics.openedAt)) / 1000)); }
+  function renderCoach() {
+    els.deck.classList.remove('coach-target');
+    els.rotate.classList.remove('coach-target');
+    els.board.classList.remove('coach-target');
+    els.check.classList.remove('coach-target');
+    if (state.levelIndex !== 0) { els.coach.hidden = true; return; }
+    els.coach.hidden = false;
+    const level = core.levels[state.levelIndex];
+    if (won) { els.coach.textContent = '✓ 第一关完成！点“继续下一关”体验新规则。'; return; }
+    if (state.turn > 0) {
+      els.coach.textContent = '第4步：点“试逃脱”，检查有没有连接成功。';
+      els.check.classList.add('coach-target'); return;
+    }
+    if (!cardTouched) {
+      els.coach.textContent = '第1步：先点下面任意一张房卡。';
+      els.deck.classList.add('coach-target'); return;
+    }
+    const kind = level.offers[0][chosen];
+    const base = core.ROOMS[kind].doors;
+    const canConnect = ((core.rotate(base, rotation) & (core.E | core.W)) === (core.E | core.W));
+    const canEverConnect = [0,1,2,3].some(n => ((core.rotate(base,n) & (core.E|core.W)) === (core.E|core.W)));
+    if (!canEverConnect) {
+      els.coach.textContent = '这张房卡无法同时连接左右两个门。试着改选直通房或三岔房。';
+      els.deck.classList.add('coach-target'); return;
+    }
+    if (!canConnect) {
+      els.coach.textContent = '第2步：点“旋转房间”，让黄色门口指向左右。';
+      els.rotate.classList.add('coach-target'); return;
+    }
+    els.coach.textContent = '第3步：方向正确！现在点地图中间的“＋”放置房间。';
+    els.board.classList.add('coach-target');
+  }
+
+
+  function safeLoad() {
+    try {
+      const obj = JSON.parse(localStorage.getItem(SAVE_KEY) || '{}');
+      completed = Array.isArray(obj.completed) ? obj.completed.filter(x => Number.isInteger(x) && x >= 0 && x < core.levels.length) : [];
+      if (!Number.isInteger(obj.levelIndex) || obj.levelIndex < 0 || obj.levelIndex >= core.levels.length) return;
+      let reconstructed = core.create(obj.levelIndex);
+      if (Array.isArray(obj.moves)) {
+        for (const move of obj.moves) {
+          if (!move || !Number.isInteger(move.cardIndex) || !Number.isInteger(move.cellIndex) || !Number.isInteger(move.rotation)) return;
+          reconstructed = core.place(reconstructed, move.cardIndex, move.cellIndex, move.rotation);
+        }
+      }
+      state = reconstructed;
+    } catch (err) {
+      state = core.create(0);
+    }
+  }
+  function persist() {
+    try {
+      const level = core.levels[state.levelIndex];
+      localStorage.setItem(SAVE_KEY, JSON.stringify({
+        version: 1,
+        completed,
+        levelIndex: state.levelIndex,
+        moves: state.placements.map((p, turn) => ({
+          cardIndex: level.offers[turn].indexOf(p.kind), cellIndex: p.index, rotation: p.rotation
+        }))
+      }));
+    } catch (err) { /* Private browsing may disable persistent storage; gameplay still works. */ }
+  }
+  function explain(message, type = '') {
+    lastMessage = message;
+    lastKind = type;
+    els.status.textContent = message;
+    els.status.className = `feedback ${type}`;
+  }
+  function smallRoom(kind, doors, mini = false) {
+    const el = document.createElement('div');
+    el.className = mini ? 'card-preview' : 'cell-center';
+    const glyph = document.createElement('span');
+    glyph.className = mini ? '' : 'cell-symbol';
+    glyph.textContent = ({start:'入',exit:'出',key:'钥',switch:'机',straight:'直',corner:'转',tee:'岔',cross:'十'})[kind] || '';
+    el.appendChild(glyph);
+    if (!mini) {
+      const label = document.createElement('span');
+      label.className = 'cell-label';
+      label.textContent = ({start:'入口',exit:'出口',key:'钥匙',switch:'机关',straight:'直通',corner:'转角',tee:'三岔',cross:'四通'})[kind] || '';
+      el.appendChild(label);
+    }
+    for (const {bit, label} of core.DIRS) {
+      if (!(doors & bit)) continue;
+      const door = document.createElement('span');
+      door.className = `door ${({北:'n',东:'e',南:'s',西:'w'})[label]}`;
+      el.appendChild(door);
+    }
+    return el;
+  }
+  function renderLevels() {
+    els.levels.replaceChildren();
+    core.levels.forEach((level, i) => {
+      const b = document.createElement('button');
+      b.className = `level-btn${state.levelIndex === i ? ' active' : ''}${completed.includes(i) ? ' done' : ''}`;
+      b.type = 'button';
+      b.setAttribute('aria-label', `第${i+1}关 ${level.name}${completed.includes(i) ? '，已通关' : ''}`);
+      b.textContent = `0${i + 1}`;
+      if (completed.includes(i)) {
+        const span = document.createElement('span');
+        span.className = 'tiny-check'; span.textContent = '✓'; b.appendChild(span);
+      }
+      b.addEventListener('click', () => startLevel(i));
+      els.levels.appendChild(b);
+    });
+  }
+  function renderBoard() {
+    const level = core.levels[state.levelIndex];
+    const res = core.check(state);
+    const connected = new Set(res.reachable);
+    const route = new Set(winningPath);
+    els.board.style.setProperty('--cols', level.cols);
+    els.board.style.setProperty('--rows', level.rows);
+    els.board.replaceChildren();
+    els.boardMeta.textContent = `${level.rows} × ${level.cols} 房间地图`;
+    for (let idx = 0; idx < level.rows * level.cols; idx++) {
+      const room = core.roomAt(level, state.placements, idx);
+      const slot = level.slots.includes(idx);
+      const b = document.createElement('button');
+      b.type = 'button';
+      let className = 'cell';
+      if (room) className += ` room ${room.kind}`;
+      else className += slot ? ' blank' : ' wall';
+      if (room && connected.has(idx)) className += ' reachable';
+      if (room && route.has(idx)) className += ' route';
+      if (hintCell === idx && !room) className += ' hintcell';
+      b.className = className;
+      const row = Math.floor(idx / level.cols) + 1;
+      const col = idx % level.cols + 1;
+      b.setAttribute('aria-label', `${row}行${col}列，${room ? (core.ROOMS[room.kind]?.label || (room.kind==='start'?'入口':'出口')) : slot ? '可以放置房间' : '墙壁'}`);
+      if (room) b.appendChild(smallRoom(room.kind, room.doors));
+      else if (slot) {
+        const center = document.createElement('div'); center.className='cell-center';
+        center.innerHTML = '<span class="cell-symbol">＋</span><span class="cell-label">放房间</span>';
+        b.appendChild(center);
+      }
+      if (!slot || room || won) b.disabled = true;
+      if (slot && !room && !won) b.addEventListener('click', () => onPlace(idx));
+      els.board.appendChild(b);
+    }
+    els.needs.replaceChildren();
+    level.required.forEach(kind => {
+      const el = document.createElement('span');
+      const met = kind === 'key' ? res.key : res.switchOn;
+      el.className = `requirement${met ? ' met' : ''}`;
+      el.textContent = `${met ? '✓' : '○'} ${kind === 'key' ? '路线取得钥匙' : '路线触发机关'}`;
+      els.needs.appendChild(el);
+    });
+  }
+  function renderCards() {
+    const level = core.levels[state.levelIndex];
+    els.deck.replaceChildren();
+    els.deckCount.textContent = `${state.turn} / ${level.budget} 张已放置`;
+    const options = level.offers[state.turn];
+    if (won || !options) {
+      const p = document.createElement('div');
+      p.className = 'empty-deck';
+      p.textContent = won ? '本关成功！可以继续下一关。' : '房卡已经放完。点击「试逃脱」或使用「撤销」。';
+      p.style.gridColumn = '1 / -1'; els.deck.appendChild(p); return;
+    }
+    options.forEach((kind, idx) => {
+      const b = document.createElement('button'); b.type='button';
+      b.className = `card${cardTouched && chosen === idx ? ' selected' : ''}`;
+      b.setAttribute('aria-pressed', String(cardTouched && chosen === idx));
+      b.setAttribute('aria-label', `${core.ROOMS[kind].label}${cardTouched && chosen === idx ? '，当前选中' : ''}`);
+      b.appendChild(smallRoom(kind, core.rotate(core.ROOMS[kind].doors, chosen === idx && cardTouched ? rotation : 0), true));
+      const name = document.createElement('span'); name.className = 'card-name'; name.textContent = core.ROOMS[kind].label;
+      const note = document.createElement('span'); note.className = 'card-note'; note.textContent = chosen === idx && cardTouched ? `已旋转 ${rotation * 90}°` : '点击选择';
+      b.append(name, note);
+      b.addEventListener('click', () => { chosen = idx; rotation = 0; cardTouched = true; track('selectCard'); hintCell = null; render(); explain(`已选择「${core.ROOMS[kind].label}」。点击“旋转房间”，然后点地图中的「＋」放置。`); });
+      els.deck.appendChild(b);
+    });
+  }
+  function render() {
+    const level = core.levels[state.levelIndex];
+    renderLevels();
+    els.title.textContent = level.name;
+    els.desc.textContent = level.description;
+    els.teaching.textContent = level.teaching;
+    els.guide.textContent = `第 ${state.levelIndex + 1} / 5 关`;
+    renderBoard(); renderCards();
+    els.rotate.disabled = won || state.turn >= level.budget || !cardTouched;
+    els.undo.disabled = won || state.turn === 0;
+    els.hint.disabled = won;
+    els.check.disabled = won;
+    els.next.hidden = !won;
+    if (won) { els.nextBtn.textContent = state.levelIndex === 4 ? '已完成全部5关 · 再玩第一关' : '继续下一关 →'; }
+    renderCoach();
+  }
+  function onPlace(index) {
+    try {
+      if (won) return;
+      if (!cardTouched) {
+        track('earlyPlace'); explain('先点下方一张房卡，再决定旋转和放置位置。', 'warn'); return;
+      }
+      state = core.place(state, chosen, index, rotation);
+      hintCell = null; chosen = 0; rotation = 0; cardTouched = false;
+      if (metrics.firstPlacementSeconds === null) metrics.firstPlacementSeconds = firstElapsed();
+      track('placeRoom');
+      persist(); render();
+      const level = core.levels[state.levelIndex];
+      explain(state.turn < level.budget ? '房间已放置。观察门是否连通，继续选择下一张房卡。' : '最后一张房卡已放置！点击「试逃脱」检查是否满足条件。');
+    } catch(err) { track('invalidPlace'); explain(err.message, 'warn'); }
+  }
+  function startLevel(index) {
+    if (completed.includes(index)) track('revisitCompleted');
+    track('startLevel');
+    state = core.create(index); chosen = 0; rotation = 0; cardTouched = false; hintCell = null; won = false; winningPath = [];
+    persist(); render();
+    explain(index === 0 ? '选择一张房卡，可以顺时针旋转，再点击带「＋」的空位放置。' : '房卡每轮只能选择一张。注意房门必须两端对齐，过关条件都需要满足。');
+  }
+  function tryEscape() {
+    track('tryEscape');
+    const res = core.check(state);
+    if (res.win) {
+      won = true; winningPath = res.path;
+      if (!completed.includes(state.levelIndex)) completed.push(state.levelIndex);
+      if (!metrics.levelWins.includes(state.levelIndex + 1)) metrics.levelWins.push(state.levelIndex + 1);
+      if (metrics.firstWinSeconds === null) metrics.firstWinSeconds = firstElapsed();
+      if (completed.length === 5 && !metrics.completedAt) metrics.completedAt = new Date().toISOString();
+      track('levelWin');
+      persist(); render(); explain(`成功逃出！路线经过 ${res.path.length} 间房。${state.levelIndex === 4 ? '五关全部完成，恭喜！' : '下一关有新机制。'}`, 'good');
+    } else {
+      track('failedEscape');
+      const level = core.levels[state.levelIndex];
+      const suffix = state.turn >= level.budget ? ' 本轮已经放完房卡；可以撤销修改或重玩。' : ' 还可以放置房间或使用提示。';
+      explain(res.cause + suffix, 'warn');
+    }
+  }
+  function giveHint() {
+    track('hint');
+    const found = core.solutions(state, 1);
+    if (!found.length) { hintCell = null; render(); explain('当前摆法已经无法满足通关条件。请点击「撤销」调整上一张房卡。', 'warn'); return; }
+    if (!found[0].length) { explain('路线已经满足条件，点击「试逃脱」即可！', 'good'); return; }
+    const move = found[0][0];
+    const level = core.levels[state.levelIndex];
+    hintCell = move.cellIndex;
+    chosen = move.cardIndex;
+    cardTouched = true;
+    rotation = move.rotation;
+    render();
+    explain(`提示：选择「${core.ROOMS[move.kind].label}」，旋转 ${move.rotation * 90}°，放在第${Math.floor(move.cellIndex / level.cols)+1}行第${(move.cellIndex % level.cols)+1}列。`);
+  }
+  els.rotate.addEventListener('click', () => { track('rotate'); rotation = (rotation + 1) % 4; hintCell=null; render(); explain(`已顺时针旋转到 ${rotation * 90}°，现在点地图空位即可放置。`); });
+  els.undo.addEventListener('click', () => { track('undo'); state=core.undo(state); chosen=0; rotation=0; cardTouched=false; hintCell=null; winningPath=[]; persist(); render(); explain('已撤销上一张房卡，可以重新选择房间和方向。'); });
+  els.retry.addEventListener('click', () => {track('retry'); startLevel(state.levelIndex);});
+  els.hint.addEventListener('click', giveHint);
+  els.check.addEventListener('click', tryEscape);
+  els.nextBtn.addEventListener('click', () => startLevel((state.levelIndex+1)%5));
+  document.addEventListener('keydown', (event) => {
+    if (event.key.toLowerCase() === 'r' && !els.rotate.disabled) els.rotate.click();
+    if (event.key.toLowerCase() === 'z' && (event.ctrlKey || event.metaKey) && !els.undo.disabled) { event.preventDefault(); els.undo.click(); }
+  });
+  function report() {
+    const selected = (name) => document.querySelector(`input[name="${name}"]:checked`)?.value || 'not_answered';
+    return {
+      product: '今晚拼出路 G01-B V0.2', exportedAt: new Date().toISOString(),
+      trial: { firstOpened: metrics.openedAt, visitDates: [...metrics.visitDates], firstPlacementSeconds: metrics.firstPlacementSeconds,
+        firstWinSeconds: metrics.firstWinSeconds, levelsWon: [...metrics.levelWins].sort(),
+        actions: { ...metrics.actions }, allFiveCompleted: Boolean(metrics.completedAt) },
+      feedback: { understoodIn30Seconds: selected('understood'), wantsMoreLevels: selected('continue'),
+        biggestObstacle: els.obstacle.value, note: els.feedbackText.value.trim().slice(0,250) },
+      environment: { viewport: `${window.innerWidth}x${window.innerHeight}`, urlProtocol: location.protocol },
+      note: '本报告由玩家主动导出或复制，游戏本身不上传答题或反馈数据。网页托管服务可能记录常规访问日志；指标来自本机记录，不代表实际留存率。'
+    };
+  }
+  els.downloadReport.addEventListener('click', () => {
+    const json = JSON.stringify(report(), null, 2);
+    const blob = new Blob([json], {type:'application/json;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url; anchor.download = '今晚拼出路_试玩反馈_G01-B.json';
+    document.body.appendChild(anchor); anchor.click(); anchor.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+    els.testMessage.textContent = '已请求浏览器保存报告。保存后可以自行发送给测试组织者。';
+  });
+  els.copyReport.addEventListener('click', async () => {
+    const f = report();
+    const text = `试玩G01-B\n完成关卡：${f.trial.levelsWon.join('、') || '无'}\n首个放置用时：${f.trial.firstPlacementSeconds ?? '未记录'}秒\n30秒内理解规则：${f.feedback.understoodIn30Seconds}\n是否想继续：${f.feedback.wantsMoreLevels}\n最困扰：${f.feedback.biggestObstacle}\n其他：${f.feedback.note || '无'}\n操作统计：${JSON.stringify(f.trial.actions)}`;
+    if (!navigator.clipboard?.writeText) { els.testMessage.textContent = '当前浏览器不能直接复制，请使用“保存体验报告”。'; return; }
+    try { await navigator.clipboard.writeText(text); els.testMessage.textContent = '体验反馈已复制，请自行粘贴发送。'; }
+    catch (e) { els.testMessage.textContent = '复制被浏览器阻止，请使用“保存体验报告”。'; }
+  });
+  safeLoad();
+  render();
+  explain('点击下方房卡选择房间 → 旋转 → 点击地图「＋」放置。放好后试逃脱。');
+})();
+
+</script>
+</body>
+</html>
