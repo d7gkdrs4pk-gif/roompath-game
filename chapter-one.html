@@ -274,7 +274,7 @@ const readLocal=(key)=>{try{return JSON.parse(localStorage.getItem(key)||'null')
 const prior=readLocal(KEY),legacy=readLocal(OLD_KEY);
 const achievements={};for(const l of levels)for(const p of l.patterns)achievements[p.badge]=!!(prior?.achievements?.[p.badge] || ((p.badge==='power'||p.badge==='lift'||p.badge==='stairs')&&legacy?.achievements?.[p.badge]));
 const stageComplete=i=>levels[i].patterns.some(p=>achievements[p.badge]);
-const unlocked=i=>i<=1 || stageComplete(i-1);
+const unlocked=i=>i===0 || stageComplete(i-1) || (i===1&&(achievements.lift||achievements.stairs));
 const defaultStage=()=>{for(let j=0;j<levels.length;j++)if(!stageComplete(j)&&unlocked(j))return j;return 5;};
 let index=(Number.isInteger(prior?.stage)&&prior.stage>=0&&prior.stage<levels.length&&unlocked(prior.stage))?prior.stage:defaultStage();
 let selected=[],choice=null,rotation=0,placed=null,winPath=[],lastBeat={text:'◈ 有效的线索会亮起；每次过关可获得新徽章。',type:''};
