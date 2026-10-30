@@ -1119,6 +1119,98 @@ body{height:100dvh;min-height:0!important}
  #successOverlay .reward-scroll:after{top:100px;font-size:7.5px}
 }
 
+
+/* === G01-E V0.7.4 | restrained window-rain + readable story ===
+   Presentation only. Core stages, decisions, scoring, rewards and storage untouched. */
+/* A sparse field of short rain drops replaces the full-screen conveyor-belt diagonals. */
+.cinema-rain{
+  position:absolute;inset:0;z-index:4;pointer-events:none;
+  background:none!important;background-image:none!important;
+  overflow:hidden;opacity:var(--rain-strength,.48);mix-blend-mode:screen;
+  mask-image:linear-gradient(90deg,#000 0%,#0009 21%,transparent 38%,transparent 68%,#0008 82%,#000 100%);
+  -webkit-mask-image:linear-gradient(90deg,#000 0%,#0009 21%,transparent 38%,transparent 68%,#0008 82%,#000 100%);
+  animation:none!important;transition:opacity .7s ease;
+}
+.cinema-rain .rain-drop{
+  position:absolute;top:-54px;left:var(--rain-x);display:block;
+  width:var(--rain-w,1px);height:var(--rain-h,28px);border-radius:100%;
+  background:linear-gradient(180deg,transparent 0%,#8fdcff12 24%,#d5f5ffae 64%,transparent 100%);
+  opacity:var(--rain-opacity,.6);transform:rotate(12deg);
+  animation:rain-fall var(--rain-duration,5s) linear var(--rain-delay,0s) infinite;
+  will-change:transform;
+}
+.cinema-rain .rain-drop.near{filter:drop-shadow(0 0 2px #b3ebff66)}
+@keyframes rain-fall{from{transform:translate3d(0,-40px,0) rotate(12deg)}to{transform:translate3d(-26px,calc(100dvh + 110px),0) rotate(12deg)}}
+/* Disable the older pseudo-rain in the hidden legacy scene. */
+.scene-art .depth-rain{animation:none!important;background:none!important;opacity:0!important}
+body[data-act="1"]{--act-aura:#182a64;--read-accent:#8eaaff;--rain-strength:.74}
+body[data-act="2"]{--act-aura:#17384d;--read-accent:#ffbd89;--rain-strength:.66}
+body[data-act="3"]{--act-aura:#153b48;--read-accent:#79ebd7;--rain-strength:.38}
+body[data-act="4"]{--act-aura:#282450;--read-accent:#cbb4ff;--rain-strength:.26}
+body[data-act="5"]{--act-aura:#381f4d;--read-accent:#eb9bd9;--rain-strength:.18}
+body[data-act="6"]{--act-aura:#492054;--read-accent:#ffcf91;--rain-strength:0}
+body[data-act] .cinema-backdrop{
+ background:radial-gradient(ellipse at 50% 42%,var(--cinema-glow),transparent 44%),radial-gradient(ellipse at 46% 66%,var(--act-aura),transparent 75%),linear-gradient(160deg,#060920,#0b1229 58%,#090818);
+ transition:filter .5s ease,background-color .5s ease;
+}
+body[data-omen="name"] .cinema-neon{filter:drop-shadow(2px 0 3px #60ffee) brightness(1.25)}
+body[data-omen="time"] .cinema-neon{filter:brightness(1.40);text-shadow:3px 0 #82f7fa,-3px 0 #dc69ff,0 0 27px #d35df5}
+body[data-omen="mirror"] .cinema-fore svg{filter:drop-shadow(4px 0 1px #f66fd0) drop-shadow(-4px 0 1px #65c7ff)}
+body[data-omen="truth"] .cinema-corridor{filter:hue-rotate(14deg) saturate(1.22)}
+/* Reading hierarchy: the stage story is the primary content, not decorative microcopy. */
+.view-landing:not([hidden]){overflow-y:auto!important;overflow-x:hidden!important;padding-bottom:calc(20px + env(safe-area-inset-bottom));scroll-padding-bottom:22px;gap:0}
+.view-landing h1{font-size:clamp(36px,10.5vw,53px)!important;line-height:1.1!important;margin-bottom:6px!important}
+.view-landing h1 em{font-size:.84em}
+.view-landing .cover-kicker{margin-bottom:6px!important}
+.view-landing .intro{font-size:clamp(13px,3.6vw,15px)!important;line-height:1.58!important;margin:5px 0 9px!important;max-width:36ch}
+.view-landing .cinema-chapters{margin:3px 0 1px}
+.view-landing .scene-prologue{
+ margin:clamp(12px,2.4dvh,24px) 0 10px!important;
+ flex:0 0 auto!important;min-height:0!important;max-height:none!important;
+ align-self:stretch;overflow:visible!important;justify-content:flex-start!important;
+}
+.view-landing .scene-prologue .scene-copy{
+ padding:13px 15px 14px!important;min-width:0;
+ background:linear-gradient(155deg,#071225f5,#08182ce8)!important;
+ border-left:3px solid var(--read-accent,#f9c96d)!important;
+ box-shadow:0 12px 30px #000b,inset 0 0 0 1px #8ab6e51a!important;
+ backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.view-landing .scene-copy .scene-eyebrow{font-size:12px!important;line-height:1.35!important;letter-spacing:.015em!important;color:#ffe0a0!important;margin-bottom:5px!important}
+.view-landing .scene-copy h2{font-size:clamp(18px,4.8vw,21px)!important;line-height:1.37!important;margin:2px 0 7px!important;color:#fff4d9!important;letter-spacing:0!important}
+.view-landing .scene-copy p{font-size:16px!important;line-height:1.61!important;color:#f0f4ff!important;margin:4px 0 9px!important;overflow:visible!important;white-space:normal!important}
+.view-landing .scene-dialogue{
+ font-size:15px!important;line-height:1.5!important;font-weight:750!important;
+ margin-top:5px!important;padding:9px 11px!important;
+ color:#ffe8af!important;background:#111d3de8!important;
+ border:1px solid #c3a46780!important;border-left:3px solid #ffca79!important;
+ overflow-wrap:anywhere;
+}
+.view-landing .progress{min-height:28px!important;margin-bottom:10px!important;font-size:11px!important}
+.view-landing .progress strong,.view-landing .progress span:last-child{font-size:11px!important}
+.view-landing>.premium-cta{margin:0 0 10px!important;min-height:54px!important;flex-shrink:0!important}
+/* Stronger auxiliary narrative labels, with natural height instead of ellipsis. */
+.view-story .view-heading p,.view-route .view-heading p{font-size:14px!important;line-height:1.5!important;color:#f1f4ff!important}
+.view-story .frame .comic-name{font-size:14px!important;line-height:1.4!important}
+.view-story .frame .comic-line{font-size:12px!important;line-height:1.45!important}
+.view-story #storyInterlude,.view-story #storyEffect{font-size:13px!important;line-height:1.48!important}
+.view-story #storyEffect strong{font-size:14px!important}
+.view-story .story-choice small{font-size:11px!important}
+/* Respect both explicit motion toggle and OS reduced-motion preference. */
+body[data-motion="off"] .cinema-rain .rain-drop{animation:none!important;opacity:0!important}
+body[data-motion="off"] .cinema-rain{opacity:0!important;transition:none!important}
+body[data-motion="off"] .cinema-fore svg,body[data-motion="off"] .cinema-neon{filter:none!important}
+@media(prefers-reduced-motion:reduce){
+ .cinema-rain .rain-drop{animation:none!important;opacity:0!important}
+ .cinema-rain{opacity:0!important}
+ .cinema-neon,.cinema-fore svg,.cinema-corridor{filter:none!important;transition:none!important}
+}
+@media(max-width:340px){
+ .view-landing h1{font-size:36px!important}
+ .view-landing .scene-prologue .scene-copy{padding:12px 12px 13px!important}
+ .view-landing .scene-copy h2{font-size:18px!important}
+}
+
 </style>
 </head>
 <body>
@@ -1884,6 +1976,67 @@ window.G01Cinema=Object.freeze({version:'0.6',origin:'V0.1 three-SVG-plane visua
   for(const node of [...card.children]) if(node!==actions) body.appendChild(node);
   card.insertBefore(body,actions);
 })();
+</script>
+<script>
+/* G01-E V0.7.4: read-only visual adapter. No game-core/storage writes. */
+(() => {
+ 'use strict';
+ const body=document.body;
+ const badge=document.getElementById('chapterBadge');
+ const rain=document.querySelector('.cinema-rain');
+ if(!badge||!rain||!window.G01Chapter)return;
+ const drops=[
+  [4,22,4.9,-1.9,.68],[11,38,5.8,-4.2,.51],[17,24,4.2,-2.2,.65],
+  [22,29,6.3,-4.8,.43],[28,33,5.4,-2.1,.54],[34,22,4.6,-3.1,.58],
+  [39,28,7.1,-5.6,.42],[44,19,4.4,-.9,.53],[51,38,6.6,-4.0,.44],
+  [56,23,5.1,-3.3,.47],[62,26,7.0,-5.2,.51],[68,32,5.6,-1.9,.50],
+  [73,19,4.7,-3.9,.55],[79,27,6.7,-1.2,.39],[84,35,5.8,-3.6,.64],
+  [88,20,4.8,-1.7,.49],[92,37,6.2,-4.4,.53],[96,24,5.2,-2.7,.61]
+ ];
+ const frag=document.createDocumentFragment();
+ for(let i=0;i<drops.length;i++){
+   const [x,height,duration,delay,opacity]=drops[i];
+   const drop=document.createElement('span');
+   drop.className='rain-drop'+(i%5===0?' near':'');
+   drop.style.setProperty('--rain-x',x+'%');
+   drop.style.setProperty('--rain-h',height+'px');
+   drop.style.setProperty('--rain-duration',duration+'s');
+   drop.style.setProperty('--rain-delay',delay+'s');
+   drop.style.setProperty('--rain-opacity',String(opacity));
+   drop.style.setProperty('--rain-w',i%5===0?'1.5px':'1px');
+   frag.appendChild(drop);
+ }
+ rain.replaceChildren(frag);
+ const stageNumber=()=>Math.max(1,Math.min(6,Number(window.G01Chapter.stageNumber())||1));
+ let previous=0;
+ function syncAct(){
+  const current=stageNumber();
+  if(current!==previous){
+   previous=current;
+   body.dataset.act=String(current);
+   body.dataset.weather=current<=2?'rain':current<=5?'mist':'clear';
+   delete body.dataset.omen;
+  }
+ }
+ new MutationObserver(syncAct).observe(badge,{childList:true,subtree:true,characterData:true});
+ syncAct();
+ let omenTimeout=0;
+ document.addEventListener('click',e=>{
+  const target=e.target.closest('#storyChoices button,#storyFrames button,#toRoute,#beginStory');
+  if(!target)return;
+  const act=stageNumber();
+  const omen=({3:'name',4:'time',5:'mirror',6:'truth'})[act];
+  if(!omen||body.dataset.motion==='off'||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  if(omenTimeout)clearTimeout(omenTimeout);
+  body.dataset.omen=omen;
+  omenTimeout=setTimeout(()=>{delete body.dataset.omen;omenTimeout=0},650);
+ },{passive:true});
+ document.getElementById('motionToggle')?.addEventListener('click',()=>{
+  if(body.dataset.motion==='off')delete body.dataset.omen;
+ });
+ window.G01VisualV074=Object.freeze({stage:stageNumber,rainDrops:()=>rain.children.length,weather:()=>body.dataset.weather,version:'0.7.4'});
+})();
+
 </script>
 </body>
 </html>
