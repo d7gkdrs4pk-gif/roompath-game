@@ -782,6 +782,135 @@ body{height:100dvh;min-height:0!important}
  .top .archive-link,.top .motion-toggle{font-size:9px;padding:4px 5px}
 }
 
+
+/* === G01-E V0.7.2 | iPhone story-slot and action-overlap repair ===
+   CSS-only change: the original scene, chapter engine, rewards and storage stay intact.
+   Every story choice scrolls INSIDE its own panel, never under a fixed button.
+*/
+.game-view.view-story:not([hidden]) {
+  display:flex;
+  flex-direction:column;
+  overflow:hidden!important;
+  padding-top:45px;
+  padding-bottom:calc(8px + env(safe-area-inset-bottom));
+  min-height:0;
+}
+.view-story > .view-heading {
+  flex:0 0 auto;
+  min-height:0;
+}
+.view-story > .panel {
+  flex:1 1 auto;
+  min-height:0;
+  overflow-x:hidden;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-y:contain;
+  scrollbar-width:thin;
+  scrollbar-color:#69d5db #10182d;
+  padding-right:3px!important;
+  padding-bottom:14px!important;
+}
+.view-story > .panel::-webkit-scrollbar {width:4px}
+.view-story > .panel::-webkit-scrollbar-thumb {background:#69d5db;border-radius:4px}
+.view-story > #relicPanel:not([hidden]) {
+  flex:0 1 auto;
+  max-height:min(24dvh,148px);
+  min-height:0;
+  overflow-y:auto;
+}
+.view-story > .premium-cta {
+  position:static!important;
+  bottom:auto!important;
+  left:auto!important;
+  transform:none!important;
+  width:100%!important;
+  min-height:51px;
+  flex:0 0 51px;
+  margin:8px 0 0!important;
+  box-shadow:0 9px 24px #0009!important;
+  z-index:5;
+}
+@media(max-width:480px) {
+  .view-story #storyFrames {
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .view-story .story-frames .frame {
+    position:relative;
+    display:grid;
+    grid-template-columns:48px minmax(0,1fr);
+    grid-template-rows:auto auto;
+    align-items:center;
+    align-content:center;
+    column-gap:10px;
+    row-gap:2px;
+    min-height:66px!important;
+    height:auto!important;
+    max-height:none!important;
+    padding:8px 9px;
+    overflow:visible!important;
+  }
+  .view-story .frame .frame-number {
+    position:static!important;
+    top:auto!important;
+    left:auto!important;
+    grid-column:1;
+    grid-row:1/span 2;
+    align-self:center;
+    display:block;
+    font-size:11px;
+    line-height:1.45;
+    white-space:nowrap;
+    text-align:left;
+    margin:0;
+    padding:0;
+  }
+  .view-story .frame .comic-name {
+    grid-column:2;
+    grid-row:1;
+    min-width:0;
+    margin:0!important;
+    padding:0;
+    font-size:13px;
+    line-height:1.4;
+    white-space:normal!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
+    text-align:left!important;
+  }
+  .view-story .frame .comic-line {
+    grid-column:2;
+    grid-row:2;
+    min-width:0;
+    min-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    background:transparent!important;
+    font-size:11px;
+    line-height:1.45;
+    white-space:normal!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
+    overflow-wrap:anywhere;
+    text-align:left!important;
+  }
+}
+/* The route action was also fixed over its controls; restore its natural row. */
+.view-route #escape {
+  position:static!important;
+  inset:auto!important;
+  bottom:auto!important;
+  left:auto!important;
+  transform:none!important;
+  width:auto!important;
+  min-width:0;
+  margin:0!important;
+  z-index:auto;
+  box-shadow:inset 0 1px #fff9bd,0 6px 21px #e88f473b!important;
+}
+
 </style>
 </head>
 <body>
