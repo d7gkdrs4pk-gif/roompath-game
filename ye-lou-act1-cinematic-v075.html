@@ -1312,6 +1312,114 @@ body[data-motion="off"] .game-view.act1-scene-in:not([hidden]){animation:none!im
 
 /* V0.7.6: Act-one reading strip and balanced cinematic evidence backdrop only. */
 @media(max-width:359px){body[data-act-one="true"] .view-landing .intro{font-size:16px!important;line-height:1.5!important;padding-top:5px;padding-bottom:5px}}
+
+
+/* G01-E V0.7.7 | Act-one visual hierarchy cleanup ONLY.
+   No scene branch, puzzle, reward, stage unlock, or persistence changes. */
+body[data-act-one="true"] .cinema-halftone{opacity:.065!important}
+body[data-act-one="true"] .cinema-beam{opacity:.16!important}
+body[data-act-one="true"] .cinema-fog{opacity:.32!important}
+body[data-act-one="true"] .cinema-rain{opacity:.12!important}
+body[data-act-one="true"] .cinema-backdrop:after{opacity:.82}
+body[data-act-one="true"] .view-landing{--story-text:#eff5ff}
+body[data-act-one="true"] .view-landing .cover-kicker{display:none!important}
+body[data-act-one="true"] .view-landing>h1{
+  font-size:clamp(31px,7.7vw,37px)!important;
+  line-height:1.06!important;letter-spacing:-.035em!important;
+  margin:16px 0 9px!important;max-width:100%;
+  color:#fcfaff;text-shadow:1px 2px 0 #070d25,0 6px 15px #02071299!important;
+}
+body[data-act-one="true"] .view-landing>h1 em{
+  font-size:.77em!important;line-height:1.18!important;letter-spacing:-.006em!important;
+  margin-top:1px!important;color:#f7d49e!important;text-shadow:0 3px 16px #030517cc!important;
+}
+/* The prologue below already contains the same anonymous SMS, avoiding a second copy on the cover. */
+body[data-act-one="true"] .view-landing>.intro{display:none!important}
+body[data-act-one="true"] .view-landing .cinema-chapters{
+  width:max-content;max-width:100%;margin:0!important;
+  background:#090e26b8!important;border:1px solid #546ca66a!important;border-radius:9px!important;
+  box-shadow:none!important;
+}
+body[data-act-one="true"] .view-landing .cinema-chapters summary{
+  font-size:12px!important;min-height:33px!important;line-height:1.25!important;
+  padding:7px 12px!important;letter-spacing:.03em!important;color:#d8e4ff!important;
+}
+body[data-act-one="true"] .view-landing .cinema-chapters summary span{display:none!important}
+body[data-act-one="true"] .scene-inspect-trigger{
+  align-self:flex-start!important;margin:clamp(68px,12dvh,118px) 0 11px!important;
+  padding:7px 11px!important;min-height:36px!important;
+  border:1px solid #3cc8cc88!important;
+  border-radius:10px!important;font-size:12px!important;
+  color:#e2fffc!important;background:#08192ca6!important;
+  box-shadow:0 4px 18px #0006!important;letter-spacing:0!important;
+}
+body[data-act-one="true"] .scene-inspect-trigger:hover{background:#12284ae5!important}
+body[data-act-one="true"] .view-landing .scene-prologue{
+  margin:0 0 9px!important;min-height:0!important;
+  background:none!important;box-shadow:none!important;border:0!important;
+}
+body[data-act-one="true"] .view-landing .scene-prologue:before,
+body[data-act-one="true"] .view-landing .scene-prologue:after{display:none!important}
+body[data-act-one="true"] .view-landing .scene-prologue .scene-copy{
+  padding:15px 16px 14px!important;min-height:0!important;
+  border:1px solid #4d738777!important;border-left:3px solid #66deda!important;
+  border-radius:13px!important;background:linear-gradient(132deg,#071122ee,#071025ef 80%,#0e1530eb)!important;
+  box-shadow:0 12px 32px #01061daa!important;overflow:visible!important;
+}
+body[data-act-one="true"] .view-landing .scene-prologue .scene-copy:before,
+body[data-act-one="true"] .view-landing .scene-prologue .scene-copy:after{display:none!important}
+body[data-act-one="true"] .view-landing .scene-copy .scene-eyebrow{
+  color:#7fe2e1!important;font-size:12px!important;line-height:1.3!important;
+  letter-spacing:.07em!important;padding:0!important;margin:0 0 7px!important;
+}
+body[data-act-one="true"] .view-landing .scene-copy h2{
+  color:#fff9ed!important;font-size:clamp(21px,5.6vw,24px)!important;
+  letter-spacing:-.01em!important;line-height:1.28!important;
+  text-shadow:none!important;margin:0 0 10px!important;
+}
+body[data-act-one="true"] .view-landing #sceneNarration{
+  font-size:17px!important;line-height:1.55!important;letter-spacing:0!important;
+  color:#f0f4ff!important;margin:0 0 10px!important;
+  overflow:visible!important;white-space:normal!important;
+}
+body[data-act-one="true"] .view-landing #sceneDialogue{
+  font-size:16px!important;line-height:1.55!important;
+  color:#f6d799!important;background:transparent!important;
+  border:0!important;border-left:2px solid #e9b568!important;
+  border-radius:0!important;margin:0!important;padding:5px 0 5px 11px!important;
+  box-shadow:none!important;text-shadow:none!important;
+  white-space:normal!important;overflow-wrap:break-word!important;
+}
+body[data-act-one="true"] .view-landing>.progress{
+  min-height:0!important;padding:1px 3px!important;margin:2px 0 10px!important;
+  border:none!important;background:transparent!important;box-shadow:none!important;
+  font-size:12px!important;color:#d6def2!important;
+}
+body[data-act-one="true"] .view-landing>.progress #achLabels{display:none!important}
+body[data-act-one="true"] .view-landing>.premium-cta{
+  min-height:54px!important;max-height:54px!important;
+  margin:0!important;padding:10px 16px!important;
+  font-size:17px!important;letter-spacing:0!important;
+  background:linear-gradient(95deg,#f8d892,#f0af77)!important;
+  border:none!important;box-shadow:0 12px 25px #0008!important;
+  border-radius:9px!important;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,0 100%)!important;
+}
+body[data-act-one="true"] .view-landing>.disclaimer,
+body[data-act-one="true"] .cinema-camera-hint,
+body[data-act-one="true"] .view-landing:after{display:none!important;content:none!important}
+@media(max-height:700px){
+ body[data-act-one="true"] .scene-inspect-trigger{margin-top:45px!important;margin-bottom:10px!important}
+ body[data-act-one="true"] .view-landing>h1{margin-top:8px!important}
+ body[data-act-one="true"] .view-landing .scene-prologue .scene-copy{padding:12px 13px!important}
+}
+@media(min-width:700px){
+ body[data-act-one="true"] .view-landing>h1{font-size:38px!important}
+ body[data-act-one="true"] .scene-inspect-trigger{margin-bottom:135px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ body[data-act-one="true"] .cinema-beam,body[data-act-one="true"] .cinema-rain{animation:none!important}
+}
+
 </style>
 </head>
 <body>
@@ -2232,7 +2340,7 @@ window.G01Cinema=Object.freeze({version:'0.6',origin:'V0.1 three-SVG-plane visua
  });
  // An explicit scene-object entry, separate from the original story CTA.
  const inspectScene=document.createElement('button');inspectScene.type='button';inspectScene.className='scene-inspect-trigger';
- inspectScene.innerHTML='<span class="inspect-dot" aria-hidden="true"></span><span>发现异常 · 查看短信线索</span><span aria-hidden="true">↗</span>';
+ inspectScene.innerHTML='<span class="inspect-dot" aria-hidden="true"></span><span>查看匿名短信</span><span aria-hidden="true">↗</span>';
  inspectScene.setAttribute('aria-label','查看匿名短信线索详情');
  const scene=q('scenePrologue');scene.parentNode.insertBefore(inspectScene,scene);
  inspectScene.addEventListener('click',()=>present({source:'23:47 · 匿名短信 / 待核验',title:'不要去十三层',desc:'阿岚刚走进公寓，手机收到一条没有号码的短信：“不要去十三层。”随后整栋楼突然停电。',note:'楼层表上只有十二层。先调查眼前的停电事件，才能获得真正的档案碎片。'},inspectScene,null));
@@ -2289,6 +2397,15 @@ window.G01Cinema=Object.freeze({version:'0.6',origin:'V0.1 three-SVG-plane visua
  window.G01Act1VisualV075=Object.freeze({version:'0.7.6',active:()=>actOne(),open:()=>openState,stage:stage,view:selectedView});
 })();
 
+</script>
+<script>
+/* G01-E V0.7.7: preview-only chapter selector, no new game logic. */
+(() => {
+  if(new URLSearchParams(location.search).get('preview') !== 'act1') return;
+  if(window.G01Chapter?.stageNumber?.() === 1) return;
+  const first=document.querySelector('#stageTabs .stage-tab');
+  if(first && !first.disabled) first.click();
+})();
 </script>
 </body>
 </html>
