@@ -190,5 +190,18 @@
     const incoming=new URL(location.href).searchParams.get('pk');
     if(incoming){const challenger=decode(incoming);$el('rankPaste').value=incoming;openRank(`收到 ${challenger.name} 的挑战：${total(challenger)}/15★。点击“加入好友成绩”进行比较。`);}
   }catch(e){openRank('收到的挑战链接无法识别，可能已过期或内容不完整。');}
+  // Read-only snapshot for V0.5 share posters. All values remain local/self-reported.
+  window.G01FriendScores = Object.freeze({
+    snapshot() {
+      const self = selfScore();
+      const count = rankList().length;
+      return {
+        nickname: self.name, stars: total(self), levels: done(self),
+        best: [...self.best], fullTimeSeconds: fullTime(self),
+        rank: count > 1 ? {position:ownRank(), participants:count, scope:'仅本机已加入好友'} : null,
+        challengeUrl: challengeLink()
+      };
+    }
+  });
   store();
 })();
