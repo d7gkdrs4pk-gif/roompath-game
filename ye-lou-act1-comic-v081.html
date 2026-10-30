@@ -1666,6 +1666,12 @@ body[data-act-one="true"] #storyChoices .story-choice::after {
   inset:auto 0 0 0!important;
   height:49px!important;
   background:linear-gradient(0deg,#050715fa 0%,#070a1bd9 54%,transparent 100%)!important;
+  /* The previous "view detail" badge left a visible border on this full-width shade. */
+  border:0!important;
+  border-radius:0!important;
+  padding:0!important;
+  margin:0!important;
+  box-shadow:none!important;
 }
 body[data-act-one="true"] #storyChoices .story-choice strong {
   font-size:clamp(15px,4.1vw,18px)!important;
