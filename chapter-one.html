@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#091526">
 <meta name="description" content="《今晚拼出路》原创悬疑故事第一章：六幕谜案、三格漫画、分支结局与即时线索奖励。">
-<title>夜楼档案：消失的十三层｜今晚拼出路 G01-E V0.1</title>
+<title>夜楼档案：消失的十三层｜今晚拼出路 G01-E V0.2</title>
 <style>
 :root{color-scheme:dark;font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;--bg:#081421;--panel:#152c44;--line:#37516a;--ink:#f2f7ff;--muted:#b1c4d7;--gold:#f4cb85;--mint:#82e1c7;--safe:#b8f4da}
 *{box-sizing:border-box}html{background:var(--bg)}body{margin:0;background:radial-gradient(ellipse at 20% 0%,#1b3655 0%,transparent 48%),radial-gradient(ellipse at 100% 38%,#183a42 0%,transparent 46%),var(--bg);color:var(--ink);min-height:100svh}
@@ -73,7 +73,11 @@ h1{font-size:clamp(25px,6vw,36px);line-height:1.13;margin:10px 0 4px;letter-spac
 @keyframes light-up{from{opacity:0}35%{opacity:.9}55%{opacity:.1}100%{opacity:1}}
 @media(max-width:420px){.scene-art{height:133px}.scene-room{width:69px;height:98px;right:20%;top:20px}.scene-room-icon{font-size:29px}.scene-person{left:18%;transform:scale(.85);transform-origin:bottom left}.scene-copy{padding:9px 11px 11px}.scene-copy h2{font-size:15px}.scene-copy p{font-size:11px}.scene-dialogue{font-size:11px}.story-frames .frame{min-height:141px}.comic-picture{height:48px;margin-top:17px}.comic-hero{font-size:25px}.comic-object{font-size:23px}.frame .comic-line{font-size:9px;padding:4px 2px}.frame .comic-name{font-size:9px}}
 
-/* G01-E first chapter: reveal story and reward cadence without modifying the original 20-stage game. */
+/* G01-E V0.2: branch-order story choices; original twenty-room main game remains unchanged. */
+.branch-compass{font-size:11px;line-height:1.55;margin:7px 0 0;border-left:3px solid #e5bc7a;background:#253a48;color:#ffe5b1;border-radius:0 8px 8px 0;padding:8px 10px;min-height:36px}
+.branch-compass.revealed{background:#234b40;color:#d5ffea;border-color:#8ad8b6}
+.branch-compass.tension{background:#433430;color:#ffe1cd;border-color:#d89c78}
+@media(max-width:420px){.branch-compass{padding:6px 8px;font-size:10px}}
 .stage-tabs{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.stage-tab{min-height:59px;padding:7px 7px}.stage-tab strong{font-size:11px}.stage-tab small{font-size:9px}.stage-tab.locked{opacity:.60;background:#0d1e2f;border-style:dashed}.stage-tab.cleared{border-color:#65bda0;color:#dbfff0}.stage-tab.active{border-color:#ffd797;color:#fff4d5;opacity:1}.stage-tab .stage-mini{font-size:9px;opacity:.8}
 .journal{background:#112d40;border:1px solid #496883;border-radius:12px;margin:0 0 11px}.journal summary{padding:11px 13px;min-height:43px;font-size:12px;color:#f5ddb3;font-weight:800;cursor:pointer;display:flex;justify-content:space-between;gap:9px}.journal-body{padding:0 11px 12px;display:grid;gap:7px}.journal-entry{padding:9px 10px;border-radius:9px;background:#20374b;border-left:3px solid #e9bc75;font-size:11px;line-height:1.65;color:#e0eff8}.journal-entry.missing{opacity:.48;border-color:#526a7d}.journal-entry strong{color:#ffe3a2;display:block;margin-bottom:1px}
 .beat-feedback{min-height:31px;margin-top:7px;padding:8px 10px;border:1px solid #426779;background:#153046;border-radius:9px;color:#b8d8eb;font-size:11px;line-height:1.5;transition:background .2s}.beat-feedback.good{background:#17483e;border-color:#77d0a6;color:#ddfff1}.beat-feedback.bad{background:#403027;border-color:#997255;color:#f5d6b0}.beat-feedback.flash{animation:clue-flash .6s both}
@@ -94,7 +98,7 @@ h1{font-size:clamp(25px,6vw,36px);line-height:1.13;margin:10px 0 4px;letter-spac
     <span class="top-badge">G01-E · 第一章 / 六幕</span>
   </header>
   <h1>夜楼档案，<em>消失的十三层</em></h1>
-  <p class="intro">一条匿名短信，一层不存在的楼。每闯过一幕，获得线索碎片与专属徽章；故事谜团会随着你的决定改变。</p>
+  <p class="intro">一条匿名短信，一层不存在的楼。每闯过一幕，获得线索碎片与专属徽章；三格顺序决定不同结局；每次调查都会留下自己的痕迹。</p>
   <nav id="stageTabs" class="stage-tabs" aria-label="第一章六幕"></nav>
   <section class="scene-prologue" id="scenePrologue" aria-label="故事剧情开场与进展">
     <div class="scene-art" id="sceneArt" aria-hidden="true">
@@ -111,13 +115,14 @@ h1{font-size:clamp(25px,6vw,36px);line-height:1.13;margin:10px 0 4px;letter-spac
   <section class="progress" aria-label="章节线索进度"><strong id="achCount">已发现线索 0 / 6</strong><span id="achLabels">已获得 0 项结局徽章</span></section>
   <details class="journal" id="journalPanel"><summary>◈ 档案袋 · 已收集的调查线索 <span id="journalCount">0/6</span></summary><div id="journalBody" class="journal-body"></div></details>
   <section class="panel" aria-labelledby="storyTitle">
-    <div class="section-head"><h2 id="storyTitle">① 安排三格故事</h2><span class="tag" id="storyTag">故事机关</span></div>
+    <div class="section-head"><h2 id="storyTitle">① 改写三格故事</h2><span class="tag" id="storyTag">故事机关</span></div>
     <p id="storyIntro" class="brief"></p>
     <div class="hint-box" id="storyHint"></div>
     <div class="story-frames" id="storyFrames" aria-label="三格漫画事件顺序"></div>
     <div class="story-interlude" id="storyInterlude" role="status" aria-live="polite">故事开始了。你的每一步选择，都可能改变下一幕。</div>
+    <div class="branch-compass" id="branchCompass" role="status" aria-live="polite">▸ 三格故事不再只有一个正确顺序：最先调查什么，就会留下什么后果。</div>
     <div class="beat-feedback" id="beatFeedback" role="status" aria-live="polite">◈ 先寻找线索，再拼出逃生路线。</div>
-    <div class="picker-heading"><span>点击事件卡片依次填入三格；点击已选画格可移除</span><button class="mini" type="button" id="clearStory">清空三格</button></div>
+    <div class="picker-heading"><span>相同三件事，先做哪件决定剧情；点画格可撤回</span><button class="mini" type="button" id="clearStory">清空三格</button></div>
     <div class="story-cards" id="storyChoices" aria-label="可选择的故事事件"></div>
     <div class="story-effect" id="storyEffect" aria-live="polite"><span class="effect-icon">☾</span><div><strong>尚未改写故事</strong><small>安排三格后，看看机关有什么变化。</small></div></div>
   </section>
@@ -137,7 +142,7 @@ h1{font-size:clamp(25px,6vw,36px);line-height:1.13;margin:10px 0 4px;letter-spac
     <div class="message" id="status" role="status" aria-live="polite">先排列三格故事，然后选择房卡放入中间空位。</div>
   </section>
   <div class="bottom"><button type="button" id="share">复制夜楼挑战地址</button><button type="button" id="resetStory">重排剧情探索分支</button></div>
-  <p class="disclaimer">原创悬疑故事第一章 · 独立本机存档；过关获得线索与徽章，重复通关不重复发放。不会修改原有20关、60星成绩、好友榜及海报。<br>不收集姓名、聊天资料或联系方式；当前无广告、无收费功能。</p>
+  <p class="disclaimer">原创悬疑故事第一章 · 同组三件事可触发多种分支；不同顺序可能开启不同逃生门。独立本机存档；同一结局不重复发放奖励。不会修改原有20关、60星成绩、好友榜及海报。<br>不收集姓名、聊天资料或联系方式；当前无广告、无收费功能。</p>
 </main>
 <div class="overlay" id="successOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="winTitle">
   <section class="success-card"><span class="trophy" aria-hidden="true">🏆</span><div style="font-size:11px;letter-spacing:.12em;color:#f3d296;font-weight:800">STORY UNLOCKED</div>
@@ -268,31 +273,104 @@ const levels=[
   description:'调查隐藏楼层或追踪匿名短信，分别触发第一章两种终局。'
  }
 ];
+// G01-E V0.2 original, independent text: the same three events can begin at
+// different moments, leading to materially different mystery consequences.
+// Existing canonical outcomes are retained exactly for historical saves.
+const BRANCH_MODES=['echo','witness','alarm'];
+const BRANCH_SCRIPTS=[
+ {
+  echo:{title:'灯光倒着亮了',narration:'阿岚先摸到了保险丝，却把“恢复电力”放在“维修”之前。走廊的灯从尽头向她倒着亮起，像有人在倒放一段监控。',quote:'阿岚：灯是从未来那一端亮过来的？',clue:'逆向亮起的灯下，出现一枚标着13的监控时间戳。',ending:'电力仍然恢复，但所有灯都晚亮一秒。阿岚透过门缝，看见墙上多出一个本来不存在的摄像头。',hook:'下一幕：电梯屏幕出现了两份互相矛盾的录像。',medal:'逆光目击者'},
+  witness:{title:'配电箱里有人留下话',narration:'阿岚先打开配电箱，里面竟贴着一张写有她姓名的维修记录，签署时间是明天凌晨。有人知道她会先走到这里。',quote:'阿岚：明天的记录，为什么已经签好了名？',clue:'配电记录上已有阿岚明天的签名，旁边圈着“13”。',ending:'她修好线路后才找到备用保险丝。门打开的瞬间，头顶传来一声年轻女人的轻笑，像在庆祝她按计划行动。',hook:'下一幕：那笑声又从电梯广播里响了一遍。',medal:'预告追踪者'},
+  alarm:{title:'红灯把影子唤醒',narration:'阿岚没摸清线路就先碰总开关，楼层进入紧急模式。红色指示灯一盏接一盏亮起，墙上跑过一个比她快半拍的影子。',quote:'阿岚：那道影子……不是我的。',clue:'楼层紧急警报被提前唤醒，监控中出现第二道影子。',ending:'她赶在警报结束前拼开东侧门。手机随后收到第二条短信：“你这次比上一次快。”',hook:'下一幕：谁在记录“上一次”的她？',medal:'红灯逃生者'}
+ },
+ {
+  echo:{title:'播报出现了第三种声音',narration:'阿岚把启动步骤提前。电梯与楼梯两端的广播短暂重叠，夹进一个孩子的声音：“无论你选哪边，都别回头。”',quote:'阿岚：广播里明明只有两条线路，第三个人是谁？',clue:'冲突广播里混入第三条未登记的儿童声音。',ending:'她沿选定的门离开，却在门外墙上看到一个小小的13号贴纸，像有人提前贴好路标。',hook:'下一幕：被划掉的名册里还有一个孩子的名字。',medal:'第三声发现者'},
+  witness:{title:'有人正站在门后',narration:'阿岚先检查中间步骤，发现走廊监控中有个人正站在她尚未选择的出口后。那个人始终背对镜头。',quote:'阿岚：我还没选路，怎么已经有人在那里等我？',clue:'未开启的出口里提前出现等待阿岚的人影。',ending:'她按自己选择的路线逃出。就在门关上的最后一刻，门内那个人对着摄像头抬起手，手上戴着与阿岚相同的手表。',hook:'下一幕：住户名册上的“阿岚”，究竟是哪一个？',medal:'门后观察者'},
+  alarm:{title:'紧急通道抢先开启',narration:'阿岚把最后一步放在最前面，楼宇系统直接把原定出口封锁，另一侧的紧急门却意外打开。她只剩一条陌生路线可走。',quote:'阿岚：有人在替我决定逃跑方向。',clue:'提前操作改变门禁：原定出口锁死，另一条紧急通道打开。',ending:'她穿过被系统强行切换的门，看到门口监控写着“偏离计划，已记录”。一支笔在无人握住时自己划掉了表格中的一行。',hook:'下一幕：被划掉的，正是她的名字。',medal:'逆门逃生者'}
+ },
+ {
+  echo:{title:'名册比人先翻了一页',narration:'阿岚刚找到身份线索，就提前开启了记录系统。屏幕自动跳到了她尚未打开的一页，写着：“请勿替未来的自己签名。”',quote:'阿岚：我连下一页都没翻，它怎么知道我要找什么？',clue:'名册自动翻到未来一页，留下了“不要签名”的提示。',ending:'通道开启后，她在档案夹里发现一张空白照片。照片背面写着：“到00:17，它会显影。”',hook:'下一幕：照片上的钟表正在倒计时。',medal:'空白照片发现者'},
+  witness:{title:'第二个签名突然出现',narration:'阿岚先动手核对记录，纸上的墨迹慢慢浮出第二种笔迹：一个人签名，另一个人删除。两种笔迹似乎都属于她。',quote:'阿岚：有两个人，在替同一个名字留下证据。',clue:'住户档案里发现两份不同字迹、却署名相同的登记。',ending:'她走出门时听到有人在背后念她的生日，墙上的钟却没有指针。',hook:'下一幕：00:17可能不是时间，而是某个记录编号。',medal:'双重署名追查者'},
+  alarm:{title:'身份校验反向锁门',narration:'阿岚过早按下最终门禁，系统立即宣布“身份冲突”。她原本要去的房间被封锁，只能从相反方向逃离。',quote:'电子音：同一住户，重复登记。',clue:'门禁识别出两份阿岚身份，紧急改走另一侧房间。',ending:'紧急门外贴着一张明天的访客单，访客姓名是阿岚，但来访时间写着00:17。',hook:'下一幕：谁把00:17写成了抵达时间？',medal:'身份冲突突破者'}
+ },
+ {
+  echo:{title:'钟声在响起之前就消失',narration:'阿岚把最后的处理提前进行。楼里所有钟先安静下来，又同时响起一声倒过来的“叮”。那一声似乎来自昨天。',quote:'阿岚：这不是停止，是有人在剪掉中间的时间。',clue:'00:17的声音被人为倒放，疑似一段拼接过的时间记录。',ending:'钟室外传来一阵敲门声。声音数到三便停了，留下一个仍在走动的秒针。',hook:'下一幕：镜子里也有人在数到三。',medal:'倒放追踪者'},
+  witness:{title:'录像里的人先转过头',narration:'阿岚先比对不同的计时记录，发现一段影像里的自己总比现实快一步。她想暂停，却发现暂停键被远程锁定。',quote:'阿岚：有人在把我的反应写成剧本。',clue:'计时与监控之间存在固定提前量，疑似有人设计行为预测。',ending:'她离开控制室时，看见镜面里的自己没有跟着离开，而是站在原地继续观察。',hook:'下一幕：镜中那个留下来的人是谁？',medal:'提前量发现者'},
+  alarm:{title:'00:17强制重播',narration:'阿岚先执行最后的开门动作，楼宇系统判定“异常提前”。原路线关闭，备用门亮起，所有语音又跳回00:17。',quote:'阿岚：它正在迫使我重走一条路。',clue:'提前行动触发系统重播和备用门开启，证明00:17是控制逻辑。',ending:'她冲进备用通道，看到墙上贴着自己的照片。照片旁只有两个字：“重试”。',hook:'下一幕：重试的人，真的只有她一个吗？',medal:'循环破局者'}
+ },
+ {
+  echo:{title:'镜面留下了迟到的影子',narration:'阿岚提前触发了监控回看，镜中的自己却在三秒后才跟着动。录像显然有人删掉了中间的帧。',quote:'阿岚：不是镜子晚了，是有人动过影片。',clue:'镜面监控被剪去三秒，影像延迟是人工造成。',ending:'她走出控制室，身后的镜子没有映出她，而是映出一扇通往第十三层的门。',hook:'下一幕：哪面镜子里藏着十三层的入口？',medal:'迟到影子破解者'},
+  witness:{title:'镜后有一位无声观众',narration:'阿岚从中途线索查起，发现镜子背后不是墙，而是一面单向观察窗。有人刚把椅子推离了摄像头。',quote:'阿岚：不是镜子在看我，是有人站在镜子那一侧。',clue:'镜面背后发现用于观察阿岚行动的单向窗口。',ending:'她顺着灯光找到离开的门，却听见观众席传来掌声。这座楼像一场没有观众名单的演出。',hook:'下一幕：谁把整栋楼当成了实验？',medal:'镜后旁观者'},
+  alarm:{title:'影子提前逃出了房间',narration:'阿岚先启动最终门禁，镜面系统紧急切换画面。正门被锁死，另一道隐藏门弹开，她看到镜中人比自己先冲了出去。',quote:'阿岚：她知道另一扇门的位置。',clue:'提前开门引出镜中的替身影像，并强制改走隐藏出口。',ending:'她沿影子指过的门离开，墙角却有一枚新鲜的脚印，大小与她完全一致。',hook:'下一幕：第十三层会不会有另一个阿岚？',medal:'镜像追逐者'}
+ },
+ {
+  echo:{title:'明天的短信提前出现',narration:'阿岚刚取得线索便提前打开终端。一条尚未发送的短信从屏幕弹出：“你选了第二次逃跑的路线。”',quote:'阿岚：它在等的不是我，而是我做决定的顺序。',clue:'控制台提前出现未发送的短信，提到“第二次逃跑”。',ending:'她踏进第十三层，第二块屏幕自动亮起：“实验编号02：已接替编号01。”',hook:'第一章完：接替她的人，为什么已经到达？',medal:'未来来信者'},
+  witness:{title:'十三层的监控室有人在记笔记',narration:'阿岚先核对过程，发现监控记录里每一次选择都被逐条写下，包括她刚刚做出的第一步。有人正在实时标注她。',quote:'阿岚：他们要的不是我逃出去，而是记录我怎么选择。',clue:'十三层实验日志实时记录玩家三格选择顺序，并非仅判定成功失败。',ending:'她走进控制室，看见一个写着“请选择下一位”的空白名单。名单第一行缓缓出现了她的名字。',hook:'第一章完：谁才是下一位被测试者？',medal:'观察者反追踪者'},
+  alarm:{title:'最后一道门不是原来的门',narration:'阿岚直接操作最终入口，系统判定路线异常。通往十三层的门锁上，另一侧控制室却打开，屏幕显示“逃生方式已改写”。',quote:'阿岚：连终点都能被它改掉。',clue:'最后一步提前执行导致终局转移，证明系统会根据选择顺序修改目标。',ending:'她绕进控制室，看到一条时间尚未发生的通关记录：“阿岚，第二次尝试——成功。”身后响起与自己完全相同的脚步声。',hook:'第一章完：谁在替她进行第二次尝试？',medal:'终局改写者'}
+ }
+];
+const BRANCH_HINTS=[
+ '先拿保险丝、先打开配电箱，或先碰总开关，都会唤醒不同的楼层记录。',
+ '先调查电梯或消防门；先启动末端设备可能让备用出口反而打开。',
+ '先检查访客卡、名册或门禁，会看见不同版本的登记事实。',
+ '谁先动了钟、录音或维修门，会改变是谁先发现你。',
+ '先看镜子、先开顶灯、先查监控，都会留下不同影像证据。',
+ '先看图纸或短信系统，调查顺序可能决定你最后走进哪一扇门。'
+];
+const BRANCH_IMPACT={
+ echo:'上一幕的逆序线索仍然在影响灯光和广播，走廊里不时出现倒放的提示音。',
+ witness:'上一幕那个提前知道你行动的人并未消失。有人似乎比你更早抵达这层楼。',
+ alarm:'上一幕触发的异常警报尚未解除。系统仍在暗中改写你本来应该走的门。'
+};
 const KEY='g01-story-chapter.v0.1',OLD_KEY='g01-story-lab.v0.1';
 const $=id=>document.getElementById(id);
 const readLocal=(key)=>{try{return JSON.parse(localStorage.getItem(key)||'null')}catch(_){return null}};
 const prior=readLocal(KEY),legacy=readLocal(OLD_KEY);
-const achievements={};for(const l of levels)for(const p of l.patterns)achievements[p.badge]=!!(prior?.achievements?.[p.badge] || ((p.badge==='power'||p.badge==='lift'||p.badge==='stairs')&&legacy?.achievements?.[p.badge]));
-const stageComplete=i=>levels[i].patterns.some(p=>achievements[p.badge]);
+// All original badge IDs and the existing local save key remain unchanged.
+// Extra badges are additive: one per new narrative and origin route, not extra clues for the same scene.
+const achievements={};
+for(const l of levels)for(const p of l.patterns){
+ achievements[p.badge]=!!(prior?.achievements?.[p.badge] || ((p.badge==='power'||p.badge==='lift'||p.badge==='stairs')&&legacy?.achievements?.[p.badge]));
+ for(const mode of BRANCH_MODES){const k=`${p.badge}_${mode}`;achievements[k]=!!prior?.achievements?.[k];}
+}
+const decisions=Array.isArray(prior?.decisions)?prior.decisions.slice(0,levels.length):[];
+const stageComplete=i=>levels[i].patterns.some(p=>achievements[p.badge]||BRANCH_MODES.some(mode=>achievements[`${p.badge}_${mode}`]));
 const unlocked=i=>i===0 || stageComplete(i-1) || (i===1&&(achievements.lift||achievements.stairs));
 const defaultStage=()=>{for(let j=0;j<levels.length;j++)if(!stageComplete(j)&&unlocked(j))return j;return 5;};
 let index=(Number.isInteger(prior?.stage)&&prior.stage>=0&&prior.stage<levels.length&&unlocked(prior.stage))?prior.stage:defaultStage();
-let selected=[],choice=null,rotation=0,placed=null,winPath=[],lastBeat={text:'◈ 有效的线索会亮起；每次过关可获得新徽章。',type:''};
+let selected=[],choice=null,rotation=0,placed=null,winPath=[],lastBeat={text:'◈ 先选哪张事件卡，将决定你会走进哪一种故事。',type:''};
 const current=()=>levels[index];
-const effect=()=>current().patterns.find(p=>p.order.length===selected.length&&p.order.every((x,i)=>x===selected[i]))||null;
+function resolveStory(stage,selection){
+ if(selection.length!==3)return null;
+ const base=stage.patterns.find(p=>selection.every(id=>p.order.includes(id)));
+ if(!base)return null; // mixing unrelated investigations creates a reversible encounter, not a fabricated win.
+ if(selection.every((id,i)=>id===base.order[i]))return {...base,variant:'canonical',originGate:base.key};
+ const pos=base.order.indexOf(selection[0]);
+ const variant=pos===0?'echo':pos===1?'witness':'alarm';
+ const script=BRANCH_SCRIPTS[levels.indexOf(stage)][variant];
+ const other=stage.exits.length>1&&variant==='alarm'?stage.exits.find(x=>x.gate!==base.key):null;
+ const exit=other||stage.exits.find(x=>x.gate===base.key);
+ const first=stage.events.find(e=>e.id===selection[0]);
+ return {...base,variant,originGate:base.key,key:exit.gate,badge:`${base.badge}_${variant}`,medal:script.medal,
+   title:script.title,details:`你决定先「${first.name}」。${other?'原计划出口被锁，另一侧的「'+other.name+'」打开了。':'机关被改写，通往「'+exit.name+'」的路线仍可尝试。'}打开新路线后请继续拼接房间。`,
+   narration:script.narration,quote:script.quote,clue:script.clue,ending:script.ending,hook:script.hook};
+}
+const effect=()=>resolveStory(current(),selected);
 const clueCount=()=>levels.filter((_,i)=>stageComplete(i)).length;
 const badgeCount=()=>Object.values(achievements).filter(Boolean).length;
-function save(){try{localStorage.setItem(KEY,JSON.stringify({schema:1,stage:index,achievements}))}catch(_){} }
+function save(){try{localStorage.setItem(KEY,JSON.stringify({schema:1,stage:index,achievements,decisions}))}catch(_){} }
 function message(t,type=''){$('status').textContent=t;$('status').className='message'+(type?' '+type:'');}
 function beat(text,type=''){lastBeat={text,type};const el=$('beatFeedback');el.textContent=text;el.className='beat-feedback'+(type?' '+type+' flash':'');}
-function validPrefix(){if(!selected.length)return true;return current().patterns.some(p=>selected.every((v,i)=>v===p.order[i]));}
-function scoreState(){return {clues:clueCount(),badges:badgeCount(),completed:levels.map((x,i)=>stageComplete(i)),achievementKeys:Object.keys(achievements).filter(x=>achievements[x])};}
+// Accept any order of three events on the same route; order determines the narrative.
+function validPrefix(){return current().patterns.some(p=>selected.every(id=>p.order.includes(id)));}
+function scoreState(){return {clues:clueCount(),badges:badgeCount(),completed:levels.map((x,i)=>stageComplete(i)),achievementKeys:Object.keys(achievements).filter(x=>achievements[x]),decisions:decisions.map(d=>d?{gate:d.gate,variant:d.variant}:null)};}
 function renderProgress(){const n=clueCount(),m=badgeCount();$('achCount').textContent=`档案碎片 ${n} / 6`;
- $('achLabels').textContent=n===6?`第一章通关 · 夜楼追踪者 · ${m}枚徽章`:n>=3?`已解锁“午夜调查员” · ${m}枚徽章`:`已获得 ${m} 枚结局徽章`;
+ $('achLabels').textContent=n===6?`第一章通关 · 夜楼追踪者 · ${m}枚徽章`:n>=3?`已解锁“午夜调查员” · ${m}枚徽章`:`已探索 ${m} 种故事结局`;
  $('journalCount').textContent=n+'/6';
  const wrap=$('journalBody');wrap.replaceChildren();levels.forEach((s,i)=>{const row=document.createElement('div');row.className='journal-entry'+(stageComplete(i)?'':' missing');const t=document.createElement('strong');t.textContent=`${i+1}. ${stageComplete(i)?s.name:'未解密档案'}`;
- const p=Object.keys(achievements).find(k=>achievements[k]&&s.patterns.some(o=>o.badge===k));
- const d=document.createElement('span');d.textContent=p?s.patterns.find(o=>o.badge===p).clue:'先完成上一幕的逃脱，获得线索碎片。';row.append(t,d);wrap.append(row)});
+ const recorded=decisions[i],primary=s.patterns.find(o=>achievements[o.badge]);
+ const branchBadge=s.patterns.find(o=>BRANCH_MODES.some(mode=>achievements[`${o.badge}_${mode}`]));
+ const d=document.createElement('span');d.textContent=recorded?.clue||primary?.clue||(branchBadge?'已解锁另一条调查路线，回到本幕可继续追查。':'先完成上一幕的逃脱，获得线索碎片。');row.append(t,d);wrap.append(row)});
 }
 function renderTabs(){const el=$('stageTabs');el.replaceChildren();levels.forEach((l,i)=>{const b=document.createElement('button');b.type='button';const locked=!unlocked(i);const cleared=stageComplete(i);b.className='stage-tab'+(index===i?' active':'')+(locked?' locked':'')+(cleared?' cleared':'');
  b.setAttribute('aria-pressed',String(index===i));b.setAttribute('aria-label',`第${i+1}幕${locked?'未解锁':l.name}${cleared?'已通关':''}`);
@@ -313,14 +391,18 @@ function getPath(){const ex=current().exits.find(x=>x.gate===effect()?.key);if(!
    if(connected(v.pos,n)&&!seen.has(n)){seen.add(n);q.push({pos:n,path:[...v.path,n]})}}}
  return null;}
 function renderNarrative(){const sc=current().scene,p=effect(),last=current().events.find(e=>e.id===selected.at(-1));const art=$('sceneArt');art.className='scene-art'+(p?' is-solved':' is-mystery');
- $('sceneEpisode').textContent=sc.episode;$('sceneClock').textContent=sc.clock;$('sceneAmbient').textContent=p?'线索已触发 · 房门改变':sc.ambience;
- $('sceneHeading').textContent=p?p.title:sc.title;$('sceneNarration').textContent=p?p.narration:sc.intro;
+ const past=index>0?decisions[index-1]:null;
+ $('sceneEpisode').textContent=sc.episode;$('sceneClock').textContent=sc.clock;$('sceneAmbient').textContent=p?`故事分支：${p.variant==='canonical'?'按计划调查':p.medal} · 门禁改变`:sc.ambience;
+ $('sceneHeading').textContent=p?p.title:sc.title;
+ $('sceneNarration').textContent=p?p.narration:sc.intro+(past&&BRANCH_IMPACT[past.variant]?` ${BRANCH_IMPACT[past.variant]}`:'');
  $('sceneDialogue').textContent=p?p.quote:last?`阿岚：${last.line}`:sc.speech;
  const door=current().exits.find(x=>x.gate===p?.key);$('sceneDoorLabel').textContent=door?door.name+' · 已解锁':'匿名门禁 · 尚未解除';$('sceneDoorIcon').textContent=door?.icon||'🚪';
- const b=$('storyInterlude');const bad=selected.length===3&&!p;b.className='story-interlude'+(p?' good':bad?' bad':'');
- b.textContent=p?`机关解开！${p.title} 但真正的秘密还在门后。现在拼房间继续前进。`:bad?'事件顺序与线索矛盾，机关没有响应。点某一格移除，再尝试新的组合。':selected.length?`第${selected.length}格：${last?.line} · 还差${3-selected.length}格。`:'一条陌生短信，把阿岚带进了这栋楼。选择三个有因果关系的事件，揭开这一幕。';
+ const b=$('storyInterlude');const mixed=selected.length>=2&&!validPrefix();b.className='story-interlude'+(p?' good':mixed?' bad':'');
+ b.textContent=p?`分支已形成：${p.title}。${p.details} 现在拼出通道继续调查。`:mixed?'【线索交错】两条调查被你拼在一起，广播突然传来陌生脚步声，但两套门禁互相冲突。你发现了额外的异常；撤回一格，选择追查哪条路线。':selected.length?`第${selected.length}格：${last?.line} · 你先做的事将决定结局，还差${3-selected.length}格。`:'三格事件不再只有一组正确顺序。先做什么，故事就从什么地方开始。';
+ const compass=$('branchCompass');compass.className='branch-compass'+(p?' revealed':mixed?' tension':'');
+ compass.textContent=p?`◈ 已触发「${p.variant==='canonical'?'原定路线':p.medal}」· 当前目标：${door?.name||'出口'}`:mixed?'◈ 触发线索冲突剧情：可以撤回事件、重选同一路调查，但无需重开整关。':selected.length?`◈ 第一格决定故事方向；目前顺序：${selected.map(id=>current().events.find(e=>e.id===id)?.name).join(' → ')}`:'◈ 自由选择顺序。同一条调查线的三张事件可产生不同走向；冒险路线可能打开另一扇门。';
 }
-function renderStory(){ $('storyIntro').textContent=current().brief;$('storyHint').textContent=current().hint;$('storyTag').textContent=`第${index+1}幕 · 故事机关`;
+function renderStory(){ $('storyIntro').textContent=current().brief;$('storyHint').textContent=BRANCH_HINTS[index]+'（三张事件选择同一条调查线，但排列顺序可以不同。）';$('storyTag').textContent=`第${index+1}幕 · 故事机关`;
  const board=$('storyFrames');board.replaceChildren();for(let i=0;i<3;i++){const c=current().events.find(x=>x.id===selected[i]);const b=document.createElement('button');b.type='button';b.className='frame'+(c?' filled':'');b.disabled=!c;
  b.setAttribute('aria-label',c?`第${i+1}格：${c.name}，点击撤回`:`第${i+1}格未填写`);
  b.innerHTML=`<span class="frame-number">第 ${i+1} 格</span><span class="comic-picture"><span class="comic-hero">${c?'🧑':'🌙'}</span><span class="comic-object">${c?.icon||'···'}</span></span><strong class="comic-name">${c?.name||'未知的下一幕'}</strong><span class="comic-line${c?'':' placeholder'}">${c?c.line:'等待你安排下一步'}</span>`;
@@ -328,11 +410,13 @@ function renderStory(){ $('storyIntro').textContent=current().brief;$('storyHint
  const opts=$('storyChoices');opts.replaceChildren();for(const ev of current().events){const b=document.createElement('button');b.type='button';b.className='story-choice';b.disabled=selected.includes(ev.id)||selected.length===3;
  b.innerHTML=`<span class="emoji">${ev.icon}</span><strong>${ev.name}</strong><small>${ev.note}</small>`;
  b.addEventListener('click',()=>{selected.push(ev.id);winPath=[];const prefix=validPrefix();const p=effect();
- if(p)beat('✦ 机关已启动！剧情推进，房门改变。','good');else if(prefix)beat(`✓ 线索吻合！第${selected.length}/3格已破解，继续前进。`,'good');else beat('这条线索暂时对不上，可点上方画格撤回再推理。','bad');
- render();message(p?'故事触发成功！现在选择房卡，打开通路。':prefix?'选择下一件可能发生的事。':'这组事件没有组成完整因果链。',p||prefix?'good':'bad');});opts.append(b)}
+ if(p)beat(`✦ 你改写了结局：「${p.title}」！真正的出口可能已变。`,'good');
+ else if(prefix)beat(`✓ 第${selected.length}/3格留下新线索！第一个决定正在改变故事。`,'good');
+ else beat('◈ 两条线索发生交错，出现意外插曲。可以撤回一格，重新选择追查方向。','bad');
+ render();message(p?`已进入「${p.medal}」分支！请观察哪扇门被开启。`:prefix?'继续选择事件。不同顺序会得到不同故事。':'线索相互冲突，你看见了一段额外剧情；试着回到同一调查方向。',p||prefix?'good':'bad');});opts.append(b)}
  const p=effect(),e=$('storyEffect');e.className='story-effect'+(p?' active':'');e.replaceChildren();
  const icon=document.createElement('span');icon.className='effect-icon';icon.textContent=p?'✦':'☾';const body=document.createElement('div'),head=document.createElement('strong'),detail=document.createElement('small');
- head.textContent=p?p.title:selected.length===3?'机关未响应':'神秘机关仍在等待';detail.textContent=p?p.details:selected.length===3?'调整事件顺序，找到正确因果链。':`已写下${selected.length}/3格；下一条线索可能揭开一扇门。`;
+ head.textContent=p?p.title:selected.length===3?'两条线索互相冲突':'故事分支尚未形成';detail.textContent=p?p.details:selected.length===3?'你触发了一段可撤回的异常插曲；同一路线的三张卡可按任意顺序排列。':`已写下${selected.length}/3格；第一步会改变结果。`;
  body.append(head,detail);e.append(icon,body);renderNarrative();const bar=$('beatFeedback');bar.textContent=lastBeat.text;bar.className='beat-feedback'+(lastBeat.type?' '+lastBeat.type:'');}
 function renderBoard(){const map=$('board');map.replaceChildren();const path=new Set(winPath);for(let i=0;i<9;i++){const v=tileInfo(i),el=document.createElement(i===4?'button':'div');if(i===4){el.type='button';el.addEventListener('click',placeRoom)}
  el.className='tile '+v.type+(v.type==='exit'&&v.open?' open':'')+(path.has(i)?' win-path':'');el.setAttribute('aria-label',v.name+(v.type==='exit'?(v.open?'，开启':'，关闭'):'') );
@@ -352,25 +436,27 @@ function placeRoom(){if(placed){message('房间已经放入中央，需要改变
 function resetStage(target=index){if(!unlocked(target)){message('前一幕尚未通关，继续寻找线索。','bad');return}
  index=target;selected=[];choice=null;rotation=0;placed=null;winPath=[];lastBeat={text:'◈ 故事从一条线索开始，每一次正确推理都有反馈。',type:''};$('successOverlay').hidden=true;save();render();message(`第${target+1}幕开启：${current().scene.title}`);}
 function getNext(){for(let n=index+1;n<levels.length;n++)if(unlocked(n))return n;return index;}
-function win(p,path){const firstStage=!stageComplete(index),firstBadge=!achievements[p.badge];achievements[p.badge]=true;save();renderProgress();renderTabs();
+function win(p,path){const firstStage=!stageComplete(index),firstBadge=!achievements[p.badge];achievements[p.badge]=true;
+ decisions[index]={variant:p.variant||'canonical',badge:p.badge,gate:p.key,clue:p.clue};
+ save();renderProgress();renderTabs();
  const n=clueCount();$('winTitle').textContent=`第${index+1}幕 · 真相前进一步！`;
- $('winDetails').textContent=`成功逃出 · 路线经过${path.length}间房 · ${firstBadge?'发现新结局！':'再次成功通关！'}`;
- const r=$('rewardFragment');r.className='reward-fragment'+(firstStage?'':' replay');r.textContent=firstStage?`✦ 线索碎片 +1 · 已收集${n}/6`:(firstBadge?'✦ 新的支线结局 +1枚徽章':'✦ 再次破案成功 · 已有线索保留');
+ $('winDetails').textContent=`成功逃出 · 路线经过${path.length}间房 · ${firstBadge?'发现新结局！':'再次成功通关！'} · ${p.variant==='canonical'?'原定调查':'选择改变了剧情'}`;
+ const r=$('rewardFragment');r.className='reward-fragment'+(firstStage?'':' replay');r.textContent=firstStage?`✦ 线索碎片 +1 · 已收集${n}/6`:(firstBadge?'✦ 解锁另一条故事分支 +1枚徽章':'✦ 再次成功逃出 · 已有奖励保留');
  const tale=$('endingTale');tale.replaceChildren();const h=document.createElement('strong');h.textContent=`${current().scene.episode} · ${p.medal}`;const body=document.createElement('span');body.textContent=p.ending;tale.append(h,body);
  $('winBadge').textContent=(firstBadge?'新徽章：':'徽章已收集：')+p.medal+(n===6?' · 第一章称号「夜楼追踪者」':n>=3?' · 阶段称号「午夜调查员」':'');
  $('nextHook').textContent='悬念 · '+p.hook;
  $('winNext').textContent=index===5?'第一章完 · 查看开场':'下一幕 · 继续追查 →';$('successOverlay').hidden=false;$('winNext').focus();
 }
 function tryEscape(){const p=effect();if(selected.length!==3){message('先完成三格事件推理，才能解锁出口。','bad');return}
- if(!p){message('故事因果链还不正确。点击已选画格撤回重排。','bad');return}
+ if(!p){message('你触发了两条线索的冲突剧情。撤回一格，继续追查同一条调查路线。','bad');return}
  if(!placed){message('机关已经解锁，但还缺一间连接通道的房间。','bad');return}
  const path=getPath();if(!path){beat('出口已开，但房间没有对齐。调整房门方向再试。','bad');message('两侧黄门需要正对，才能走到解锁的出口。','bad');return}
  winPath=path;beat('✓ 找到安全路线！新的档案碎片正在解锁。','good');render();message('逃脱成功！获得结局记录。','good');win(p,path);
 }
-function hint(){const p=effect();if(!p){const expected=current().patterns[0];message('剧情提示：'+expected.order.map(id=>current().events.find(e=>e.id===id).name).join(' → ')+'。部分关卡还有另一个结局。');return}
+function hint(){const p=effect();if(!p){message('不同先手会带来不同故事：选择同一线索方向的三件事，顺序不必固定。先点哪一件，可能会改变最后逃生的门。');return}
  if(!placed){message('出口已开！北侧路线用西＋北门；东侧路线用西＋东门。');return}
  message(getPath()?'路径已经连通！点击尝试逃脱。':'看中央房间的门，必须同时连接入口和已开启的出口。',getPath()?'good':'bad');}
-function share(){const url=location.origin+location.pathname;const txt=`《今晚拼出路·夜楼档案》悬疑六幕｜我已找到${clueCount()}/6条线索。你能找出消失的十三层吗？\n${url}`;
+function share(){const url=location.origin+location.pathname;const chosen=decisions[index];const txt=`《今晚拼出路·夜楼档案》六幕悬疑｜收集${clueCount()}/6条线索 · ${badgeCount()}种真实结局${chosen?' · 我选择了「'+(chosen.variant==='canonical'?'原定调查':'改写顺序')+'」':''}。你会走哪条路？\n${url}`;
  if(navigator.clipboard?.writeText){navigator.clipboard.writeText(txt).then(()=>message('挑战地址与真实线索进度已复制，可发给微信或QQ好友。','good')).catch(()=>message('复制被浏览器限制，请复制当前页面网址。'))}
  else message('请长按复制当前网页地址，邀请好友破案。');}
 $('clearStory').addEventListener('click',()=>{selected=[];winPath=[];beat('三格已经清空，可以改写故事。');render();message('选择另一组事件。')});
@@ -382,7 +468,7 @@ $('winBack').addEventListener('click',()=>{$('successOverlay').hidden=true;});
 $('winNext').addEventListener('click',()=>{const next=index===5?0:index+1;resetStage(next)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('successOverlay').hidden)$('successOverlay').hidden=true;});
 // Read-only diagnostics for local acceptance tests: no data is sent to a server.
-window.G01Chapter=Object.freeze({totalStages:levels.length,stageNumber:()=>index+1,summary:scoreState});
+window.G01Chapter=Object.freeze({totalStages:levels.length,stageNumber:()=>index+1,summary:scoreState,route:()=>{const p=effect();return p?{gate:p.key,variant:p.variant,badge:p.badge}:null;}});
 render();message(`第${index+1}幕开启：${current().scene.title}`);
 })();
 
