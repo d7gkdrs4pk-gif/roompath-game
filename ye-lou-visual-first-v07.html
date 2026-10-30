@@ -911,6 +911,214 @@ body{height:100dvh;min-height:0!important}
   box-shadow:inset 0 1px #fff9bd,0 6px 21px #e88f473b!important;
 }
 
+
+/* G01-E V0.7.3 | whole-page usability audit: CSS-only corrections.
+   P1-01 Reward card artwork stays separate from heading and story text.
+   P1-02 Story-frame labels are readable on tablet/desktop too.
+   P1-03 Truth & archive panels never shrink and silently clip evidence/choices.
+   Six chapter engine, route rules, awards and all storage formats are untouched.
+*/
+/* Reward is a scrollable cinematic card; never collapse its prose behind the poster. */
+#successOverlay .success-card{
+  height:min(95dvh,760px)!important;
+  min-height:0!important;
+  max-height:calc(100dvh - 16px)!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  justify-content:flex-start!important;
+  align-items:stretch;
+  padding:clamp(147px,25dvh,182px) 16px calc(14px + env(safe-area-inset-bottom))!important;
+  scroll-padding-bottom:83px;
+  overscroll-behavior-y:contain;
+  scrollbar-width:thin;
+  scrollbar-color:#b99b67 #0b122b;
+}
+#successOverlay .success-card:before{
+  top:12px;
+  left:50%;
+  width:106px;
+  height:112px;
+  border-width:4px;
+  line-height:104px;
+  font-size:76px;
+  z-index:0;
+}
+#successOverlay .success-card:after{top:119px;z-index:1;font-size:8px;letter-spacing:1.1px}
+#successOverlay .success-card > *{flex-shrink:0!important}
+#successOverlay .success-card .reward-mark{line-height:1.4;min-height:16px;white-space:normal}
+#successOverlay .success-card h2{font-size:clamp(23px,6vw,29px)!important;line-height:1.24!important;margin:6px 0 8px!important;overflow-wrap:anywhere}
+#successOverlay .success-card #winDetails{height:auto!important;max-height:none!important;line-height:1.55;overflow:visible!important;overflow-wrap:anywhere;margin:7px 0}
+#successOverlay .success-card .reward-fragment{height:auto!important;max-height:none!important;line-height:1.5}
+#successOverlay .success-card .ending-tale{
+  min-height:70px;
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+  font-size:13px;
+  line-height:1.55;
+  overflow-wrap:anywhere;
+}
+#successOverlay .success-card .achievement,#successOverlay .success-card .next-hook{
+  max-height:none!important;
+  height:auto!important;
+  overflow:visible!important;
+  overflow-wrap:anywhere;
+}
+#successOverlay .success-card .success-buttons{
+  flex-shrink:0;
+  position:sticky;
+  bottom:calc(-14px - env(safe-area-inset-bottom));
+  z-index:4;
+  background:linear-gradient(180deg,#11142aef,#070c22 45%);
+  box-shadow:0 -9px 18px #020718a8;
+  padding:9px 0 calc(5px + env(safe-area-inset-bottom));
+  margin-top:14px;
+}
+#successOverlay .success-buttons button{min-width:0;overflow-wrap:anywhere;line-height:1.35}
+@media(max-height:690px){
+  #successOverlay .success-card{padding-top:123px!important}
+  #successOverlay .success-card:before{top:8px;width:88px;height:90px;line-height:82px;font-size:64px}
+  #successOverlay .success-card:after{top:100px;font-size:7.5px}
+}
+/* Wider viewports still use a compact 3-panel composition, without absolute text. */
+@media(min-width:481px){
+  .view-story #storyFrames{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .view-story .story-frames .frame{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    height:auto!important;
+    min-height:128px!important;
+    max-height:none!important;
+    overflow:visible!important;
+    padding:9px 7px;
+    text-align:center;
+    gap:5px;
+  }
+  .view-story .frame .frame-number{
+    position:static!important;
+    top:auto!important;left:auto!important;
+    display:block;
+    flex:0 0 auto;
+    width:100%;
+    font-size:11px;
+    text-align:left;
+    line-height:1.35;
+    margin:0!important;
+  }
+  .view-story .frame .comic-name,
+  .view-story .frame .comic-line{
+    flex:0 0 auto;
+    display:block;
+    white-space:normal!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
+    max-height:none!important;
+    height:auto!important;
+    min-height:0!important;
+    width:100%;
+    margin:0!important;
+    overflow-wrap:anywhere;
+    text-align:center;
+  }
+  .view-story .frame .comic-name{font-size:13px;line-height:1.4}
+  .view-story .frame .comic-line{font-size:11px;line-height:1.48;padding:0}
+}
+/* Archive and Truth: retain natural heights so all clues and choices can scroll. */
+.game-view.view-archive:not([hidden]),
+.game-view.view-truth:not([hidden]){
+  display:flex;
+  flex-direction:column;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  overscroll-behavior-y:contain;
+  padding-bottom:calc(22px + env(safe-area-inset-bottom));
+  scroll-padding-bottom:25px;
+}
+.view-archive > .view-heading,.view-truth > .view-heading{flex:0 0 auto}
+.view-archive #journalPanel,.view-truth #truthPanel{
+  flex:0 0 auto!important;
+  height:auto!important;
+  min-height:0;
+  max-height:none!important;
+  overflow:visible!important;
+}
+.view-archive #archiveReturn,.view-truth #truthReturn{
+  position:static!important;
+  flex:0 0 auto;
+  min-height:46px;
+  margin:14px 0 8px;
+}
+
+
+/* Reward final boundary: headline and evidence scroll independently from the two fixed actions. */
+#successOverlay .success-card {
+  padding:0!important;
+  height:min(95dvh,760px)!important;
+  min-height:0!important;
+  max-height:calc(100dvh - 16px)!important;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  overflow:hidden!important;
+}
+#successOverlay .success-card:before,
+#successOverlay .success-card:after{content:none!important;display:none!important}
+#successOverlay .reward-scroll{
+  flex:1 1 auto!important;
+  min-height:0;
+  width:100%;
+  position:relative;
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding:clamp(147px,25dvh,182px) 16px 18px;
+  scrollbar-width:thin;
+  scrollbar-color:#c5a86f #10152b;
+  overscroll-behavior-y:contain;
+  -webkit-overflow-scrolling:touch;
+}
+#successOverlay .reward-scroll:before{
+  content:'13';position:absolute;pointer-events:none;
+  top:12px;left:50%;width:106px;height:112px;
+  box-sizing:border-box;
+  font-family:var(--comic-font);font-weight:1000;color:#ffc26a;
+  font-size:76px;letter-spacing:-.10em;text-align:center;line-height:104px;
+  transform:translateX(-50%) rotate(-11deg);
+  background:linear-gradient(145deg,#2e2346,#090f28);
+  border:4px solid #ffe29c;outline:1px solid #66558e;
+  box-shadow:0 0 25px #ffd77980,0 0 52px #ffca5877,inset 0 0 16px #5f476d;
+}
+#successOverlay .reward-scroll:after{
+  content:'CLASSIFIED / 001';position:absolute;pointer-events:none;
+  top:118px;left:50%;transform:translateX(-50%) rotate(-11deg);
+  font-size:8px;letter-spacing:1px;color:#fff5d6;white-space:nowrap;
+}
+#successOverlay .success-buttons {
+  position:relative!important;
+  bottom:auto!important;
+  flex:0 0 auto!important;
+  margin:0!important;
+  padding:10px 15px calc(8px + env(safe-area-inset-bottom))!important;
+  z-index:4;
+  background:linear-gradient(180deg,#171b35,#090e24 75%);
+  box-shadow:0 -10px 19px #050820d6;
+}
+#successOverlay .reward-scroll .ending-tale{
+  display:block;
+  height:auto!important;
+  min-height:68px!important;
+  max-height:none!important;
+  overflow:visible!important;
+  white-space:normal!important;
+  text-overflow:clip!important;
+}
+@media(max-height:690px){
+ #successOverlay .reward-scroll{padding-top:123px}
+ #successOverlay .reward-scroll:before{top:8px;width:88px;height:90px;line-height:82px;font-size:64px}
+ #successOverlay .reward-scroll:after{top:100px;font-size:7.5px}
+}
+
 </style>
 </head>
 <body>
@@ -1482,7 +1690,7 @@ function win(p,path){const firstStage=!stageComplete(index),firstBadge=!achievem
  const tale=$('endingTale');tale.replaceChildren();const h=document.createElement('strong');h.textContent=`${current().scene.episode} · ${p.medal}`;const body=document.createElement('span');body.textContent=p.ending;tale.append(h,body);
  $('winBadge').textContent=(firstBadge?'新徽章：':'徽章已收集：')+p.medal+(firstBonus?' · 额外获得「暗道探路者」':bonusRoute?' · 已发现备用暗道':'')+(n===6?' · 第一章称号「夜楼追踪者」':n>=3?' · 阶段称号「午夜调查员」':'');
  $('nextHook').textContent='悬念 · '+p.hook+(n===6?'  六块档案碎片已经归位，隐藏真相推演现已开放。':'');
- $('winNext').textContent=index===5&&n===6?'推演隐藏真相 →':index===5?'第一章完 · 查看开场':'下一幕 · 继续追查 →';$('successOverlay').hidden=false;$('winNext').focus();
+ $('winNext').textContent=index===5&&n===6?'推演隐藏真相 →':index===5?'第一章完 · 查看开场':'下一幕 · 继续追查 →';$('successOverlay').hidden=false;$('winNext').focus({preventScroll:true});$('successOverlay').querySelector('.success-card').scrollTop=0;
 }
 function tryEscape(){const p=effect();if(selected.length!==3){message('先完成三格事件推理，才能解锁出口。','bad');return}
  if(!p){message('你触发了两条线索的冲突剧情。撤回一格，继续追查同一条调查路线。','bad');return}
@@ -1663,6 +1871,18 @@ story?.addEventListener('click',e=>{
 const dialog=document.getElementById('successOverlay');
 if(dialog){new MutationObserver(()=>{if(!dialog.hidden&&active){flash.classList.remove('pulse');void flash.offsetWidth;flash.classList.add('pulse')}}).observe(dialog,{attributes:true,attributeFilter:['hidden']})}
 window.G01Cinema=Object.freeze({version:'0.6',origin:'V0.1 three-SVG-plane visual master',planeCount:()=>env.querySelectorAll('.cinema-plane').length,currentMood:()=>body.dataset.mood});
+})();
+</script>
+
+<script>
+/* V0.7.3 visual-only DOM grouping: preserve reward element IDs and original click handlers. */
+(() => {
+  const card=document.querySelector('#successOverlay .success-card');
+  const actions=card?.querySelector('.success-buttons');
+  if(!card||!actions||card.querySelector('.reward-scroll')) return;
+  const body=document.createElement('div');body.className='reward-scroll';
+  for(const node of [...card.children]) if(node!==actions) body.appendChild(node);
+  card.insertBefore(body,actions);
 })();
 </script>
 </body>
