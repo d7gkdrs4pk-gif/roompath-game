@@ -784,7 +784,7 @@ h1{font-size:clamp(28px,6vw,42px);margin:6px 0 7px;letter-spacing:-.05em;line-he
   function report() {
     const selected = (name) => document.querySelector(`input[name="${name}"]:checked`)?.value || 'not_answered';
     return {
-      product: '今晚拼出路 G01-B V0.2', exportedAt: new Date().toISOString(),
+      product: '今晚拼出路 G01-B V0.3', exportedAt: new Date().toISOString(),
       trial: { firstOpened: metrics.openedAt, visitDates: [...metrics.visitDates], firstPlacementSeconds: metrics.firstPlacementSeconds,
         firstWinSeconds: metrics.firstWinSeconds, levelsWon: [...metrics.levelWins].sort(),
         actions: { ...metrics.actions }, allFiveCompleted: Boolean(metrics.completedAt),
