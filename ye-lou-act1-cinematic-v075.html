@@ -1222,9 +1222,9 @@ body[data-act-one="true"] .cinema-beam{opacity:.25;animation-duration:18s}
 body[data-act-one="true"] .cinema-rain{opacity:.31;mask-image:linear-gradient(90deg,#000 0,transparent 22%,transparent 77%,#000 100%)}
 body[data-act-one="true"] .cinema-neon{filter:drop-shadow(0 7px 15px #f35a9a70)}
 body[data-act-one="true"] .view-landing .cover-kicker{letter-spacing:2.2px;font-size:10px;opacity:.86}
-body[data-act-one="true"] .view-landing h1{font-size:clamp(32px,8vw,40px)!important;line-height:1.02;letter-spacing:-.055em;text-shadow:2px 3px 0 #080d29,0 12px 22px #0007;margin:8px 0 9px!important}
+body[data-act-one="true"] .view-landing h1{font-size:clamp(32px,8vw,40px)!important;line-height:1.02;letter-spacing:-.055em;text-shadow:2px 3px 0 #080d29,0 12px 22px #0007;margin:8px 0 5px!important}
 body[data-act-one="true"] .view-landing h1 em{margin-top:3px;font-size:.9em}
-body[data-act-one="true"] .view-landing .intro{font-size:15px!important;line-height:1.52!important;color:#e4eaff!important;max-width:38ch;text-shadow:0 2px 10px #000}
+body[data-act-one="true"] .view-landing .intro{font-size:16px!important;line-height:1.56!important;color:#edf4ff!important;max-width:38ch;text-shadow:0 2px 10px #000;padding:6px 9px 7px 10px;margin:3px 0 8px -8px!important;border-left:2px solid #7bece6ad;border-radius:2px 9px 9px 2px;background:linear-gradient(90deg,#060d22ee 0%,#070c22d5 72%,#070c2244 100%);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
 body[data-act-one="true"] .cinema-chapters{border-color:#6d719d85;background:#080c25b8}
 body[data-act-one="true"] .scene-prologue{margin:6px 0 10px!important}
 body[data-act-one="true"] .scene-prologue .scene-copy{position:relative;isolation:isolate;padding:16px 16px 17px!important;border-left:3px solid #ffe2a1!important;background:linear-gradient(130deg,#09152af5,#0a1630ee 63%,#141335ee)!important;border-radius:3px 13px 13px 3px;box-shadow:0 15px 45px #020713ba,inset 0 0 0 1px #8895dd40!important;overflow:visible}
@@ -1264,7 +1264,7 @@ body[data-act-one="true"] .game-view.act1-scene-in:not([hidden]){animation:act1-
 /* Cinematic FLIP evidence viewer with light-safe overlay. */
 .evidence-overlay[hidden]{display:none!important}
 .evidence-overlay{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:calc(18px + env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) calc(18px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));isolation:isolate}
-.evidence-overlay .evidence-veil{position:absolute;inset:0;background:#01040bc7;backdrop-filter:blur(13px) saturate(.7);-webkit-backdrop-filter:blur(13px) saturate(.7);opacity:1}
+.evidence-overlay .evidence-veil{position:absolute;inset:0;background:linear-gradient(180deg,#04081787,#05091975);backdrop-filter:blur(9px) saturate(.84);-webkit-backdrop-filter:blur(9px) saturate(.84);opacity:1}
 .evidence-sheet{position:relative;z-index:2;width:min(100%,440px);max-height:min(720px,84dvh);display:flex;flex-direction:column;overflow:hidden;isolation:isolate;border:1px solid #83e5edac;border-radius:6px 21px 6px 21px;background:linear-gradient(145deg,#0f2240,#090e25 70%,#211c47);box-shadow:0 0 0 1px #162447,0 30px 90px #000f,8px 8px 0 #1e1649,inset 0 0 26px #39c7dc13;transform-origin:center center;color:#f4f8ff}
 .evidence-sheet:before{content:'';position:absolute;inset:0 0 auto;height:7px;background:linear-gradient(90deg,#ff60aa 0 19%,#56e6dd 19% 69%,#ffe6a1 69%);pointer-events:none}
 .evidence-head{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:65px;padding:20px 21px 12px;border-bottom:1px solid #7a9ccb50}
@@ -1280,7 +1280,7 @@ body[data-act-one="true"] .game-view.act1-scene-in:not([hidden]){animation:act1-
 .evidence-action{border:0;color:#071227;font-size:15px;font-weight:850;background:linear-gradient(105deg,#fff0a5,#ffb56f);min-height:48px;min-width:138px;flex:1 1 58%;padding:10px 12px;border-radius:3px 10px 3px 10px}
 .evidence-cancel{border:1px solid #667a9b;background:#121b3e;color:#e3f2fc;font-size:14px;min-height:48px;flex:1 1 27%;padding:9px 12px;border-radius:6px}
 .evidence-actions .evidence-action[hidden]{display:none}
-body[data-evidence-open="true"] .cinema-environment{filter:brightness(.45) saturate(.7)}
+body[data-evidence-open="true"] .cinema-environment{filter:brightness(.98) saturate(.86)}
 body[data-evidence-open="true"] .cinema-rain .rain-drop{animation-play-state:paused!important}
 body[data-evidence-open="true"] .cinema-beam{animation-play-state:paused!important}
 /* A completed first-act archive is inspectable without manufacturing new clues. */
@@ -1310,6 +1310,8 @@ body[data-act-one="true"] .journal-entry:first-child:not(.missing):hover{backgro
 }
 body[data-motion="off"] .game-view.act1-scene-in:not([hidden]){animation:none!important}
 
+/* V0.7.6: Act-one reading strip and balanced cinematic evidence backdrop only. */
+@media(max-width:359px){body[data-act-one="true"] .view-landing .intro{font-size:16px!important;line-height:1.5!important;padding-top:5px;padding-bottom:5px}}
 </style>
 </head>
 <body>
@@ -2184,9 +2186,12 @@ window.G01Cinema=Object.freeze({version:'0.6',origin:'V0.1 three-SVG-plane visua
   origin=from;selectedCard=commit||null;fill(record,!!commit);
   overlay.hidden=false;openState=true;body.dataset.evidenceOpen='true';
   shell.inert=true;
+  // Move focus into the modal immediately, including during the FLIP animation.
+  // Delayed focus previously left keyboard input on an inert background for ~400ms.
+  exit.focus({preventScroll:true});
   const backdrop=document.querySelector('.cinema-environment');if(backdrop)backdrop.setAttribute('aria-hidden','true');
   veil.animate?.([{opacity:0},{opacity:1}],{duration:gentle()?260:1,fill:'forwards'});
-  const t=++transitionId;flipElement(origin,sheet).then(()=>{if(t===transitionId&&openState)exit.focus({preventScroll:true})});
+  ++transitionId;void flipElement(origin,sheet);
   if(!hist){try{history.pushState({nightEvidenceV075:true},'',location.href);hist=true}catch(_){hist=false}}
  }
  function hideVisual(restore=true){
@@ -2281,7 +2286,7 @@ window.G01Cinema=Object.freeze({version:'0.6',origin:'V0.1 three-SVG-plane visua
   rewardNote.hidden=false;
  });rw.observe(reward,{attributes:true,attributeFilter:['hidden']});
  if(!reward.hidden)rw.takeRecords();
- window.G01Act1VisualV075=Object.freeze({version:'0.7.5',active:()=>actOne(),open:()=>openState,stage:stage,view:selectedView});
+ window.G01Act1VisualV075=Object.freeze({version:'0.7.6',active:()=>actOne(),open:()=>openState,stage:stage,view:selectedView});
 })();
 
 </script>
