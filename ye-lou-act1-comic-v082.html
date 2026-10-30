@@ -1762,6 +1762,18 @@ body[data-act-one="true"] #board .tile.slot.room-preview .door{
 @keyframes m082-room-signal{from{opacity:.35;scale:.9}to{opacity:1;scale:1}}
 @media(prefers-reduced-motion:reduce){body[data-act-one="true"] #board .tile.slot .room-flow{animation:none!important}}
 body[data-motion="off"] #board .tile.slot .room-flow{animation:none!important}
+
+/* V0.8.2.1 - distinguish the uncommitted preview from the placed room. */
+body[data-act-one="true"] #board .tile.slot .room-placement-state{
+  position:absolute;top:3px;left:3px;z-index:5;
+  font-size:9px;line-height:1.3;font-weight:850;
+  padding:2px 3px;color:#0a1623;background:#7ff6df;
+  border:1px solid #d6fff5;border-radius:2px;
+  pointer-events:none;
+}
+body[data-act-one="true"] #board .tile.slot.placed .room-placement-state{
+  background:#ffda7e;border-color:#fff1b8;
+}
 </style>
 </head>
 <body>
@@ -2310,10 +2322,10 @@ function renderBoard(){const map=$('board');map.replaceChildren();const path=new
  const visibleDoors=visibleRoom&&!placed?turn(visibleRoom.doors,rotation):v.doors;
  const angle=roomTurn*90;
  el.className='tile '+v.type+(v.type==='exit'&&v.open?' open':'')+(path.has(i)?' win-path':'')+(visibleRoom&&!placed?' room-preview':'')+(visibleRoom?' room-direction-visible':'');
- el.setAttribute('aria-label',visibleRoom?`${visibleRoom.name}，${angle}度，${placed?'已放置，可直接旋转':'待放置，点击中央确认'}`:v.name+(v.type==='exit'?(v.open?'，开启':'，关闭'):''));
+ el.setAttribute('aria-label',visibleRoom?`${visibleRoom.name}，${angle}度，${placed?'已放置，可直接旋转':'预览中，可点中央放置，也可直接点击确认并尝试逃脱'}`:v.name+(v.type==='exit'?(v.open?'，开启':'，关闭'):''));
  if(visibleRoom){
   const arms=dirs.filter(d=>(visibleDoors&d.bit)!==0).map(d=>`<i class="route-arm ${d.name}"></i>`).join('');
-  el.innerHTML=`<span class="room-flow" aria-hidden="true">${arms}<i class="route-hub"></i></span><span class="room-angle">${angle}°</span><span class="tile-label">${visibleRoom.name}</span>`;
+  el.innerHTML=`<span class="room-flow" aria-hidden="true">${arms}<i class="route-hub"></i></span><span class="room-placement-state">${placed?'已放置':'预览'}</span><span class="room-angle">${angle}°</span><span class="tile-label">${visibleRoom.name}</span>`;
  }else{
   el.innerHTML=`<span class="tile-icon">${v.icon}</span>${v.name?`<span class="tile-label">${v.name}</span>`:''}${v.type==='exit'?`<span class="tile-mini">${v.open?'已开启':'未开启'}</span>`:''}`;
  }
@@ -2321,8 +2333,9 @@ function renderBoard(){const map=$('board');map.replaceChildren();const path=new
  map.append(el)} }
 function renderRooms(){const place=$('roomChoices');place.replaceChildren();for(const r of ROOM_TYPES){const b=document.createElement('button');b.type='button';b.className='room-card'+(choice===r.id?' selected':'');b.disabled=!!placed;
  b.innerHTML=`<b><span class="room-symbol" style="transform:rotate(${choice===r.id?rotation*90:0}deg)">${r.icon}</span> ${r.name}</b><small>${r.note}${choice===r.id?' · '+rotation*90+'°':''}</small>`;
- b.addEventListener('click',()=>{choice=r.id;rotation=0;renderRooms();if(index===0)renderBoard();message(index===0?'已在中央格预览房门方向，旋转后点击中央格放置。':'已选择房卡，旋转后点击地图中央的“＋”。')});place.append(b)}
- $('rotate').disabled=!choice|| (!!placed&&index!==0);$('undo').disabled=!placed;}
+ b.addEventListener('click',()=>{choice=r.id;rotation=0;renderRooms();if(index===0)renderBoard();message(index===0?'中央为房间预览；旋转对齐后，直接点击“确认并尝试逃脱”会自动放置。':'已选择房卡，旋转后点击地图中央的“＋”。')});place.append(b)}
+ $('rotate').disabled=!choice|| (!!placed&&index!==0);$('undo').disabled=!placed;
+ if(index===0)$('escape').textContent=choice&&!placed?'确认并尝试逃脱 →':'尝试逃脱 →';}
 function render(){renderProgress();renderTabs();renderStory();renderBoard();renderRooms();renderRelic();renderTruth();$('mapIntro').textContent=current().description;const p=effect();$('mapTag').textContent=p?'出口已解锁 · '+current().exits.find(x=>x.gate===p.key).name:'出口尚未解锁';renderFlow();}
 function placeRoom(){if(placed){message('房间已经放入中央，需要改变请先撤销。','bad');return}
  if(!choice){message('先从下方选择一张房卡。','bad');return}
@@ -2351,12 +2364,18 @@ function win(p,path){const firstStage=!stageComplete(index),firstBadge=!achievem
 }
 function tryEscape(){const p=effect();if(selected.length!==3){message('先完成三格事件推理，才能解锁出口。','bad');return}
  if(!p){message('你触发了两条线索的冲突剧情。撤回一格，继续追查同一条调查路线。','bad');return}
- if(!placed){message('机关已经解锁，但还缺一间连接通道的房间。','bad');return}
+ if(!placed){
+  if(index===0&&choice){
+   // Act-one UX correction: visual room previews can be directly confirmed by Escape.
+   // No route, scoring, chapter, or save rule is altered.
+   placed={kind:choice,rotation};winPath=[];render();
+  }else{message(index===0?'请先从下方选择一张房卡，再旋转并尝试逃脱。':'机关已经解锁，但还缺一间连接通道的房间。','bad');return}
+ }
  const path=getPath();if(!path){beat('出口已开，但房间没有对齐。调整房门方向再试。','bad');message('两侧黄门需要正对，才能走到解锁的出口。','bad');return}
  winPath=path;beat('✓ 找到安全路线！新的档案碎片正在解锁。','good');render();message('逃脱成功！获得结局记录。','good');win(p,path);
 }
 function hint(){const p=effect();if(!p){message('不同先手会带来不同故事：选择同一线索方向的三件事，顺序不必固定。先点哪一件，可能会改变最后逃生的门。');return}
- if(!placed){message('出口已开！北侧路线用西＋北门；东侧路线用西＋东门。');return}
+ if(!placed){message(index===0?'中央显示的是预览房间；让房门与入口、东侧门连通，点击“确认并尝试逃脱”将自动放置并判定。':'出口已开！北侧路线用西＋北门；东侧路线用西＋东门。');return}
  message(getPath()?'路径已经连通！点击尝试逃脱。':'看中央房间的门，必须同时连接入口和已开启的出口。',getPath()?'good':'bad');}
 function share(){const url=location.origin+location.pathname;const chosen=decisions[index];const txt=`《今晚拼出路·夜楼档案》六幕悬疑｜收集${clueCount()}/6条线索 · ${badgeCount()}种真实结局${chosen?' · 我选择了「'+(chosen.variant==='canonical'?'原定调查':'改写顺序')+'」':''}。你会走哪条路？\n${url}`;
  if(navigator.clipboard?.writeText){navigator.clipboard.writeText(txt).then(()=>message('挑战地址与真实线索进度已复制，可发给微信或QQ好友。','good')).catch(()=>message('复制被浏览器限制，请复制当前页面网址。'))}
@@ -2371,7 +2390,7 @@ $('rotate').addEventListener('click',()=>{
   message(connectedNow?`已旋转${rotation*90}°：房门已接通，可以尝试逃脱。`:`已旋转${rotation*90}°：房门尚未接通，可继续旋转。`,connectedNow?'good':'');
  }else{
   renderRooms();if(index===0)renderBoard();
-  message(index===0?`方向预览 ${rotation*90}°：中央房间已同步旋转，点击放置。`:`已旋转${rotation*90}°，点击中央格子放入。`);
+  message(index===0?`方向预览 ${rotation*90}°：可点中央格放置，也可直接确认并尝试逃脱。`:`已旋转${rotation*90}°，点击中央格子放入。`);
  }
 });
 $('undo').addEventListener('click',()=>{placed=null;winPath=[];render();message('已撤销房间，可以重新选择和旋转。')});
