@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#091526">
+<meta name="theme-color" content="#070e18">
 <meta name="description" content="《今晚拼出路》原创悬疑故事第一章：六幕谜案、三格漫画、分支结局与即时线索奖励。">
-<title>夜楼档案：消失的十三层｜今晚拼出路 G01-E V0.3</title>
+<title>夜楼档案：消失的十三层｜今晚拼出路 G01-E V0.4</title>
 <style>
 :root{color-scheme:dark;font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;--bg:#081421;--panel:#152c44;--line:#37516a;--ink:#f2f7ff;--muted:#b1c4d7;--gold:#f4cb85;--mint:#82e1c7;--safe:#b8f4da}
 *{box-sizing:border-box}html{background:var(--bg)}body{margin:0;background:radial-gradient(ellipse at 20% 0%,#1b3655 0%,transparent 48%),radial-gradient(ellipse at 100% 38%,#183a42 0%,transparent 46%),var(--bg);color:var(--ink);min-height:100svh}
@@ -107,19 +107,251 @@ h1{font-size:clamp(25px,6vw,36px);line-height:1.13;margin:10px 0 4px;letter-spac
 .truth-feedback.good,.truth-ending-text.good{background:#215245;color:#e7ffe8}
 .truth-feedback.warn{background:#4b3b30;color:#ffe6c3}
 @media(max-width:420px){.relic-panel{padding:10px}.relic-panel p,.truth-content{font-size:13px}.truth-panel summary{font-size:13px}}
+
+/* G01-E V0.4 premium mobile flow — presentation-only. */
+:root{
+  color-scheme:dark;
+  --bg:#060d17;--panel:#0c1b2a;--line:#345069;--ink:#f9f1dd;
+  --muted:#b6c3cf;--gold:#e9bd79;--mint:#8bd5c9;--safe:#b9f0dc;
+  --serif:"Songti SC","Noto Serif CJK SC","Source Han Serif SC","STSong",Georgia,serif;
+  --radius:18px;
+}
+html{background:#060d17;scroll-behavior:auto}
+body{background:radial-gradient(ellipse at 8% 5%,rgba(32,65,85,.42),transparent 48%),radial-gradient(ellipse at 95% 65%,rgba(27,45,52,.3),transparent 40%),#060d17;line-height:1.5;color:var(--ink)}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:linear-gradient(115deg,transparent,#05101b19 40%,transparent),repeating-linear-gradient(90deg,transparent 0 11px,#aac1d203 12px 13px);opacity:.4}
+.shell{position:relative;z-index:1;max-width:580px;min-height:100svh;padding:10px 15px calc(24px + env(safe-area-inset-bottom))}
+.top{min-height:47px;margin-bottom:9px;gap:7px;align-items:center}
+.back,.top-badge,.archive-link{min-height:40px;display:flex;align-items:center;justify-content:center;padding:8px 11px;border-radius:999px;font-size:12px;font-weight:760;white-space:nowrap;text-align:center}
+.back{background:rgba(13,28,44,.86);color:#e2ebf1;border:1px solid #46617a}
+.top-badge{margin-left:auto;color:#f4d19a;background:rgba(59,46,30,.75);border-color:#9c7950;letter-spacing:.01em}
+.archive-link{background:#0f2a3b;color:#e6cfac;border:1px solid #4b7281;cursor:pointer;min-width:69px}
+.game-view[hidden],.step-bar[hidden],#utilityBottom[hidden]{display:none!important}
+.game-view{animation:view-enter .18s ease both;max-width:100%}
+@keyframes view-enter{from{opacity:.4;transform:translateY(7px)}to{opacity:1;transform:none}}
+.step-bar{display:flex;align-items:center;gap:10px;justify-content:space-between;margin:3px 0 15px;padding:8px 0 10px;border-bottom:1px solid #314354}
+.step-back{background:transparent;border:0;color:#d4dce7;font-size:13px;font-weight:700;min-height:42px;padding:6px}
+.step-name{color:#f6d29b;font-family:var(--serif);font-size:21px;font-weight:700}
+.step-progress{border:1px solid #4f6577;padding:4px 9px;border-radius:999px;color:#b4cbd5;font-size:12px;white-space:nowrap}
+h1{font-family:var(--serif);font-size:clamp(30px,8.5vw,43px);line-height:1.24;font-weight:780;letter-spacing:.01em;margin:8px 0 9px;color:#f9e4b8;text-shadow:0 3px 22px #0009}
+h1 em{display:block;color:#e7bb7d}
+.intro{font-size:15px;line-height:1.55;color:#d3dee5;margin:0 0 15px;max-width:33em}
+.view-heading{margin:4px 0 12px}.view-eyebrow{font-size:11px;letter-spacing:.17em;color:#c0a57a;font-weight:900;margin-bottom:4px}.view-heading h2{font-family:var(--serif);font-weight:760;color:#fbe4b8;font-size:clamp(26px,7vw,32px);margin:0 0 4px;letter-spacing:.01em;line-height:1.2}.view-heading p{font-size:14px;line-height:1.5;color:#c1d1d9;margin:4px 0 0}
+.stage-tabs{grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;margin:6px 0 12px}
+.stage-tab{min-width:0;padding:5px 1px;gap:3px;min-height:56px;align-items:center;text-align:center;background:#0a1a29d9;border-color:#355269;border-radius:12px}
+.stage-tab strong{font-family:Georgia,serif;font-size:20px;letter-spacing:.01em;font-weight:650}
+.stage-tab small{font-size:10px;letter-spacing:0;white-space:nowrap}
+.stage-tab.active{background:linear-gradient(155deg,#49391f,#231d1b);border-color:#d6a765;box-shadow:inset 0 0 0 1px #e8bc7c3b,0 0 18px #d6a7652b}
+.stage-tab.cleared{color:#a9e2d3}
+.scene-prologue{margin:0 0 12px;border:1px solid #756348;border-radius:19px;background:#091726;overflow:hidden;box-shadow:0 16px 55px #0008}
+.scene-art{height:clamp(180px,27svh,265px);background:linear-gradient(180deg,#0b1522,#142639 57%,#0e1928);position:relative}
+.scene-art::before{background:radial-gradient(ellipse at 68% 40%,#ffa44d20,transparent 47%),linear-gradient(90deg,#09131fbb,transparent 48%,#070c15aa),repeating-linear-gradient(92deg,transparent 0 55px,#8fabc011 56px 58px);opacity:1}
+.scene-art::after{content:"";inset:auto 0 0;position:absolute;height:55px;opacity:1;pointer-events:none;background:linear-gradient(transparent,#07131ff2)}
+.scene-hall{bottom:-18px;left:14%;right:5%;height:75%;opacity:.52;clip-path:polygon(44% 0,66% 0,100% 100%,0 100%);background:linear-gradient(#4d576044,#283943);border-top:1px solid #afaa8840}
+.scene-room{right:16%;top:15%;height:67%;width:23%;max-width:120px;border:2px solid #67727a;background:linear-gradient(110deg,#13202b,#07101b 70%);box-shadow:inset 0 0 20px #020609,0 8px 30px #000c}
+.scene-room::after{content:'13';position:absolute;bottom:9px;right:8px;font-size:11px;color:#cf9e64;opacity:.72;letter-spacing:.12em}
+.scene-room-label{top:9px;font-size:11px;text-shadow:0 1px 8px black}.scene-room-icon{font-size:38px;filter:drop-shadow(0 0 8px #f2a36280)}
+.scene-person{bottom:2px;left:21%;transform:scale(1.09);transform-origin:bottom left;filter:brightness(.72) drop-shadow(0 10px 13px #000b)}
+.scene-time{top:12px;left:12px;font-size:11px;padding:6px 9px;background:#07131edd;border-color:#b39a7266;letter-spacing:.07em}
+.scene-ambient{top:auto;bottom:23px;left:14px;max-width:43%;font-size:13px;color:#f2e7ce;text-shadow:0 2px 7px #000}
+.scene-copy{padding:13px 15px 15px;background:linear-gradient(180deg,#0f2534,#0a1c2a)}
+.scene-eyebrow{color:#e0bb7f;font-size:12px;letter-spacing:.09em}
+.scene-copy h2{font-family:var(--serif);font-size:23px;line-height:1.24;margin:5px 0 8px;color:#fff2d5}
+.scene-copy p{font-size:14px;line-height:1.48;margin:0 0 9px;color:#ccd9df;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.scene-dialogue{font-size:14px;line-height:1.45;border:1px solid #4a5d67;padding:9px 11px;background:#162a39;color:#fbe7c6;box-shadow:inset 2px 0 #caa66f}
+.scene-dialogue::before{display:none}
+.progress{margin:0 0 11px;background:#0e2732;border:1px solid #476c6f;padding:11px 13px;min-height:51px;border-radius:14px}
+.progress strong{color:#e8d1a5;font-size:15px}.progress span:last-child{font-size:12px;color:#c3d6d9;line-height:1.35;text-align:right}
+.premium-cta{display:flex;align-items:center;justify-content:center;gap:15px;width:100%;min-height:56px;background:linear-gradient(122deg,#c49253,#f2d499 48%,#c08a4f);border:1px solid #f2d29b;border-radius:13px;color:#101c29;font-size:18px;font-weight:900;letter-spacing:.03em;box-shadow:0 6px 22px #bd8d5260,inset 0 1px #fff2d4bd;cursor:pointer}
+.premium-cta:disabled{background:#263440;color:#9aabb6;border-color:#496074;box-shadow:none;opacity:1}
+.premium-cta span{font-size:22px}
+.premium-cta:not(:disabled):active{transform:translateY(1px)}
+.view-landing>.premium-cta,.view-story>.premium-cta{position:sticky;bottom:max(8px,env(safe-area-inset-bottom));z-index:3;margin:13px 0 0}
+.outline-cta{display:block;width:100%;margin:14px 0 5px;min-height:46px;border:1px solid #506779;background:#162a3b;color:#dce3eb;font-size:15px;border-radius:12px;font-weight:780}
+.panel{background:linear-gradient(145deg,rgba(17,34,51,.96),rgba(8,23,38,.96));border:1px solid #3d5369;border-radius:18px;padding:14px;margin:0;box-shadow:0 10px 35px #0005}
+.section-head{margin:0 0 6px}.section-head h2{font-family:var(--serif);font-size:19px}.section-head .tag{font-size:12px;background:#342d21;color:#ecd29d;padding:4px 7px}
+.brief{font-size:14px;line-height:1.45;color:#b9cbd5;margin:5px 0 9px}
+.view-story .panel{padding:12px}
+.view-story .section-head,.view-story #storyIntro{display:none}
+.tip-shelf{margin:6px 0 10px;color:#c0d4dc;border:1px solid #345469;border-radius:10px;background:#102639}
+.tip-shelf summary{min-height:38px;display:flex;align-items:center;padding:8px 10px;font-size:13px;font-weight:700;cursor:pointer;color:#d8b986}
+.tip-shelf .hint-box{margin:0 8px 9px;padding:8px 11px;font-size:14px;line-height:1.5}
+.story-frames{gap:7px;margin:0 0 7px}
+.story-frames .frame{min-height:155px;border-radius:12px;padding:7px 5px 9px;box-shadow:inset 0 -8px #0002;background:linear-gradient(170deg,#223449,#0e2435)}
+.story-frames .frame.filled{background:linear-gradient(145deg,#394740,#1f3438);border-color:#e6bd7b}
+.frame .frame-number{font-size:11px;left:9px;top:6px;color:#d2b98e}
+.comic-picture{height:58px;margin-top:24px;background:linear-gradient(135deg,#334858,#152a39)}
+.comic-hero{font-size:29px}.comic-object{font-size:26px}
+.frame .comic-name{font-size:13px;line-height:1.35;min-height:unset;color:#fce4b6}
+.frame .comic-line{font-size:12px;font-weight:600;line-height:1.4;padding:5px;min-height:42px;color:#dce8ed}
+.picker-heading{margin:10px 0 7px;font-size:13px;line-height:1.4;color:#d7e0e6}.mini{font-size:13px;min-height:40px}
+.story-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.story-choice{min-height:66px;padding:7px 8px;border-radius:11px;flex-direction:row;gap:9px;text-align:left;justify-content:flex-start;background:#122d40;border-color:#476579}
+.story-choice .emoji{font-size:25px;flex:0 0 auto}.story-choice strong{font-size:14px;font-weight:780;line-height:1.3}.story-choice small{display:none}
+.story-effect{margin-top:10px;padding:9px 11px;min-height:48px;background:#112839;border-color:#4a6373}.story-effect.active{background:#173a35;border-color:#a2c69e}.story-effect strong{font-size:14px;color:#ffe5b7}.story-effect small{font-size:13px;line-height:1.45;color:#d3e3e7}
+#storyInterlude,#branchCompass,#beatFeedback{display:none}
+.relic-panel{margin:11px 0 0;padding:11px 13px;background:linear-gradient(130deg,#283b3b,#172836);border-color:#b39560}
+.relic-panel strong{font-size:15px}.relic-panel p{font-size:14px}.relic-buttons button{font-size:14px;min-height:46px}
+.game-view.view-story>.premium-cta{margin-bottom:0}
+.view-route .panel{padding:12px}
+.view-route .section-head h2{font-size:18px}.view-route .brief{display:none}
+.game-map{max-width:min(285px,84vw);margin:10px auto 0;gap:6px}
+.tile{border-radius:10px}.tile .tile-icon{font-size:25px}.tile .tile-label{font-size:13px}.tile .tile-mini{font-size:11px}
+.board-legend{font-size:12px;line-height:1.35;margin:8px 0;color:#c2ced8}
+.rooms{gap:8px;margin-top:11px}.room-card{min-height:77px;border-radius:11px}
+.room-card b{font-size:15px;color:#f3dfbf}.room-card small{font-size:12px;color:#c4d5dd}
+.controls{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:12px 0 8px}
+.game-btn{font-size:14px;min-height:46px;border-radius:11px;padding:8px 4px}
+.game-btn.primary{grid-column:1/-1;order:10;min-height:55px;font-size:18px;background:linear-gradient(120deg,#c99654,#f0d59b,#c08c51);border-color:#f2d8a4;color:#182431;box-shadow:0 5px 19px #c0965950;position:sticky;bottom:8px;z-index:3}
+#restart{grid-column:span 3;order:4;background:transparent;border-color:#3f6071;color:#c4d4dd;min-height:41px}
+.message{font-size:14px;line-height:1.5;padding:10px 12px;min-height:42px}
+.journal{margin:0;border-radius:15px;background:#132939}.journal summary{font-size:15px;min-height:50px}.journal-entry{font-size:14px;line-height:1.55;padding:12px}.journal-entry strong{font-size:15px}
+.truth-panel{margin:0;border:1px solid #9c7d4d;background:linear-gradient(#192b37,#0b2030);border-radius:16px}
+.truth-panel summary{min-height:50px;font-size:15px;padding:12px 13px}
+.truth-content{font-size:15px;line-height:1.6;padding:5px 14px 17px}
+.truth-evidence span{font-size:14px;line-height:1.55}
+.truth-choices button,.truth-endings button{font-size:15px;min-height:51px;padding:12px}
+.truth-feedback,.truth-ending-text{font-size:15px;line-height:1.6}
+.bottom{margin-top:14px}.bottom button{font-size:14px;min-height:45px}
+.disclaimer{font-size:11px;line-height:1.7;color:#8799a9;margin:18px 3px}
+/* Rewards feel like a premium find, not an administrative success alert. */
+.overlay{background:rgba(2,8,17,.89);backdrop-filter:blur(9px)}
+.success-card{border:1px solid #cda46b;border-radius:22px;background:radial-gradient(ellipse at 50% 7%,#4e4733 0%,transparent 45%),linear-gradient(160deg,#152c3c,#091a2a 88%);box-shadow:0 25px 90px #000c,0 0 60px #d2a35629;text-align:center;padding:24px 20px;max-height:min(92svh,800px);overflow-y:auto}
+.success-card .trophy{font-family:var(--serif);font-size:62px;color:#f2d6a1;filter:drop-shadow(0 2px 20px #ffe3a382)}
+.reward-mark{font-size:11px;letter-spacing:.13em;color:#ecd29b;font-weight:800}
+.success-card h2{font-family:var(--serif);font-size:31px;line-height:1.3;margin:8px 0 6px;color:#fce3b2}
+.success-card p{font-size:14px;line-height:1.5}
+.reward-fragment{font-size:17px;line-height:1.4;background:linear-gradient(115deg,#4c3e29,#392e28);border:1px solid #d5a965;border-radius:13px;padding:14px;margin:12px 0}
+.ending-tale{font-size:15px;line-height:1.6;border-color:#6b8a87;background:#142d37}.ending-tale strong{font-size:15px}
+.success-card .achievement{font-size:15px;margin:12px 0;border:1px solid #b99e6b;background:#3a382c}
+.next-hook{font-size:14px!important;line-height:1.6!important;color:#f0d8a5!important;background:#142938!important}
+.success-buttons button{font-size:14px;min-height:52px}
+.success-buttons .primary{background:linear-gradient(100deg,#d3a35e,#f2d7a1)}
+@media(min-width:600px){
+  .shell{padding:18px 28px 40px}.scene-art{height:255px}.scene-copy{padding:19px 20px}
+  .game-map{max-width:340px}.story-frames .frame{min-height:173px}.comic-picture{height:68px}
+}
+@media(max-width:420px){
+  .shell{padding:8px 11px calc(17px + env(safe-area-inset-bottom))}
+  .top{margin-bottom:4px}.back,.top-badge,.archive-link{font-size:11px;min-height:40px;padding:7px 8px}
+  h1{font-size:32px;margin:7px 0}.intro{font-size:14px;line-height:1.5;margin:0 0 10px}
+  .stage-tab{min-height:52px;border-radius:9px}.stage-tab strong{font-size:18px}.stage-tab small{font-size:10px}
+  .scene-art{height:clamp(150px,24svh,220px)}
+  .scene-room{width:22%;height:70%;right:17%;top:17%;border-radius:2px}.scene-person{transform:scale(.92);transform-origin:bottom left}
+  .scene-copy{padding:9px 12px 11px}.scene-copy h2{font-size:21px}.scene-copy p{font-size:14px}.scene-dialogue{font-size:14px;padding:8px 11px}
+  .progress{padding:9px 11px}.progress strong{font-size:14px}.progress span:last-child{font-size:11px}
+  .premium-cta{min-height:54px;font-size:17px}
+  .view-heading{margin:0 0 11px}.view-heading h2{font-size:27px}.view-heading p{font-size:14px}
+  .story-frames .frame{min-height:151px;padding:6px 4px 7px}
+  .comic-picture{height:45px;margin:24px auto 2px}.comic-hero{font-size:24px}.comic-object{font-size:23px}
+  .frame .comic-name{font-size:13px}.frame .comic-line{font-size:12px;line-height:1.35;padding:5px 4px;min-height:46px}
+  .story-choice{min-height:66px}.story-choice strong{font-size:14px}.story-choice .emoji{font-size:23px}
+  .game-map{max-width:min(270px,82vw)}.room-card{min-height:70px}
+}
+@media(max-width:370px){
+  .top-badge{font-size:10px}.archive-link{min-width:60px}
+  .scene-art{height:145px}.scene-room{max-height:110px}.scene-person{transform:scale(.82)}
+  .stage-tab strong{font-size:17px}.stage-tab small{font-size:9.5px}
+  .story-frames .frame{min-height:144px}.frame .comic-line{font-size:11.5px}
+  .view-story .panel,.view-route .panel{padding:10px}
+  .story-choice{min-height:63px}.room-card b{font-size:14px}
+}
+@media(prefers-reduced-motion:reduce){.game-view{animation:none!important}button{scroll-behavior:auto}}
+/* V0.4 cinematic hallway illustration replaces the former flat character shapes. */
+.scene-art .scene-illustration{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block}
+.scene-art .scene-hall,.scene-art .scene-person{display:none}
+.scene-room{z-index:1;right:15%;top:14%;height:68%;width:22%;border-color:#a19a85a9;background:linear-gradient(120deg,#111f2a,#040f1a);box-shadow:inset 0 0 25px #030710,0 5px 15px #000d}
+.scene-art.is-powered .scene-illustration,.scene-art.is-solved .scene-illustration{filter:brightness(1.22) saturate(1.1)}
+.scene-art.is-mystery .scene-illustration{filter:brightness(.82) saturate(.82)}
+.scene-room-label{font-size:12px;color:#f4dfb9;text-shadow:0 2px 5px #000}.scene-room-icon{font-size:34px}
+.scene-art .scene-time,.scene-art .scene-ambient{z-index:2}
+body:not([data-view="archive"])>.shell .disclaimer{display:none}
+/* Remove repeated labels and secondary navigation on the short escape screen. */
+.view-route .view-heading p,.view-route .section-head h2,.view-route>.outline-cta{display:none}
+.view-route .view-heading{margin-bottom:9px}
+.view-route .section-head{justify-content:flex-end;margin-bottom:0}
+.view-route .game-map{max-width:min(250px,76vw);margin:6px auto 0}
+.view-route .board-legend{margin:7px 0 3px}
+.view-route .room-card{min-height:66px}
+.view-route .controls{margin:8px 0}
+@media(max-width:420px){
+ .view-route .view-heading h2{font-size:25px}
+ .view-route .game-map{max-width:min(246px,75vw)}
+ .view-route .panel{padding:9px 11px}
+}
+@media(max-height:720px){
+ .scene-art{height:145px}
+ .scene-copy h2{font-size:19px}
+ .view-route .game-map{max-width:min(210px,69vw)}
+ .view-route .room-card{min-height:59px}
+ .view-route .room-card small{font-size:11px}
+ .view-story .story-frames .frame{min-height:133px}
+ .view-story .comic-picture{height:38px}
+ .view-story .story-choice{min-height:57px}
+}
+
 </style>
 </head>
 <body>
 <main class="shell">
   <header class="top">
-    <a class="back" href="./" aria-label="返回今晚拼出路20关主游戏">← 返回20关主游戏</a>
-    <span class="top-badge">G01-E · 第一章 / 六幕</span>
+    <a class="back" href="./" aria-label="返回今晚拼出路20关主游戏">‹ 返回主线</a>
+    <span class="top-badge" id="chapterBadge">第一章 · 第1幕</span>
+    <button class="archive-link" id="archiveShortcut" type="button" aria-label="查看档案袋">◈ 档案</button>
   </header>
+  <div id="stepBar" class="step-bar" hidden aria-label="当前调查步骤">
+    <button type="button" id="stepBack" class="step-back" aria-label="返回上一步">‹ 上一步</button>
+    <span class="step-name" id="stepName">改写故事</span>
+    <span class="step-progress" id="stepProgress">1 / 2</span>
+  </div>
+  <section id="landingView" class="game-view view-landing" aria-label="本幕剧情开场">
   <h1>夜楼档案，<em>消失的十三层</em></h1>
-  <p class="intro">一条匿名短信，一层不存在的楼。每闯过一幕都能收集线索；有些线索能在后续派上用场，六块碎片还可开启隐藏真相。</p>
+  <p class="intro">一条匿名短信，一层不存在的楼。你的顺序，决定真相。</p>
   <nav id="stageTabs" class="stage-tabs" aria-label="第一章六幕"></nav>
   <section class="scene-prologue" id="scenePrologue" aria-label="故事剧情开场与进展">
     <div class="scene-art" id="sceneArt" aria-hidden="true">
+    <svg class="scene-illustration" viewBox="0 0 420 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="sceneWall" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#07101d"/><stop offset=".57" stop-color="#1e3345"/><stop offset="1" stop-color="#081522"/></linearGradient>
+        <linearGradient id="sceneFloor" x1="0" y1="0" x2=".4" y2="1"><stop stop-color="#55626a" stop-opacity=".40"/><stop offset="1" stop-color="#101925"/></linearGradient>
+        <radialGradient id="sceneLamp"><stop stop-color="#f7dca2" stop-opacity=".85"/><stop offset=".15" stop-color="#daa765" stop-opacity=".3"/><stop offset="1" stop-color="#df9a42" stop-opacity="0"/></radialGradient>
+        <linearGradient id="sceneCoat" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#513e36"/><stop offset=".5" stop-color="#a17b54"/><stop offset="1" stop-color="#272937"/></linearGradient>
+        <filter id="sceneMist"><feGaussianBlur stdDeviation="12"/></filter>
+      </defs>
+      <rect width="420" height="240" fill="url(#sceneWall)"/>
+      <path d="M0 0 L155 25 L172 180 L0 240Z" fill="#07121c" opacity=".76"/>
+      <path d="M420 0 L319 24 L277 180 L420 240Z" fill="#101d29" opacity=".7"/>
+      <path d="M155 25 L319 24 L277 180 L172 180Z" fill="#223343" opacity=".58"/>
+      <path d="M0 240 L172 180 L277 180 L420 240Z" fill="url(#sceneFloor)"/>
+      <g stroke="#a9b4ac" stroke-opacity=".12" stroke-width="1">
+       <path d="M27 240 L181 181 M96 240 L192 181 M334 240 L266 181 M399 240 L267 181"/>
+       <path d="M0 225 L420 225 M0 204 L420 204 M0 184 L420 184"/>
+       <path d="M56 0 L165 176 M360 0 L286 177"/>
+      </g>
+      <rect x="8" y="26" width="60" height="112" fill="#0c1c2c" stroke="#435369" stroke-width="2"/>
+      <rect x="17" y="34" width="40" height="96" fill="#05121d"/>
+      <rect x="338" y="12" width="66" height="160" fill="#0b1826" stroke="#4f6271" stroke-width="3"/>
+      <rect x="349" y="25" width="45" height="135" fill="#0c1929"/>
+      <path d="M169 26H290V182H169Z" fill="#132435" stroke="#526778" stroke-opacity=".52" stroke-width="2"/>
+      <path d="M188 36V178 M269 36V178" stroke="#506170" opacity=".25"/>
+      <circle cx="205" cy="27" r="105" fill="url(#sceneLamp)" opacity=".56"/>
+      <path d="M204 0V23" stroke="#b6ad91" stroke-opacity=".48" stroke-width="2"/>
+      <ellipse cx="205" cy="27" rx="7" ry="3" fill="#f6d7ac" opacity=".76"/>
+      <rect x="3" y="180" width="370" height="35" fill="#b9c9c9" opacity=".035" filter="url(#sceneMist)"/>
+      <!-- lone investigator, back-lit silhouette -->
+      <ellipse cx="113" cy="226" rx="39" ry="8" fill="#050b15" opacity=".62"/>
+      <path d="M88 171 Q94 158 111 158 Q140 157 146 186 L153 240 L72 240 L75 191Z" fill="url(#sceneCoat)" stroke="#b49368" stroke-opacity=".35" stroke-width="2"/>
+      <path d="M81 183 Q59 187 60 218 L65 240 L81 240Z" fill="#1b2430"/>
+      <path d="M149 182 Q161 194 162 231L156 240L143 240Z" fill="#20212a"/>
+      <path d="M99 158V168Q109 177 125 165V156Z" fill="#533b32"/>
+      <ellipse cx="113" cy="146" rx="19" ry="22" fill="#6a5147"/>
+      <path d="M94 146Q90 115 114 119 Q137 120 132 145 L128 135 Q110 136 96 143Z" fill="#151a22"/>
+      <path d="M96 170 Q85 181 82 220 Q95 235 119 227 L127 174Z" fill="#2a2d32" stroke="#8d7158" stroke-width="2"/>
+      <path d="M106 172L104 218 M126 173L126 225" stroke="#b6a17d" stroke-opacity=".28" stroke-width="2"/>
+      <path d="M132 157 Q161 150 195 118" stroke="#f0bd78" stroke-opacity=".24" stroke-width="3"/>
+      <ellipse cx="286" cy="154" rx="84" ry="51" fill="#b8d1e0" opacity=".05" filter="url(#sceneMist)"/>
+      <path d="M0 0H420V240H0Z" fill="none" stroke="#101b2b" stroke-width="10" opacity=".13"/>
+    </svg>
+
       <div class="scene-hall"></div><div class="scene-beam"></div>
       <div class="scene-room"><span class="scene-room-label" id="sceneDoorLabel">逃生门 · 锁住</span><span class="scene-room-icon" id="sceneDoorIcon">🚪</span></div>
       <div class="scene-person"><span class="backpack"></span><span class="coat"></span><span class="head"></span><span class="hair"></span></div>
@@ -131,8 +363,16 @@ h1{font-size:clamp(25px,6vw,36px);line-height:1.13;margin:10px 0 4px;letter-spac
     </div>
   </section>
   <section class="progress" aria-label="章节线索进度"><strong id="achCount">已发现线索 0 / 6</strong><span id="achLabels">已获得 0 项结局徽章</span></section>
-  <details class="journal" id="journalPanel"><summary>◈ 档案袋 · 已收集的调查线索 <span id="journalCount">0/6</span></summary><div id="journalBody" class="journal-body"></div></details>
-  <details class="truth-panel" id="truthPanel" hidden>
+  <button id="beginStory" class="premium-cta" type="button">开始调查 <span aria-hidden="true">→</span></button>
+  </section>
+  <section id="archiveView" class="game-view view-archive" hidden aria-label="已获得线索档案">
+    <div class="view-heading"><div class="view-eyebrow">CONFIDENTIAL · ARCHIVE</div><h2>已发现的线索</h2><p>发现每一条真相，都在靠近不存在的十三层。</p></div>
+  <details class="journal" id="journalPanel" open><summary>◈ 档案袋 · 已收集的调查线索 <span id="journalCount">0/6</span></summary><div id="journalBody" class="journal-body"></div></details>
+  <button class="outline-cta" id="archiveReturn" type="button">‹ 返回调查</button>
+  </section>
+  <section id="truthView" class="game-view view-truth" hidden aria-label="隐藏真相推演">
+    <div class="view-heading"><div class="view-eyebrow">FINAL DECRYPTION · 00:17</div><h2>最后一份档案</h2><p>六块碎片已经归位，你能推断出十三层真正的用途吗？</p></div>
+  <details class="truth-panel" id="truthPanel" hidden open>
     <summary id="truthSummary">◈ 六块档案碎片：隐藏真相推演已解锁</summary>
     <div class="truth-content">
       <p>找出三条记录之间的共同规律，判断十三层究竟发生了什么。答错可以重选，不扣除碎片。</p>
@@ -156,10 +396,14 @@ h1{font-size:clamp(25px,6vw,36px);line-height:1.13;margin:10px 0 4px;letter-spac
       <p id="truthEndingText" class="truth-ending-text" hidden role="status"></p>
     </div>
   </details>
+  <button class="outline-cta" id="truthReturn" type="button">‹ 返回档案袋</button>
+  </section>
+  <section id="storyView" class="game-view view-story" hidden aria-label="三格故事选择">
+    <div class="view-heading"><div class="view-eyebrow">01 · REWRITE THE STORY</div><h2>改写三格故事</h2><p>先做哪件事，会改变接下来的真相。</p></div>
   <section class="panel" aria-labelledby="storyTitle">
     <div class="section-head"><h2 id="storyTitle">① 改写三格故事</h2><span class="tag" id="storyTag">故事机关</span></div>
     <p id="storyIntro" class="brief"></p>
-    <div class="hint-box" id="storyHint"></div>
+    <details class="tip-shelf"><summary>查看调查提示（可选）</summary><div class="hint-box" id="storyHint"></div></details>
     <div class="story-frames" id="storyFrames" aria-label="三格漫画事件顺序"></div>
     <div class="story-interlude" id="storyInterlude" role="status" aria-live="polite">故事开始了。你的每一步选择，都可能改变下一幕。</div>
     <div class="branch-compass" id="branchCompass" role="status" aria-live="polite">▸ 三格故事不再只有一个正确顺序：最先调查什么，就会留下什么后果。</div>
@@ -174,6 +418,10 @@ h1{font-size:clamp(25px,6vw,36px);line-height:1.13;margin:10px 0 4px;letter-spac
     <div class="relic-buttons" id="relicButtons"></div>
     <p class="relic-response" id="relicResponse" role="status"></p>
   </section>
+  <button id="toRoute" class="premium-cta" type="button" disabled>先完成三格故事 <span aria-hidden="true">→</span></button>
+  </section>
+  <section id="routeView" class="game-view view-route" hidden aria-label="拼接逃生房间">
+    <div class="view-heading"><div class="view-eyebrow">02 · FIND THE EXIT</div><h2>拼出逃生路线</h2><p>根据你改写的故事，选择房间并接通出口。</p></div>
   <section class="panel" aria-labelledby="mapTitle">
     <div class="section-head"><h2 id="mapTitle">② 选择房间拼出路</h2><span class="tag" id="mapTag">单张房卡</span></div>
     <p class="brief" id="mapIntro">房门相互对齐，且目标出口已被故事解锁，才能逃出。</p>
@@ -189,11 +437,13 @@ h1{font-size:clamp(25px,6vw,36px);line-height:1.13;margin:10px 0 4px;letter-spac
     </div>
     <div class="message" id="status" role="status" aria-live="polite">先排列三格故事，然后选择房卡放入中间空位。</div>
   </section>
-  <div class="bottom"><button type="button" id="share">复制夜楼挑战地址</button><button type="button" id="resetStory">重排剧情探索分支</button></div>
+  <button id="routeReturn" class="outline-cta" type="button">‹ 返回三格故事修改顺序</button>
+  </section>
+  <div class="bottom" id="utilityBottom"><button type="button" id="share">复制夜楼挑战地址</button><button type="button" id="resetStory">重排剧情探索分支</button></div>
   <p class="disclaimer">原创悬疑故事第一章 · 同组三件事可触发多种分支；不同顺序可能开启不同逃生门。独立本机存档；同一结局不重复发放奖励。不会修改原有20关、60星成绩、好友榜及海报。<br>不收集姓名、聊天资料或联系方式；当前无广告、无收费功能。</p>
 </main>
 <div class="overlay" id="successOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="winTitle">
-  <section class="success-card"><span class="trophy" aria-hidden="true">🏆</span><div style="font-size:11px;letter-spacing:.12em;color:#f3d296;font-weight:800">STORY UNLOCKED</div>
+  <section class="success-card"><span class="trophy" aria-hidden="true">◈</span><div class="reward-mark">ARCHIVE UNLOCKED · 新线索</div>
     <h2 id="winTitle">新的真相出现了！</h2><p id="winDetails"></p>
     <div class="reward-fragment" id="rewardFragment">◈ 发现一块档案碎片</div>
     <div id="endingTale" class="ending-tale" aria-label="故事结局"></div>
@@ -500,7 +750,7 @@ function renderProgress(){const n=clueCount(),m=badgeCount();$('achCount').textC
 }
 function renderTabs(){const el=$('stageTabs');el.replaceChildren();levels.forEach((l,i)=>{const b=document.createElement('button');b.type='button';const locked=!unlocked(i);const cleared=stageComplete(i);b.className='stage-tab'+(index===i?' active':'')+(locked?' locked':'')+(cleared?' cleared':'');
  b.setAttribute('aria-pressed',String(index===i));b.setAttribute('aria-label',`第${i+1}幕${locked?'未解锁':l.name}${cleared?'已通关':''}`);
- b.innerHTML=`<strong>${String(i+1).padStart(2,'0')} · ${locked?'???':l.name}</strong><small>${locked?'等待上一幕':' '+(cleared?'✓ 已记录':i===0?'故事开始':'解锁剧情')}</small>`;
+ b.innerHTML=`<strong>${String(i+1).padStart(2,'0')}</strong><small>${locked?'锁定':(cleared?'已查':index===i?'当前':'可查')}</small>`;
  b.addEventListener('click',()=>{if(locked){message('先完成前一幕，才能解开下一张档案。','bad');return}resetStage(i)});el.append(b)});}
 const dirs=[{bit:N,other:S,delta:-3,name:'n'},{bit:E,other:W,delta:1,name:'e'},{bit:S,other:N,delta:3,name:'s'},{bit:W,other:E,delta:-1,name:'w'}];
 const turn=(doors,r)=>{let v=doors;for(let i=0;i<((r%4)+4)%4;i++)v=((v<<1)&15)|((v&8)>>3);return v};
@@ -560,7 +810,7 @@ function renderRooms(){const place=$('roomChoices');place.replaceChildren();for(
  b.innerHTML=`<b><span class="room-symbol" style="transform:rotate(${choice===r.id?rotation*90:0}deg)">${r.icon}</span> ${r.name}</b><small>${r.note}${choice===r.id?' · '+rotation*90+'°':''}</small>`;
  b.addEventListener('click',()=>{choice=r.id;rotation=0;renderRooms();message('已选择房卡，旋转后点击地图中央的“＋”。')});place.append(b)}
  $('rotate').disabled=!choice||!!placed;$('undo').disabled=!placed;}
-function render(){renderProgress();renderTabs();renderStory();renderBoard();renderRooms();renderRelic();renderTruth();$('mapIntro').textContent=current().description;const p=effect();$('mapTag').textContent=p?'出口已解锁 · '+current().exits.find(x=>x.gate===p.key).name:'出口尚未解锁';}
+function render(){renderProgress();renderTabs();renderStory();renderBoard();renderRooms();renderRelic();renderTruth();$('mapIntro').textContent=current().description;const p=effect();$('mapTag').textContent=p?'出口已解锁 · '+current().exits.find(x=>x.gate===p.key).name:'出口尚未解锁';renderFlow();}
 function placeRoom(){if(placed){message('房间已经放入中央，需要改变请先撤销。','bad');return}
  if(!choice){message('先从下方选择一张房卡。','bad');return}
  placed={kind:choice,rotation};winPath=[];render();
@@ -568,7 +818,7 @@ function placeRoom(){if(placed){message('房间已经放入中央，需要改变
  else {beat('房间已安放 · 再检查门口方向与故事条件。');message('房间已放置，看看黄色门口是否两两相接。')}
 }
 function resetStage(target=index){if(!unlocked(target)){message('前一幕尚未通关，继续寻找线索。','bad');return}
- index=target;selected=[];choice=null;rotation=0;placed=null;winPath=[];lastBeat={text:'◈ 故事从一条线索开始，每一次正确推理都有反馈。',type:''};$('successOverlay').hidden=true;save();render();message(`第${target+1}幕开启：${current().scene.title}`);}
+ index=target;selected=[];choice=null;rotation=0;placed=null;winPath=[];lastBeat={text:'◈ 故事从一条线索开始，每一次正确推理都有反馈。',type:''};$('successOverlay').hidden=true;save();render();setView('landing');message(`第${target+1}幕开启：${current().scene.title}`);}
 function getNext(){for(let n=index+1;n<levels.length;n++)if(unlocked(n))return n;return index;}
 function win(p,path){const firstStage=!stageComplete(index),firstBadge=!achievements[p.badge];achievements[p.badge]=true;
  const route=getRoute(),bonusRoute=index===1&&extra.used[1]&&route&&route.gate!==p.key;
@@ -604,15 +854,52 @@ $('undo').addEventListener('click',()=>{placed=null;winPath=[];render();message(
 $('escape').addEventListener('click',tryEscape);$('restart').addEventListener('click',()=>resetStage(index));$('hint').addEventListener('click',hint);
 $('share').addEventListener('click',share);$('resetStory').addEventListener('click',()=>{selected=[];placed=null;choice=null;rotation=0;winPath=[];render();message('已重置本幕，可以重新追查不同结局。')});
 $('winBack').addEventListener('click',()=>{$('successOverlay').hidden=true;});
-$('winNext').addEventListener('click',()=>{if(index===5&&clueCount()===6){$('successOverlay').hidden=true;$('truthPanel').open=true;renderTruth();$('truthPanel').scrollIntoView({behavior:'auto',block:'start'});return;}const next=index===5?0:index+1;resetStage(next)});
+$('winNext').addEventListener('click',()=>{if(index===5&&clueCount()===6){$('successOverlay').hidden=true;$('truthPanel').open=true;renderTruth();setView('truth');return;}const next=index===5?0:index+1;resetStage(next)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('successOverlay').hidden)$('successOverlay').hidden=true;});
+// G01-E V0.4: mobile-first, one-step-at-a-time presentation only.
+const VIEWS=['landing','story','route','archive','truth'];
+let activeView='landing', returnView='landing';
+const viewNode=name=>$(name+'View');
+function setView(name){
+ if(!VIEWS.includes(name))return;
+ if(name==='archive' && activeView!=='archive')returnView=activeView;
+ if(name==='truth'&&clueCount()<6){name='archive';returnView='landing';}
+ VIEWS.forEach(v=>{viewNode(v).hidden=v!==name});
+ activeView=name;
+ $('stepBar').hidden=name==='landing';
+ document.body.dataset.view=name;
+ $('chapterBadge').textContent=`第一章 · 第${index+1}幕`;
+ const names={story:'三格故事',route:'拼房逃脱',archive:'调查档案',truth:'真相推演'};
+ $('stepName').textContent=names[name]||'剧情开场';
+ $('stepProgress').textContent=name==='story'?'1 / 2':name==='route'?'2 / 2':'◈';
+ $('stepBack').textContent=name==='route'?'‹ 改写故事':name==='story'?'‹ 返回剧情':name==='truth'?'‹ 返回档案':'‹ 返回调查';
+ $('utilityBottom').hidden=name!=='archive';
+ window.scrollTo(0,0);
+ if(name==='truth'){$('truthPanel').open=true;renderTruth();}
+ if(name==='archive'){$('journalPanel').open=true;}
+ renderFlow();
+}
+function renderFlow(){
+ $('chapterBadge').textContent=`第一章 · 第${index+1}幕`;
+ const success=!!effect();
+ $('toRoute').disabled=!success;
+ $('toRoute').innerHTML=success?'机关已启动 · 开始拼房 <span aria-hidden="true">→</span>':selected.length===3?'线索交错 · 请重新选择':'先完成三格故事 <span aria-hidden="true">→</span>';
+ $('archiveShortcut').textContent=clueCount()>=6?'◈ 真相':'◈ 档案';
+}
+$('beginStory').addEventListener('click',()=>setView('story'));
+$('toRoute').addEventListener('click',()=>{if(effect())setView('route')});
+$('routeReturn').addEventListener('click',()=>setView('story'));
+$('archiveReturn').addEventListener('click',()=>setView(returnView==='archive'?'landing':returnView));
+$('truthReturn').addEventListener('click',()=>setView('archive'));
+$('archiveShortcut').addEventListener('click',()=>setView(clueCount()>=6?'truth':'archive'));
+$('stepBack').addEventListener('click',()=>{if(activeView==='route')setView('story');else if(activeView==='story')setView('landing');else if(activeView==='truth')setView('archive');else if(activeView==='archive')setView(returnView==='archive'?'landing':returnView);});
 // Read-only diagnostics for local acceptance tests: no data is sent to a server.
-window.G01Chapter=Object.freeze({totalStages:levels.length,stageNumber:()=>index+1,summary:scoreState,
+window.G01Chapter=Object.freeze({totalStages:levels.length,stageNumber:()=>index+1,summary:scoreState,view:()=>activeView,
  route:()=>{const p=effect();return p?{gate:p.key,variant:p.variant,badge:p.badge,actualGate:getRoute()?.gate||null}:null;},
  relics:()=>({used:[...extra.used],secret:{...extra.secret},truthSolved:extra.truthSolved,truthBadges:{...extra.truthBadges}})});
 for(const b of $('truthChoices').querySelectorAll('button'))b.addEventListener('click',()=>chooseTruth(b.dataset.truth));
 for(const b of $('truthEndings').querySelectorAll('button'))b.addEventListener('click',()=>pickTruthEnding(b.dataset.ending));
-render();message(`第${index+1}幕开启：${current().scene.title}`);
+render();setView('landing');message(`第${index+1}幕开启：${current().scene.title}`);
 })();
 
 </script>
