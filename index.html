@@ -102,6 +102,10 @@ h1{font-size:clamp(28px,6vw,42px);margin:6px 0 7px;letter-spacing:-.05em;line-he
 .shell.theme-starlight .cell.route{background:#51808d;border-color:#b8f4fe;box-shadow:0 0 9px rgba(173,229,255,.44)}
 @keyframes reward-pop{0%{opacity:0;transform:translateY(14px) scale(.5)}75%{opacity:1;transform:translateY(-3px) scale(1.15)}100%{transform:translateY(0) scale(1);opacity:1}}
 @media(max-width:470px){.reward-card{padding:22px 15px 17px}.reward-stars{font-size:38px}.reward-card h2{font-size:25px}.mode.star-hud{font-size:10px}}
+/* G01-D: one lightweight entry link only; original game engine and its stored scores are unchanged. */
+.story-lab-entry{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;margin:-5px 0 12px;padding:10px 12px;border:1px solid #a68d5c;border-radius:11px;background:#302e31;color:#f5e4bd;text-decoration:none;font-size:12px;font-weight:850;line-height:1.4}
+.story-lab-entry .tiny-note{font-size:10px;color:#c4d5d6;font-weight:600}
+@media(max-width:470px){.story-lab-entry{padding:8px 9px;margin:0 0 9px;font-size:11px}.story-lab-entry .tiny-note{font-size:9px}}
 </style>
 </head>
 <body>
@@ -114,6 +118,7 @@ h1{font-size:clamp(28px,6vw,42px);margin:6px 0 7px;letter-spacing:-.05em;line-he
     <p class="subtitle">从三张房卡中选一张，旋转、放置、连接通道。<br>不必跑得快，只需要选得对。</p>
     <nav id="chapters" class="chapter-tabs" aria-label="选择挑战章节"></nav>
     <nav id="levels" class="levels" aria-label="选择关卡"></nav>
+    <a class="story-lab-entry" href="./story-lab.html" aria-label="进入故事机关实验室，体验两个独立新关卡"><span>✦ 新玩法：三格故事 × 拼房间</span><span class="tiny-note">2个实验关 ›</span></a>
     <section class="panel" aria-label="游戏关卡">
       <div class="level-head"><div><div id="levelTitle" class="level-title">第一扇门</div><p id="levelDesc" class="desc"></p></div><span class="step-tag" id="guide">第 1 / 20 关</span></div>
       <div id="teaching" class="teaching"></div>
