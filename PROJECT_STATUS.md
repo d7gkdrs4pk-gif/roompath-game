@@ -8,11 +8,14 @@
 - **接续顺序：** 新对话先读取本状态表指定的当前试玩/正式母版及当前交接单；后续仅按交接单列出的最小范围读取/增量处理，不依赖历史聊天从零重建。正式商业版未冻结时，不得把试玩候选说成正式母版。
 - **质量门：** 源码回读、核心逻辑回归、跨幕漫画视觉一致性、移动端安全边界；未验证的公网HTTPS/真实Safari/微信体验须明确标记。GitHub提交与部署成功不可代替终端验收。
 
-## Skill 安装独立 PR 交接入口（仅本分支，未进入 main）
-- **本轮 Skill 接入交接单：** [`HANDOFF_FRONTEND_DESIGN_SKILL_INSTALL_V1.0.md`](./HANDOFF_FRONTEND_DESIGN_SKILL_INSTALL_V1.0.md)。
-- **等待审核：** [Anthropic frontend-design Skill 安装 Draft PR #1](https://github.com/d7gkdrs4pk-gif/roompath-game/pull/1)，分支 `chore/install-anthropic-frontend-design-skill`，原始 Skill 文件提交 `10bbc68a6d29a0f70e9d0b481f1c8eddef796dcc`，基线 `504b0f75e0a45b880705788fb97f39506ea63065`。
-- **边界：** 此条仅存在于安装 PR 分支，不代表 `main` 已安装或游戏母版已经变更；原 G01-E V0.9.1 交接单、视觉冻结、下一轮 iPhone 实测任务继续有效。
-- **验证：** 上游官方 Apache-2.0、两文件 Git Blob 完全一致、文本安全基本静态检查通过；Codex 实际运行时发现尚未验证，需真实 Codex 环境检查。该 PR 未合并、未主动重新部署。
+## Frontend Design Skill 正式接入（PR #1 已合并）
+- **当前 Skill 安装/合并交接单：** [`HANDOFF_FRONTEND_DESIGN_SKILL_MERGE_V1.1.md`](./HANDOFF_FRONTEND_DESIGN_SKILL_MERGE_V1.1.md)，上一版安装交接单 [V1.0](./HANDOFF_FRONTEND_DESIGN_SKILL_INSTALL_V1.0.md) 已归档退出当前 Skill 执行链。
+- **合并事实：** 用户明确批准；[PR #1](https://github.com/d7gkdrs4pk-gif/roompath-game/pull/1) 已 Closed/Merged，`main` 的合并提交 `1e029a7a01dfa314d8283fc15a026fdfcf98ff2a`。原安装分支 `chore/install-anthropic-frontend-design-skill` 可保留为历史；不得继续认作当前唯一母版。
+- **正式安装路径：** `.agents/skills/frontend-design/SKILL.md`（Blob `a5333457c414d20d625f307df945842c0952ecc3`）和 `.agents/skills/frontend-design/LICENSE.txt`（Blob `f433b1a53f5b830a205fd2df78e2b34974656c7b`）；两者与锁定的 Anthropic 官方提交 `ca45fc496a3436251f191354091d557da31c15b5` 一致，Skill 原版 Apache-2.0 许可未改变游戏许可。
+- **Codex 验证分层：** 此前实际 Codex CLI `0.163.0` 已用 `skills/list` 发现 `frontend-design`（repo/enabled/errors=[]），会话日志已记录完整 Skill 正文加载；**模型实际执行未通过验证**，先前认证刷新出现 `unauthorized`。这不是 Skill 安装失败，未来真正调用时须正常登录/授权，不能虚报已执行。
+- **修改范围：** 合并 PR 仅新增官方 Skill 两文件、安装交接单和调整项目状态表，`index.html`、G01-E `ye-lou-act2-puzzle-v091.html`、剧情、拼图逻辑、奖励、排名、存档和冻结漫画2.5D视觉均未修改；**游戏仍 V0.9.1，不启动视觉改版**。
+- **部署事实：** 未手动触发部署，但合并 `main` 已使 GitHub Pages 工作流自动触发（运行 ID `41223829079`，记录时结果待核验）。代码未改 ≠ 没有构建；部署成功 ≠ 真实 Safari 验收。
+- **下一步：** Skill 合并阶段在此封口；游戏研发任务继续依据下一节 G01-E V0.9.1 当前游戏交接单执行真实手机跨幕视觉及第二幕双房机关验收，**不得因为安装 Skill 擅自开始视觉改版**。
 
 ## 当前交接单（唯一游戏研发入口）
 - [G01-E V0.9.1 阶段交接单](./HANDOFF_G01-E_V0.9.1.md)（存档版本：V0.9.1；2026-11-01补充本规则；没有修改游戏代码）。
