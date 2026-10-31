@@ -8,7 +8,13 @@
 - **接续顺序：** 新对话先读取本状态表指定的当前试玩/正式母版及当前交接单；后续仅按交接单列出的最小范围读取/增量处理，不依赖历史聊天从零重建。正式商业版未冻结时，不得把试玩候选说成正式母版。
 - **质量门：** 源码回读、核心逻辑回归、跨幕漫画视觉一致性、移动端安全边界；未验证的公网HTTPS/真实Safari/微信体验须明确标记。GitHub提交与部署成功不可代替终端验收。
 
-## 当前交接单（唯一执行入口）
+## Skill 安装独立 PR 交接入口（仅本分支，未进入 main）
+- **本轮 Skill 接入交接单：** [`HANDOFF_FRONTEND_DESIGN_SKILL_INSTALL_V1.0.md`](./HANDOFF_FRONTEND_DESIGN_SKILL_INSTALL_V1.0.md)。
+- **等待审核：** [Anthropic frontend-design Skill 安装 Draft PR #1](https://github.com/d7gkdrs4pk-gif/roompath-game/pull/1)，分支 `chore/install-anthropic-frontend-design-skill`，原始 Skill 文件提交 `10bbc68a6d29a0f70e9d0b481f1c8eddef796dcc`，基线 `504b0f75e0a45b880705788fb97f39506ea63065`。
+- **边界：** 此条仅存在于安装 PR 分支，不代表 `main` 已安装或游戏母版已经变更；原 G01-E V0.9.1 交接单、视觉冻结、下一轮 iPhone 实测任务继续有效。
+- **验证：** 上游官方 Apache-2.0、两文件 Git Blob 完全一致、文本安全基本静态检查通过；Codex 实际运行时发现尚未验证，需真实 Codex 环境检查。该 PR 未合并、未主动重新部署。
+
+## 当前交接单（唯一游戏研发入口）
 - [G01-E V0.9.1 阶段交接单](./HANDOFF_G01-E_V0.9.1.md)（存档版本：V0.9.1；2026-11-01补充本规则；没有修改游戏代码）。
 - 对应试玩工作母版：`ye-lou-act2-puzzle-v091.html`（SHA-256：`5757bb07084d9b588d456832a55d0d82b31ae364715ba0e24c33046eda28e398`；Blob：`11775607dc78a2ff8afda5f7d80d2be215d324cd`）；当前新对话优先从此链接与状态表接续。
 - 交接单提交：`8a1315aa8088b5703bd6b53a49e7514c051f8ed9`；本轮仅新增/修订项目管理文件，**未改游戏HTML/JS，游戏仍为 V0.9.1**。
