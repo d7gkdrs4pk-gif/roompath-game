@@ -1,0 +1,21 @@
+name: Unblock one stale Pages deployment
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/pages-deploy-unblock-once.yml'
+permissions:
+  contents: read
+  pages: write
+jobs:
+  unblock:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel only the stale P0.4 Pages deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          gh api -X POST "repos/${GH_REPO}/pages/deployments/f967e877da0f94bd7dd519eb32bb58a6dc3e620a/cancel"
+          echo "Cancellation request sent for stuck Pages deployment."
