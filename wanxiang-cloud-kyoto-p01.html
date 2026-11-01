@@ -54,55 +54,1338 @@
 .posterOverlay .posterLink{width:min(100%,430px);border:1px solid rgba(255,255,255,.24);border-radius:9px;background:#142426;color:#dbe5e2;padding:9px 10px;font-size:11px}
 .toast{position:fixed;z-index:140;bottom:calc(60px + var(--safe));left:50%;transform:translateX(-50%);border-radius:12px;background:#e6c58a;color:#142023;padding:12px 18px;font-size:13px;box-shadow:0 8px 28px rgba(0,0,0,.3);width:max-content;max-width:90vw;text-align:center}
 @media(max-width:350px){.infoSheet{padding-left:18px;padding-right:18px}.sharePanel .btn{font-size:11px;padding-left:9px;padding-right:9px}}
+
+/* P0.4: achievements & personal invitation, incremental over P0.3 */
+.welcomeName{margin:8px 0 2px}.welcomeName label{display:block;font-size:11px;color:#fff;margin-bottom:6px}.welcomeName input{width:100%;border:1px solid rgba(255,255,255,.43);background:rgba(8,25,27,.34);color:#fff;border-radius:11px;min-height:41px;padding:8px 12px;font-size:14px;outline:none;backdrop-filter:blur(8px)}.welcomeName input::placeholder{color:rgba(255,255,255,.7)}.welcomeName small{display:block;margin-top:4px;font-size:10px;color:rgba(255,255,255,.75)}
+.achievementPanel{margin-top:10px}.achievementGrid{display:flex;flex-wrap:wrap;gap:6px;margin:9px 0}.achievement{border:1px solid rgba(230,197,138,.52);border-radius:18px;padding:5px 9px;background:rgba(230,197,138,.12);font-size:11px;color:#f8e6bb}.scoreLine{font-size:12px;color:#e6f1e9;line-height:1.8;margin:7px 0}.scoreLine strong{font-size:17px;color:#f5d6a0}.rivalBox{margin:10px 0 4px;padding:12px;border:1px solid rgba(230,197,138,.38);border-radius:13px;background:rgba(4,18,19,.35)}.rivalBox h3{font-size:14px;margin:0 0 8px;color:#eed19e}.comparison{display:grid;grid-template-columns:1fr 1fr;gap:10px}.comparison > div{border:1px solid rgba(255,255,255,.14);background:rgba(5,20,22,.35);border-radius:10px;padding:8px 10px}.comparison span{display:block;font-size:11px;color:#c8d8d3}.comparison strong{display:block;font-size:17px;color:white;margin-top:2px}.challengeWarn{color:rgba(255,255,255,.72);font-size:10px;line-height:1.6;margin:10px 0 0}.challengePath{font-size:12px;line-height:1.7;color:#e6edeb;margin:8px 0}.invitePanel{margin-top:10px;max-width:100%}.invitePanel .rewardBadge{max-width:100%}.invitePanel h2{font:600 26px/1.4 'Songti SC',serif;margin:8px 0}.invitePanel .challengePath{max-height:86px;overflow-y:auto}.invitePanel .achievementGrid{max-height:72px;overflow-y:auto}
+@media(max-width:350px){.welcomeName{margin-top:5px}.welcomeName input{min-height:38px}.achievement{font-size:10px;padding:4px 7px}.invitePanel h2{font-size:23px}}
+@media(max-height:700px){.welcomeName input{min-height:38px}.moodgrid{margin-top:7px;margin-bottom:11px}}
 </style></head><body><div id="app"></div>
 <script>const MEDIA={"station": {"id": "station", "name": "祇园四条站入口", "date": "2026-06-18", "author": "HAGAT hOMSZE", "file": "JP 日本 Japan 京都 Kyoto 四條 Shijo 京阪電車 Keihan Railway 祇園四條駅 Gion-shijo Station June 2026 N13P 01.jpg", "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/JP_%E6%97%A5%E6%9C%AC_Japan_%E4%BA%AC%E9%83%BD_Kyoto_%E5%9B%9B%E6%A2%9D_Shijo_%E4%BA%AC%E9%98%AA%E9%9B%BB%E8%BB%8A_Keihan_Railway_%E7%A5%87%E5%9C%92%E5%9B%9B%E6%A2%9D%E9%A7%85_Gion-shijo_Station_June_2026_N13P_01.jpg/1280px-JP_%E6%97%A5%E6%9C%AC_Japan_%E4%BA%AC%E9%83%BD_Kyoto_%E5%9B%9B%E6%A2%9D_Shijo_%E4%BA%AC%E9%98%AA%E9%9B%BB%E8%BB%8A_Keihan_Railway_%E7%A5%87%E5%9C%92%E5%9B%9B%E6%A2%9D%E9%A7%85_Gion-shijo_Station_June_2026_N13P_01.jpg", "page": "https://commons.wikimedia.org/wiki/File:JP_日本_Japan_京都_Kyoto_四條_Shijo_京阪電車_Keihan_Railway_祇園四條駅_Gion-shijo_Station_June_2026_N13P_01.jpg", "license": "见来源页"}, "minamiza": {"id": "minamiza", "name": "南座剧场", "date": "2007-06-21", "author": "MichaelMaggs", "file": "Minamiza theatre, Kyoto, evening.jpg", "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/61/Minamiza_theatre%2C_Kyoto%2C_evening.jpg/960px-Minamiza_theatre%2C_Kyoto%2C_evening.jpg", "page": "https://commons.wikimedia.org/wiki/File:Minamiza_theatre,_Kyoto,_evening.jpg", "license": "CC BY-SA 2.5"}, "riverSpring": {"id": "riverSpring", "name": "四条大桥向上游眺望", "date": "2017-04-14", "author": "Saigen Jiro", "file": "Kamo River from Shijo Bridge.jpg", "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ac/Kamo_River_from_Shijo_Bridge.jpg/1280px-Kamo_River_from_Shijo_Bridge.jpg", "page": "https://commons.wikimedia.org/wiki/File:Kamo_River_from_Shijo_Bridge.jpg", "license": "CC0 1.0"}, "riverSummer": {"id": "riverSummer", "name": "四条大桥夏日河岸", "date": "2025-07-17", "author": "武田信徳", "file": "Kamo River from Shijo Bridge 20250717.jpg", "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/Kamo_River_from_Shijo_Bridge_20250717.jpg/1280px-Kamo_River_from_Shijo_Bridge_20250717.jpg", "page": "https://commons.wikimedia.org/wiki/File:Kamo_River_from_Shijo_Bridge_20250717.jpg", "license": "CC BY 4.0"}, "yuka": {"id": "yuka", "name": "鸭川夏季纳凉床", "date": "2025-06-16", "author": "MaedaAkihiko", "file": "Kyoto Kamogawa Noryo-Yuka.jpg", "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Kyoto_Kamogawa_Noryo-Yuka.jpg/1280px-Kyoto_Kamogawa_Noryo-Yuka.jpg", "page": "https://commons.wikimedia.org/wiki/File:Kyoto_Kamogawa_Noryo-Yuka.jpg", "license": "CC0 1.0"}, "oldStreet": {"id": "oldStreet", "name": "先斗町旧街巷", "date": "2006-06-20", "author": "Wolfiewolf", "file": "Pontocho by Wolfiewolf in Nabeyacho, Kyoto.jpg", "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/68/Pontocho_by_Wolfiewolf_in_Nabeyacho%2C_Kyoto.jpg/1280px-Pontocho_by_Wolfiewolf_in_Nabeyacho%2C_Kyoto.jpg", "page": "https://commons.wikimedia.org/wiki/File:Pontocho_by_Wolfiewolf_in_Nabeyacho,_Kyoto.jpg", "license": "见来源页"}, "alleyRed": {"id": "alleyRed", "name": "灯笼映照的先斗町", "date": "2022-07-29", "author": "Sergiy Galyonkin", "file": "Pontocho Alley, Kyoto (52406856003).jpg", "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/Pontocho_Alley%2C_Kyoto_%2852406856003%29.jpg/1280px-Pontocho_Alley%2C_Kyoto_%2852406856003%29.jpg", "page": "https://commons.wikimedia.org/wiki/File:Pontocho_Alley,_Kyoto_(52406856003).jpg", "license": "CC BY-SA 2.0"}, "lantern": {"id": "lantern", "name": "先斗町灯笼", "date": "2006-11-27", "author": "James Disley", "file": "Pontocho paper lantern by James Disley in Kyoto.jpg", "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Pontocho_paper_lantern_by_James_Disley_in_Kyoto.jpg/960px-Pontocho_paper_lantern_by_James_Disley_in_Kyoto.jpg", "page": "https://commons.wikimedia.org/wiki/File:Pontocho_paper_lantern_by_James_Disley_in_Kyoto.jpg", "license": "CC BY-SA 2.0"}, "kaiseki": {"id": "kaiseki", "name": "先斗町餐厅前的夜巷", "date": "2006-11-27", "author": "James Disley", "file": "Pontocho kaiseki restaurant by James Disley in Kyoto.jpg", "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Pontocho_kaiseki_restaurant_by_James_Disley_in_Kyoto.jpg/960px-Pontocho_kaiseki_restaurant_by_James_Disley_in_Kyoto.jpg", "page": "https://commons.wikimedia.org/wiki/File:Pontocho_kaiseki_restaurant_by_James_Disley_in_Kyoto.jpg", "license": "见来源页"}, "streetLights": {"id": "streetLights", "name": "先斗町灯影双巷", "date": "2022-07-29", "author": "Sergiy Galyonkin", "file": "Pontocho Alley at night, Kyoto (53614869876).jpg", "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Pontocho_Alley_at_night%2C_Kyoto_%2853614869876%29.jpg/1280px-Pontocho_Alley_at_night%2C_Kyoto_%2853614869876%29.jpg", "page": "https://commons.wikimedia.org/wiki/File:Pontocho_Alley_at_night,_Kyoto_(53614869876).jpg", "license": "CC BY-SA 2.0"}, "streetBw": {"id": "streetBw", "name": "先斗町黑白夜巷", "date": "2022-07-29", "author": "Sergiy Galyonkin", "file": "Pontocho Alley at night, Kyoto (52409569493).jpg", "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/Pontocho_Alley_at_night%2C_Kyoto_%2852409569493%29.jpg/960px-Pontocho_Alley_at_night%2C_Kyoto_%2852409569493%29.jpg", "page": "https://commons.wikimedia.org/wiki/File:Pontocho_Alley_at_night,_Kyoto_(52409569493).jpg", "license": "CC BY-SA 2.0"}, "riverNight": {"id": "riverNight", "name": "鸭川与先斗町夜景", "date": "2017-04-09", "author": "Yiannis Theologos Michellis", "file": "Nighttime view along the Kamo River in Pontocho, Kyoto, Japan 20170409105043 (34159633185).jpg", "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Nighttime_view_along_the_Kamo_River_in_Pontocho%2C_Kyoto%2C_Japan_20170409105043_%2834159633185%29.jpg/1280px-Nighttime_view_along_the_Kamo_River_in_Pontocho%2C_Kyoto%2C_Japan_20170409105043_%2834159633185%29.jpg", "page": "https://commons.wikimedia.org/wiki/File:Nighttime_view_along_the_Kamo_River_in_Pontocho,_Kyoto,_Japan_20170409105043_(34159633185).jpg", "license": "CC0 1.0"}};
 const SCENES={"station": {"title": "01 · 旅程起点", "subtitle": "祇园四条站", "location": "四条大桥东侧附近", "body": "车站外的站名让这趟旅程有了坐标。你可以把手机暂时当作一扇窗：这里是真实存在的京都街口，并不是一张被AI编造的日系场景。", "fact": "照片拍摄于2026年6月18日。站口标识中能辨认“祇園四条駅”和“Keihan Railway”；这与车站实际名称一致。", "stamp": "抵达", "options": [["先看一座老剧场", "minamiza", "建筑"], ["直接去看河流", "riverSpring", "河流"]]}, "minamiza": {"title": "02 · 剧场的另一面", "subtitle": "南座", "location": "祇园四条站附近", "body": "你在照片里停留，仔细辨认屋檐、灯笼与门口的招牌。南座坐落在四条通的桥东一侧，属于这片街区容易识别的建筑地标。", "fact": "南座与歌舞伎演出传统有关。此图摄于2007年夜间，画面不能被当作2026年此时此刻的现场。", "stamp": "文化", "options": [["看一眼桥上的春日河景", "riverSpring", "河流"], ["切换到夏日鸭川照片", "riverSummer", "河流"]]}, "riverSpring": {"title": "03 · 站在桥上", "subtitle": "四条大桥·上游", "location": "四条大桥", "body": "河水从城市之间延展。左侧有临河建筑，右侧是树木与步道。看似只是安静的水面，视线却能顺着河道进入更远处。", "fact": "照片标注为2017年4月14日，从四条大桥向鸭川上游拍摄。不同年份的视角在本作品里作为“真实时光切片”并列展示。", "stamp": "河流", "options": [["换成夏天的河岸", "riverSummer", "河流"], ["去看看沿河的临时露台", "yuka", "文化"]]}, "riverSummer": {"title": "04 · 夏季的河岸", "subtitle": "鸭川·四条桥附近", "location": "四条大桥", "body": "这张照片里，最靠近你的不是水，而是一排沿河建筑和通向远处的步道。你可以观察木结构延伸出河岸的方式。", "fact": "照片拍摄于2025年7月17日，画面记录四条大桥附近的河岸建筑。这是另一个拍摄日，并非上一张照片的瞬间延续。", "stamp": "步行", "options": [["近看纳凉床的结构", "yuka", "文化"], ["转入先斗町的街巷", "oldStreet", "街巷"]]}, "yuka": {"title": "05 · 河边的座位", "subtitle": "纳凉床", "location": "鸭川西岸·先斗町附近", "body": "你仔细看，临河餐厅的木平台向岸外伸出，下面是支撑结构。即使隔着屏幕，也能明白为什么“靠河而坐”会成为这里夏季生活的一部分。", "fact": "京都鸭川沿岸的“纳凉床”是夏季临时设置的露天用餐平台，通常出现在5月至9月。照片为2025年6月16日实拍，位置标注在四条大桥附近。", "stamp": "风物", "options": [["走进与河岸平行的先斗町", "oldStreet", "街巷"], ["查看先斗町灯笼街景", "alleyRed", "街巷"]]}, "oldStreet": {"title": "06 · 进入窄巷", "subtitle": "先斗町", "location": "先斗町通·锅屋町附近", "body": "照片里的道路比想象中窄。门廊、木格栅和门前的小灯让你的视线自然沿着街巷向前延伸。没有必要把每一幢建筑讲成传说，真实街景本身就有故事。", "fact": "先斗町是一条与鸭川平行、从四条附近延伸至三条附近的窄街。这张照片拍摄于2006年，反映的是当时的街巷面貌。", "stamp": "街巷", "options": [["看看另一个年份的街景", "alleyRed", "街巷"], ["先看看餐厅与门廊细节", "kaiseki", "风物"]]}, "alleyRed": {"title": "07 · 灯笼亮起来", "subtitle": "先斗町·餐厅门前", "location": "先斗町通", "body": "摄影师将红色灯笼留在前景，街巷深处有人走过。你仿佛不是站在景点观景台，而是在一条实际有人生活、消费、交谈的街上。", "fact": "照片由Sergiy Galyonkin拍摄于2022年7月。先斗町是商业和餐饮街区，而非只供观光拍照的布景。", "stamp": "灯影", "options": [["看看灯笼的图案", "lantern", "风物"], ["继续看灯光下的街巷", "streetLights", "夜色"]]}, "lantern": {"title": "08 · 一盏灯笼", "subtitle": "街巷微观", "location": "先斗町·细节", "body": "从整条街切换到一盏灯笼，你会发现城市记忆有时不来自壮观的景色，而来自能被记住的小小符号。", "fact": "这是一张2006年拍摄的先斗町灯笼特写。它不是与2022年上一张实拍同一时刻的连续画面。", "stamp": "风物", "options": [["从灯笼回到餐厅前", "kaiseki", "文化"], ["看看夜晚的先斗町", "streetLights", "夜色"]]}, "kaiseki": {"title": "09 · 餐厅前稍作停留", "subtitle": "窄巷里的选择", "location": "先斗町通", "body": "路的两边有餐厅入口和悬挂的招牌。你决定不把每一个招牌都查成“必吃攻略”，而是把一段安静的街景留在自己的旅行记录里。", "fact": "照片由James Disley拍摄于2006年11月，记录先斗町一家餐厅附近的夜间巷道。具体店铺目前是否营业未做验证。", "stamp": "在场", "options": [["看看人来人往的街巷", "streetLights", "夜色"], ["先回到河边看夜色", "riverNight", "夜色"]]}, "streetLights": {"title": "10 · 人与灯影", "subtitle": "先斗町·夜色", "location": "先斗町通", "body": "两位行人站在街巷分岔附近，灯笼把路面照出暖色。照片只是一瞬间，但它告诉你：这是一个活着的街区，而不是任何人安排好的游戏片场。", "fact": "这张2022年拍摄的实景由Sergiy Galyonkin提供。摄影画面记录了具体行人，但我们不为照片中的陌生人编造身份或故事。", "stamp": "夜色", "options": [["换一张更克制的黑白视角", "streetBw", "观察"], ["返回鸭川，给旅程收尾", "riverNight", "河流"]]}, "streetBw": {"title": "11 · 夜巷的另一种记忆", "subtitle": "黑白记录", "location": "先斗町通", "body": "去掉色彩以后，灯光、街道纵深和步行的人变得更突出。你可以在这里停留片刻，也可以带着这份印象返回桥边。", "fact": "本场景是摄影师Sergiy Galyonkin于2022年拍摄的独立黑白摄影，不是网站用滤镜改造其他图像。", "stamp": "观察", "options": [["返回鸭川的夜景", "riverNight", "河流"], ["结束这趟时光漫游", "end", "回忆"]]}, "riverNight": {"title": "12 · 城市入夜", "subtitle": "鸭川·夜景", "location": "先斗町附近的鸭川河岸", "body": "现在画面里能看到临河建筑的灯光、岸边步道和流动的水。你的旅程终于回到了鸭川，但这是2017年的真实夜景，不是此前夏日照片的同日晚间。", "fact": "2017年4月9日的摄影记录了先斗町附近的夜间鸭川。作品通过不同拍摄日期的实景切片组成体验，而非单日连续影像。", "stamp": "夜色", "options": [["收好今天的旅行记录", "end", "回忆"], ["再看看先斗町夜巷", "streetBw", "观察"]]}};
 const SHORT={"station":"从这里走向鸭川，京都的慢旅行正式开始。","minamiza":"四条大桥旁的传统剧场，见证京都悠久的演艺文化。","riverSpring":"站在桥上，看鸭川与河岸步道一起伸向远处。","riverSummer":"换个季节的视角，看看夏天的鸭川河岸。","yuka":"沿河搭起的纳凉床，是京都夏日特别的风景。","oldStreet":"走进先斗町，窄巷与木格栅让脚步慢下来。","alleyRed":"灯笼亮起，街巷里透出温暖的生活气息。","lantern":"一盏纸灯笼，把先斗町的夜色留在眼前。","kaiseki":"沿着窄巷慢走，餐厅门前亮着柔和的灯。","streetLights":"灯光和人影，构成先斗町的夜晚。","streetBw":"黑白街景里，行人与街道的线条格外清晰。","riverNight":"回到鸭川，看河岸灯光融进夜色。"};
 const PLACE_INFO={"station":"这里是京阪电车祇园四条站的出入口。它位于鸭川东侧，走出车站不远就能到四条大桥和南座。先看一眼站牌，再决定今天从剧场还是从河边开始。","minamiza":"南座坐落在京都四条通，靠近鸭川东岸，是与歌舞伎演出传统相关的剧场。看一看它的屋顶线条和入口装饰，能感受到京都繁忙街道里的传统气息。","riverSpring":"从四条大桥向上游望去，鸭川穿过京都市区。两岸有步行空间和临河建筑，远处的桥梁依次排开。这里值得做的事很简单：顺着河道把目光慢慢放远。","riverSummer":"这也是四条大桥附近的鸭川，但拍摄于另一年的夏季。观察河岸建筑和行走空间，与刚才的春日画面对照，能看到同一条河在不同季节的细微变化。","yuka":"鸭川西岸夏季常见的“纳凉床”，是临河餐厅设置的露天用餐平台。人们坐在河边感受夜风，也是京都颇有代表性的夏日风景。可以留意平台的支撑结构。","oldStreet":"先斗町是一条与鸭川大致平行的狭窄街巷，分布着餐饮店铺。木格栅、门廊和曲折的透视线，让这里与宽阔的城市主干道形成鲜明对比。","alleyRed":"镜头走进先斗町的餐厅街区。门前灯笼与街巷的纵深带来温暖的视觉层次；这张照片只是某一年的一个瞬间，不代表此时正在发生相同的活动。","lantern":"纸灯笼是京都传统街巷里容易注意到的细节。与整条道路相比，这张特写让你看清灯笼的材质、字样和光影。旅行记忆有时就来自这样一个小物件。","kaiseki":"先斗町的狭窄巷道两旁分布着餐饮店铺。可以观察门口的灯光、招牌与木质立面；照片记录的是过去某年的街景，不代表照片中的店铺如今仍在营业。","streetLights":"入夜后的先斗町，灯笼与街灯映亮狭窄的街道。画面中出现的行人只是实拍经过的陌生人，故事不会为他们虚构身份。静静看看夜里的街巷方向。","streetBw":"这一张独立的黑白摄影，把注意力放到街巷线条、行人轮廓和亮暗对比上。你可以不急着进入下一站，先观察照片中从近到远的空间层次。","riverNight":"夜晚的鸭川呈现出与白天不同的样子：临河建筑灯光亮起，河岸步道与水面在暗处交汇。这是另一拍摄日期的实景，适合作为本次时光漫游的结尾。"};
-const SHARE_URL='https://d7gkdrs4pk-gif.github.io/roompath-game/wanxiang-cloud-kyoto-p01.html?v=p03';
-const REWARD_TITLES={'放空':'鸭川慢行者','好奇':'京都细节发现家','记录':'京都时光收藏家'};
-const QR_DATA='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQIAAAECAQAAAAA9NOT9AAACa0lEQVR4nO2ZTWokOxCEv+ws8FIF7wA+StbNjA/2QDrK3EC9NKiIWWRVz+65wZ5+LbDoRSNiEUEq8q9M/Pdpl08A8IP4QXyCaGZma9ttW66bme1rs5XdzMyei+kdCEmDeNE74JJ3BlAk1Yfy+A7Ebgbtw96g7bYtxHLdoNn6WB7fhgjX+4CUA+3/4vEFxHL7ty/RiH//6cCcWi6AS9BeVAcstPQ+hPpjeXwHwswW+FgbJZ8ZA7ia2fZQHl9FoPN4D6lmEhvEeV2fheldWuooGgTEKHJVddRRj1HqbFqkjlQH6CwuGRpgNi0VIm2iHurhnbyZMC6VUr0jyaXkr/TOZH65ZO7dX7Vct93MO1w3wOwtq8wTMf3sZDPmqoD3UI/0PoRrujcmVx2E93RNAN5xifn8chaXzigaoM4gvJMV51mY3ud97wEMcFVKHUWpK3P1szC9Ny71UFRqXvoZmum0ZFy8k0UfYuRvPr/UTF8UHfWxM0rlDNmzML3fL0WumkJuHdqE3lcW+kxi6ZTD+5PVlwu0fQ1b8X4IWWgLLDDbvE8GxXNyKdXPtjmlTRWX7PnT+DEIl249/2xvDEkUZat/m1+8xyBm62Eu0Lja/lopdbcNeOkBUN5n211kn4x6QEgaRZnQKJptfkGqZ2WJHMF0VP8Za+Wxb8kGJvvknFxm8/7l3PPzsQKxgK0B7OujeXwZgVTTJtntD84p5pz6n4XpnfsxGOXolm/zC1P65dBCqZ5bsn5YZrY8dkM0//W2ryywrwHBdRvz7WFufhH82b5SpoyLmS0071Aqpe6v797xX9Ptx+zn+/4P4i8jfgOKF0QNDlQmwQAAAABJRU5ErkJggg==';
+const SHARE_URL='https://d7gkdrs4pk-gif.github.io/roompath-game/wanxiang-cloud-kyoto-p01.html?v=p04';
+const SCENE_IDS=Object.keys(SCENES),MOODS=['放空','好奇','记录'];
+/* Dynamic QR encoder from Kazuhiko Arase's QRCode for JavaScript (MIT).
+   License: https://opensource.org/licenses/MIT ; origin http://www.d-project.com/ */
+const QRCode=(function(){
+const modules=Object.create(null),cache=Object.create(null);
+function require(name){name=name.replace(/^\.\//,'');if(!modules[name])throw Error('QR module unavailable: '+name);if(!cache[name]){const m={exports:{}};cache[name]=m;modules[name](m,require)}return cache[name].exports}
+modules['QRMode']=function(module,require){
+module.exports = {
+    MODE_NUMBER :       1 << 0,
+    MODE_ALPHA_NUM :    1 << 1,
+    MODE_8BIT_BYTE :    1 << 2,
+    MODE_KANJI :        1 << 3
+};
+
+};
+modules['QRErrorCorrectLevel']=function(module,require){
+module.exports = {
+	L : 1,
+	M : 0,
+	Q : 3,
+	H : 2
+};
+
+
+};
+modules['QRMaskPattern']=function(module,require){
+module.exports = {
+	PATTERN000 : 0,
+	PATTERN001 : 1,
+	PATTERN010 : 2,
+	PATTERN011 : 3,
+	PATTERN100 : 4,
+	PATTERN101 : 5,
+	PATTERN110 : 6,
+	PATTERN111 : 7
+};
+
+};
+modules['QRMath']=function(module,require){
+var QRMath = {
+
+	glog : function(n) {
+	
+		if (n < 1) {
+			throw new Error("glog(" + n + ")");
+		}
+		
+		return QRMath.LOG_TABLE[n];
+	},
+	
+	gexp : function(n) {
+	
+		while (n < 0) {
+			n += 255;
+		}
+	
+		while (n >= 256) {
+			n -= 255;
+		}
+	
+		return QRMath.EXP_TABLE[n];
+	},
+	
+	EXP_TABLE : new Array(256),
+	
+	LOG_TABLE : new Array(256)
+
+};
+	
+for (var i = 0; i < 8; i++) {
+	QRMath.EXP_TABLE[i] = 1 << i;
+}
+for (var i = 8; i < 256; i++) {
+	QRMath.EXP_TABLE[i] = QRMath.EXP_TABLE[i - 4]
+		^ QRMath.EXP_TABLE[i - 5]
+		^ QRMath.EXP_TABLE[i - 6]
+		^ QRMath.EXP_TABLE[i - 8];
+}
+for (var i = 0; i < 255; i++) {
+	QRMath.LOG_TABLE[QRMath.EXP_TABLE[i] ] = i;
+}
+
+module.exports = QRMath;
+
+};
+modules['QRBitBuffer']=function(module,require){
+function QRBitBuffer() {
+	this.buffer = [];
+	this.length = 0;
+}
+
+QRBitBuffer.prototype = {
+
+	get : function(index) {
+		var bufIndex = Math.floor(index / 8);
+		return ( (this.buffer[bufIndex] >>> (7 - index % 8) ) & 1) == 1;
+	},
+	
+	put : function(num, length) {
+		for (var i = 0; i < length; i++) {
+			this.putBit( ( (num >>> (length - i - 1) ) & 1) == 1);
+		}
+	},
+	
+	getLengthInBits : function() {
+		return this.length;
+	},
+	
+	putBit : function(bit) {
+	
+		var bufIndex = Math.floor(this.length / 8);
+		if (this.buffer.length <= bufIndex) {
+			this.buffer.push(0);
+		}
+	
+		if (bit) {
+			this.buffer[bufIndex] |= (0x80 >>> (this.length % 8) );
+		}
+	
+		this.length++;
+	}
+};
+
+module.exports = QRBitBuffer;
+
+};
+modules['QRPolynomial']=function(module,require){
+var QRMath = require('./QRMath');
+
+function QRPolynomial(num, shift) {
+	if (num.length === undefined) {
+		throw new Error(num.length + "/" + shift);
+	}
+
+	var offset = 0;
+
+	while (offset < num.length && num[offset] === 0) {
+		offset++;
+	}
+
+	this.num = new Array(num.length - offset + shift);
+	for (var i = 0; i < num.length - offset; i++) {
+		this.num[i] = num[i + offset];
+	}
+}
+
+QRPolynomial.prototype = {
+
+	get : function(index) {
+		return this.num[index];
+	},
+	
+	getLength : function() {
+		return this.num.length;
+	},
+	
+	multiply : function(e) {
+	
+		var num = new Array(this.getLength() + e.getLength() - 1);
+	
+		for (var i = 0; i < this.getLength(); i++) {
+			for (var j = 0; j < e.getLength(); j++) {
+				num[i + j] ^= QRMath.gexp(QRMath.glog(this.get(i) ) + QRMath.glog(e.get(j) ) );
+			}
+		}
+	
+		return new QRPolynomial(num, 0);
+	},
+	
+	mod : function(e) {
+	
+		if (this.getLength() - e.getLength() < 0) {
+			return this;
+		}
+	
+		var ratio = QRMath.glog(this.get(0) ) - QRMath.glog(e.get(0) );
+	
+		var num = new Array(this.getLength() );
+		
+		for (var i = 0; i < this.getLength(); i++) {
+			num[i] = this.get(i);
+		}
+		
+		for (var x = 0; x < e.getLength(); x++) {
+			num[x] ^= QRMath.gexp(QRMath.glog(e.get(x) ) + ratio);
+		}
+	
+		// recursive call
+		return new QRPolynomial(num, 0).mod(e);
+	}
+};
+
+module.exports = QRPolynomial;
+
+};
+modules['QRRSBlock']=function(module,require){
+var QRErrorCorrectLevel = require('./QRErrorCorrectLevel');
+
+function QRRSBlock(totalCount, dataCount) {
+	this.totalCount = totalCount;
+	this.dataCount  = dataCount;
+}
+
+QRRSBlock.RS_BLOCK_TABLE = [
+
+	// L
+	// M
+	// Q
+	// H
+
+	// 1
+	[1, 26, 19],
+	[1, 26, 16],
+	[1, 26, 13],
+	[1, 26, 9],
+	
+	// 2
+	[1, 44, 34],
+	[1, 44, 28],
+	[1, 44, 22],
+	[1, 44, 16],
+
+	// 3
+	[1, 70, 55],
+	[1, 70, 44],
+	[2, 35, 17],
+	[2, 35, 13],
+
+	// 4		
+	[1, 100, 80],
+	[2, 50, 32],
+	[2, 50, 24],
+	[4, 25, 9],
+	
+	// 5
+	[1, 134, 108],
+	[2, 67, 43],
+	[2, 33, 15, 2, 34, 16],
+	[2, 33, 11, 2, 34, 12],
+	
+	// 6
+	[2, 86, 68],
+	[4, 43, 27],
+	[4, 43, 19],
+	[4, 43, 15],
+	
+	// 7		
+	[2, 98, 78],
+	[4, 49, 31],
+	[2, 32, 14, 4, 33, 15],
+	[4, 39, 13, 1, 40, 14],
+	
+	// 8
+	[2, 121, 97],
+	[2, 60, 38, 2, 61, 39],
+	[4, 40, 18, 2, 41, 19],
+	[4, 40, 14, 2, 41, 15],
+	
+	// 9
+	[2, 146, 116],
+	[3, 58, 36, 2, 59, 37],
+	[4, 36, 16, 4, 37, 17],
+	[4, 36, 12, 4, 37, 13],
+	
+	// 10		
+	[2, 86, 68, 2, 87, 69],
+	[4, 69, 43, 1, 70, 44],
+	[6, 43, 19, 2, 44, 20],
+	[6, 43, 15, 2, 44, 16],
+
+	// 11
+	[4, 101, 81],
+	[1, 80, 50, 4, 81, 51],
+	[4, 50, 22, 4, 51, 23],
+	[3, 36, 12, 8, 37, 13],
+
+	// 12
+	[2, 116, 92, 2, 117, 93],
+	[6, 58, 36, 2, 59, 37],
+	[4, 46, 20, 6, 47, 21],
+	[7, 42, 14, 4, 43, 15],
+
+	// 13
+	[4, 133, 107],
+	[8, 59, 37, 1, 60, 38],
+	[8, 44, 20, 4, 45, 21],
+	[12, 33, 11, 4, 34, 12],
+
+	// 14
+	[3, 145, 115, 1, 146, 116],
+	[4, 64, 40, 5, 65, 41],
+	[11, 36, 16, 5, 37, 17],
+	[11, 36, 12, 5, 37, 13],
+
+	// 15
+	[5, 109, 87, 1, 110, 88],
+	[5, 65, 41, 5, 66, 42],
+	[5, 54, 24, 7, 55, 25],
+	[11, 36, 12],
+
+	// 16
+	[5, 122, 98, 1, 123, 99],
+	[7, 73, 45, 3, 74, 46],
+	[15, 43, 19, 2, 44, 20],
+	[3, 45, 15, 13, 46, 16],
+
+	// 17
+	[1, 135, 107, 5, 136, 108],
+	[10, 74, 46, 1, 75, 47],
+	[1, 50, 22, 15, 51, 23],
+	[2, 42, 14, 17, 43, 15],
+
+	// 18
+	[5, 150, 120, 1, 151, 121],
+	[9, 69, 43, 4, 70, 44],
+	[17, 50, 22, 1, 51, 23],
+	[2, 42, 14, 19, 43, 15],
+
+	// 19
+	[3, 141, 113, 4, 142, 114],
+	[3, 70, 44, 11, 71, 45],
+	[17, 47, 21, 4, 48, 22],
+	[9, 39, 13, 16, 40, 14],
+
+	// 20
+	[3, 135, 107, 5, 136, 108],
+	[3, 67, 41, 13, 68, 42],
+	[15, 54, 24, 5, 55, 25],
+	[15, 43, 15, 10, 44, 16],
+
+	// 21
+	[4, 144, 116, 4, 145, 117],
+	[17, 68, 42],
+	[17, 50, 22, 6, 51, 23],
+	[19, 46, 16, 6, 47, 17],
+
+	// 22
+	[2, 139, 111, 7, 140, 112],
+	[17, 74, 46],
+	[7, 54, 24, 16, 55, 25],
+	[34, 37, 13],
+
+	// 23
+	[4, 151, 121, 5, 152, 122],
+	[4, 75, 47, 14, 76, 48],
+	[11, 54, 24, 14, 55, 25],
+	[16, 45, 15, 14, 46, 16],
+
+	// 24
+	[6, 147, 117, 4, 148, 118],
+	[6, 73, 45, 14, 74, 46],
+	[11, 54, 24, 16, 55, 25],
+	[30, 46, 16, 2, 47, 17],
+
+	// 25
+	[8, 132, 106, 4, 133, 107],
+	[8, 75, 47, 13, 76, 48],
+	[7, 54, 24, 22, 55, 25],
+	[22, 45, 15, 13, 46, 16],
+
+	// 26
+	[10, 142, 114, 2, 143, 115],
+	[19, 74, 46, 4, 75, 47],
+	[28, 50, 22, 6, 51, 23],
+	[33, 46, 16, 4, 47, 17],
+
+	// 27
+	[8, 152, 122, 4, 153, 123],
+	[22, 73, 45, 3, 74, 46],
+	[8, 53, 23, 26, 54, 24],
+	[12, 45, 15, 28, 46, 16],
+
+	// 28
+	[3, 147, 117, 10, 148, 118],
+	[3, 73, 45, 23, 74, 46],
+	[4, 54, 24, 31, 55, 25],
+	[11, 45, 15, 31, 46, 16],
+
+	// 29
+	[7, 146, 116, 7, 147, 117],
+	[21, 73, 45, 7, 74, 46],
+	[1, 53, 23, 37, 54, 24],
+	[19, 45, 15, 26, 46, 16],
+
+	// 30
+	[5, 145, 115, 10, 146, 116],
+	[19, 75, 47, 10, 76, 48],
+	[15, 54, 24, 25, 55, 25],
+	[23, 45, 15, 25, 46, 16],
+
+	// 31
+	[13, 145, 115, 3, 146, 116],
+	[2, 74, 46, 29, 75, 47],
+	[42, 54, 24, 1, 55, 25],
+	[23, 45, 15, 28, 46, 16],
+
+	// 32
+	[17, 145, 115],
+	[10, 74, 46, 23, 75, 47],
+	[10, 54, 24, 35, 55, 25],
+	[19, 45, 15, 35, 46, 16],
+
+	// 33
+	[17, 145, 115, 1, 146, 116],
+	[14, 74, 46, 21, 75, 47],
+	[29, 54, 24, 19, 55, 25],
+	[11, 45, 15, 46, 46, 16],
+
+	// 34
+	[13, 145, 115, 6, 146, 116],
+	[14, 74, 46, 23, 75, 47],
+	[44, 54, 24, 7, 55, 25],
+	[59, 46, 16, 1, 47, 17],
+
+	// 35
+	[12, 151, 121, 7, 152, 122],
+	[12, 75, 47, 26, 76, 48],
+	[39, 54, 24, 14, 55, 25],
+	[22, 45, 15, 41, 46, 16],
+
+	// 36
+	[6, 151, 121, 14, 152, 122],
+	[6, 75, 47, 34, 76, 48],
+	[46, 54, 24, 10, 55, 25],
+	[2, 45, 15, 64, 46, 16],
+
+	// 37
+	[17, 152, 122, 4, 153, 123],
+	[29, 74, 46, 14, 75, 47],
+	[49, 54, 24, 10, 55, 25],
+	[24, 45, 15, 46, 46, 16],
+
+	// 38
+	[4, 152, 122, 18, 153, 123],
+	[13, 74, 46, 32, 75, 47],
+	[48, 54, 24, 14, 55, 25],
+	[42, 45, 15, 32, 46, 16],
+
+	// 39
+	[20, 147, 117, 4, 148, 118],
+	[40, 75, 47, 7, 76, 48],
+	[43, 54, 24, 22, 55, 25],
+	[10, 45, 15, 67, 46, 16],
+
+	// 40
+	[19, 148, 118, 6, 149, 119],
+	[18, 75, 47, 31, 76, 48],
+	[34, 54, 24, 34, 55, 25],
+	[20, 45, 15, 61, 46, 16]
+];
+
+QRRSBlock.getRSBlocks = function(typeNumber, errorCorrectLevel) {
+	
+	var rsBlock = QRRSBlock.getRsBlockTable(typeNumber, errorCorrectLevel);
+	
+	if (rsBlock === undefined) {
+		throw new Error("bad rs block @ typeNumber:" + typeNumber + "/errorCorrectLevel:" + errorCorrectLevel);
+	}
+
+	var length = rsBlock.length / 3;
+	
+	var list = [];
+	
+	for (var i = 0; i < length; i++) {
+
+		var count = rsBlock[i * 3 + 0];
+		var totalCount = rsBlock[i * 3 + 1];
+		var dataCount  = rsBlock[i * 3 + 2];
+
+		for (var j = 0; j < count; j++) {
+			list.push(new QRRSBlock(totalCount, dataCount) );	
+		}
+	}
+	
+	return list;
+};
+
+QRRSBlock.getRsBlockTable = function(typeNumber, errorCorrectLevel) {
+
+	switch(errorCorrectLevel) {
+	case QRErrorCorrectLevel.L :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 0];
+	case QRErrorCorrectLevel.M :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 1];
+	case QRErrorCorrectLevel.Q :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 2];
+	case QRErrorCorrectLevel.H :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 3];
+	default :
+		return undefined;
+	}
+};
+
+module.exports = QRRSBlock;
+
+};
+modules['QRUtil']=function(module,require){
+var QRMode = require('./QRMode');
+var QRPolynomial = require('./QRPolynomial');
+var QRMath = require('./QRMath');
+var QRMaskPattern = require('./QRMaskPattern');
+
+var QRUtil = {
+
+    PATTERN_POSITION_TABLE : [
+        [],
+        [6, 18],
+        [6, 22],
+        [6, 26],
+        [6, 30],
+        [6, 34],
+        [6, 22, 38],
+        [6, 24, 42],
+        [6, 26, 46],
+        [6, 28, 50],
+        [6, 30, 54],        
+        [6, 32, 58],
+        [6, 34, 62],
+        [6, 26, 46, 66],
+        [6, 26, 48, 70],
+        [6, 26, 50, 74],
+        [6, 30, 54, 78],
+        [6, 30, 56, 82],
+        [6, 30, 58, 86],
+        [6, 34, 62, 90],
+        [6, 28, 50, 72, 94],
+        [6, 26, 50, 74, 98],
+        [6, 30, 54, 78, 102],
+        [6, 28, 54, 80, 106],
+        [6, 32, 58, 84, 110],
+        [6, 30, 58, 86, 114],
+        [6, 34, 62, 90, 118],
+        [6, 26, 50, 74, 98, 122],
+        [6, 30, 54, 78, 102, 126],
+        [6, 26, 52, 78, 104, 130],
+        [6, 30, 56, 82, 108, 134],
+        [6, 34, 60, 86, 112, 138],
+        [6, 30, 58, 86, 114, 142],
+        [6, 34, 62, 90, 118, 146],
+        [6, 30, 54, 78, 102, 126, 150],
+        [6, 24, 50, 76, 102, 128, 154],
+        [6, 28, 54, 80, 106, 132, 158],
+        [6, 32, 58, 84, 110, 136, 162],
+        [6, 26, 54, 82, 110, 138, 166],
+        [6, 30, 58, 86, 114, 142, 170]
+    ],
+
+    G15 : (1 << 10) | (1 << 8) | (1 << 5) | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0),
+    G18 : (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0),
+    G15_MASK : (1 << 14) | (1 << 12) | (1 << 10)    | (1 << 4) | (1 << 1),
+
+    getBCHTypeInfo : function(data) {
+        var d = data << 10;
+        while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15) >= 0) {
+            d ^= (QRUtil.G15 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15) ) );    
+        }
+        return ( (data << 10) | d) ^ QRUtil.G15_MASK;
+    },
+
+    getBCHTypeNumber : function(data) {
+        var d = data << 12;
+        while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18) >= 0) {
+            d ^= (QRUtil.G18 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18) ) );    
+        }
+        return (data << 12) | d;
+    },
+
+    getBCHDigit : function(data) {
+
+        var digit = 0;
+
+        while (data !== 0) {
+            digit++;
+            data >>>= 1;
+        }
+
+        return digit;
+    },
+
+    getPatternPosition : function(typeNumber) {
+        return QRUtil.PATTERN_POSITION_TABLE[typeNumber - 1];
+    },
+
+    getMask : function(maskPattern, i, j) {
+        
+        switch (maskPattern) {
+            
+        case QRMaskPattern.PATTERN000 : return (i + j) % 2 === 0;
+        case QRMaskPattern.PATTERN001 : return i % 2 === 0;
+        case QRMaskPattern.PATTERN010 : return j % 3 === 0;
+        case QRMaskPattern.PATTERN011 : return (i + j) % 3 === 0;
+        case QRMaskPattern.PATTERN100 : return (Math.floor(i / 2) + Math.floor(j / 3) ) % 2 === 0;
+        case QRMaskPattern.PATTERN101 : return (i * j) % 2 + (i * j) % 3 === 0;
+        case QRMaskPattern.PATTERN110 : return ( (i * j) % 2 + (i * j) % 3) % 2 === 0;
+        case QRMaskPattern.PATTERN111 : return ( (i * j) % 3 + (i + j) % 2) % 2 === 0;
+
+        default :
+            throw new Error("bad maskPattern:" + maskPattern);
+        }
+    },
+
+    getErrorCorrectPolynomial : function(errorCorrectLength) {
+
+        var a = new QRPolynomial([1], 0);
+
+        for (var i = 0; i < errorCorrectLength; i++) {
+            a = a.multiply(new QRPolynomial([1, QRMath.gexp(i)], 0) );
+        }
+
+        return a;
+    },
+
+    getLengthInBits : function(mode, type) {
+
+        if (1 <= type && type < 10) {
+
+            // 1 - 9
+
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 10;
+            case QRMode.MODE_ALPHA_NUM  : return 9;
+            case QRMode.MODE_8BIT_BYTE  : return 8;
+            case QRMode.MODE_KANJI      : return 8;
+            default :
+                throw new Error("mode:" + mode);
+            }
+
+        } else if (type < 27) {
+
+            // 10 - 26
+
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 12;
+            case QRMode.MODE_ALPHA_NUM  : return 11;
+            case QRMode.MODE_8BIT_BYTE  : return 16;
+            case QRMode.MODE_KANJI      : return 10;
+            default :
+                throw new Error("mode:" + mode);
+            }
+
+        } else if (type < 41) {
+
+            // 27 - 40
+
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 14;
+            case QRMode.MODE_ALPHA_NUM  : return 13;
+            case QRMode.MODE_8BIT_BYTE  : return 16;
+            case QRMode.MODE_KANJI      : return 12;
+            default :
+                throw new Error("mode:" + mode);
+            }
+
+        } else {
+            throw new Error("type:" + type);
+        }
+    },
+
+    getLostPoint : function(qrCode) {
+        
+        var moduleCount = qrCode.getModuleCount();
+        var lostPoint = 0;
+        var row = 0; 
+        var col = 0;
+
+        
+        // LEVEL1
+        
+        for (row = 0; row < moduleCount; row++) {
+
+            for (col = 0; col < moduleCount; col++) {
+
+                var sameCount = 0;
+                var dark = qrCode.isDark(row, col);
+
+                for (var r = -1; r <= 1; r++) {
+
+                    if (row + r < 0 || moduleCount <= row + r) {
+                        continue;
+                    }
+
+                    for (var c = -1; c <= 1; c++) {
+
+                        if (col + c < 0 || moduleCount <= col + c) {
+                            continue;
+                        }
+
+                        if (r === 0 && c === 0) {
+                            continue;
+                        }
+
+                        if (dark === qrCode.isDark(row + r, col + c) ) {
+                            sameCount++;
+                        }
+                    }
+                }
+
+                if (sameCount > 5) {
+                    lostPoint += (3 + sameCount - 5);
+                }
+            }
+        }
+
+        // LEVEL2
+
+        for (row = 0; row < moduleCount - 1; row++) {
+            for (col = 0; col < moduleCount - 1; col++) {
+                var count = 0;
+                if (qrCode.isDark(row,     col    ) ) count++;
+                if (qrCode.isDark(row + 1, col    ) ) count++;
+                if (qrCode.isDark(row,     col + 1) ) count++;
+                if (qrCode.isDark(row + 1, col + 1) ) count++;
+                if (count === 0 || count === 4) {
+                    lostPoint += 3;
+                }
+            }
+        }
+
+        // LEVEL3
+
+        for (row = 0; row < moduleCount; row++) {
+            for (col = 0; col < moduleCount - 6; col++) {
+                if (qrCode.isDark(row, col) && 
+                        !qrCode.isDark(row, col + 1) && 
+                         qrCode.isDark(row, col + 2) && 
+                         qrCode.isDark(row, col + 3) && 
+                         qrCode.isDark(row, col + 4) && 
+                        !qrCode.isDark(row, col + 5) && 
+                         qrCode.isDark(row, col + 6) ) {
+                    lostPoint += 40;
+                }
+            }
+        }
+
+        for (col = 0; col < moduleCount; col++) {
+            for (row = 0; row < moduleCount - 6; row++) {
+                if (qrCode.isDark(row, col) &&
+                        !qrCode.isDark(row + 1, col) &&
+                         qrCode.isDark(row + 2, col) &&
+                         qrCode.isDark(row + 3, col) &&
+                         qrCode.isDark(row + 4, col) &&
+                        !qrCode.isDark(row + 5, col) &&
+                         qrCode.isDark(row + 6, col) ) {
+                    lostPoint += 40;
+                }
+            }
+        }
+
+        // LEVEL4
+        
+        var darkCount = 0;
+
+        for (col = 0; col < moduleCount; col++) {
+            for (row = 0; row < moduleCount; row++) {
+                if (qrCode.isDark(row, col) ) {
+                    darkCount++;
+                }
+            }
+        }
+        
+        var ratio = Math.abs(100 * darkCount / moduleCount / moduleCount - 50) / 5;
+        lostPoint += ratio * 10;
+
+        return lostPoint;       
+    }
+
+};
+
+module.exports = QRUtil;
+
+};
+modules['QR8bitByte']=function(module,require){
+var QRMode = require('./QRMode');
+
+function QR8bitByte(data) {
+	this.mode = QRMode.MODE_8BIT_BYTE;
+	this.data = data;
+}
+
+QR8bitByte.prototype = {
+
+	getLength : function() {
+		return this.data.length;
+	},
+	
+	write : function(buffer) {
+		for (var i = 0; i < this.data.length; i++) {
+			// not JIS ...
+			buffer.put(this.data.charCodeAt(i), 8);
+		}
+	}
+};
+
+module.exports = QR8bitByte;
+
+};
+modules['index']=function(module,require){
+
+var QR8bitByte = require('./QR8bitByte');
+var QRUtil = require('./QRUtil');
+var QRPolynomial = require('./QRPolynomial');
+var QRRSBlock = require('./QRRSBlock');
+var QRBitBuffer = require('./QRBitBuffer');
+
+function QRCode(typeNumber, errorCorrectLevel) {
+	this.typeNumber = typeNumber;
+	this.errorCorrectLevel = errorCorrectLevel;
+	this.modules = null;
+	this.moduleCount = 0;
+	this.dataCache = null;
+	this.dataList = [];
+}
+
+QRCode.prototype = {
+	
+	addData : function(data) {
+		var newData = new QR8bitByte(data);
+		this.dataList.push(newData);
+		this.dataCache = null;
+	},
+	
+	isDark : function(row, col) {
+		if (row < 0 || this.moduleCount <= row || col < 0 || this.moduleCount <= col) {
+			throw new Error(row + "," + col);
+		}
+		return this.modules[row][col];
+	},
+
+	getModuleCount : function() {
+		return this.moduleCount;
+	},
+	
+	make : function() {
+		// Calculate automatically typeNumber if provided is < 1
+		if (this.typeNumber < 1 ){
+			var typeNumber = 1;
+			for (typeNumber = 1; typeNumber < 40; typeNumber++) {
+				var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, this.errorCorrectLevel);
+
+				var buffer = new QRBitBuffer();
+				var totalDataCount = 0;
+				for (var i = 0; i < rsBlocks.length; i++) {
+					totalDataCount += rsBlocks[i].dataCount;
+				}
+
+				for (var x = 0; x < this.dataList.length; x++) {
+					var data = this.dataList[x];
+					buffer.put(data.mode, 4);
+					buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber) );
+					data.write(buffer);
+				}
+				if (buffer.getLengthInBits() <= totalDataCount * 8)
+					break;
+			}
+			this.typeNumber = typeNumber;
+		}
+		this.makeImpl(false, this.getBestMaskPattern() );
+	},
+	
+	makeImpl : function(test, maskPattern) {
+		
+		this.moduleCount = this.typeNumber * 4 + 17;
+		this.modules = new Array(this.moduleCount);
+		
+		for (var row = 0; row < this.moduleCount; row++) {
+			
+			this.modules[row] = new Array(this.moduleCount);
+			
+			for (var col = 0; col < this.moduleCount; col++) {
+				this.modules[row][col] = null;//(col + row) % 3;
+			}
+		}
+	
+		this.setupPositionProbePattern(0, 0);
+		this.setupPositionProbePattern(this.moduleCount - 7, 0);
+		this.setupPositionProbePattern(0, this.moduleCount - 7);
+		this.setupPositionAdjustPattern();
+		this.setupTimingPattern();
+		this.setupTypeInfo(test, maskPattern);
+		
+		if (this.typeNumber >= 7) {
+			this.setupTypeNumber(test);
+		}
+	
+		if (this.dataCache === null) {
+			this.dataCache = QRCode.createData(this.typeNumber, this.errorCorrectLevel, this.dataList);
+		}
+	
+		this.mapData(this.dataCache, maskPattern);
+	},
+
+	setupPositionProbePattern : function(row, col)  {
+		
+		for (var r = -1; r <= 7; r++) {
+			
+			if (row + r <= -1 || this.moduleCount <= row + r) continue;
+			
+			for (var c = -1; c <= 7; c++) {
+				
+				if (col + c <= -1 || this.moduleCount <= col + c) continue;
+				
+				if ( (0 <= r && r <= 6 && (c === 0 || c === 6) ) || 
+                     (0 <= c && c <= 6 && (r === 0 || r === 6) ) || 
+                     (2 <= r && r <= 4 && 2 <= c && c <= 4) ) {
+					this.modules[row + r][col + c] = true;
+				} else {
+					this.modules[row + r][col + c] = false;
+				}
+			}		
+		}		
+	},
+	
+	getBestMaskPattern : function() {
+	
+		var minLostPoint = 0;
+		var pattern = 0;
+	
+		for (var i = 0; i < 8; i++) {
+			
+			this.makeImpl(true, i);
+	
+			var lostPoint = QRUtil.getLostPoint(this);
+	
+			if (i === 0 || minLostPoint >  lostPoint) {
+				minLostPoint = lostPoint;
+				pattern = i;
+			}
+		}
+	
+		return pattern;
+	},
+	
+	createMovieClip : function(target_mc, instance_name, depth) {
+	
+		var qr_mc = target_mc.createEmptyMovieClip(instance_name, depth);
+		var cs = 1;
+	
+		this.make();
+
+		for (var row = 0; row < this.modules.length; row++) {
+			
+			var y = row * cs;
+			
+			for (var col = 0; col < this.modules[row].length; col++) {
+	
+				var x = col * cs;
+				var dark = this.modules[row][col];
+			
+				if (dark) {
+					qr_mc.beginFill(0, 100);
+					qr_mc.moveTo(x, y);
+					qr_mc.lineTo(x + cs, y);
+					qr_mc.lineTo(x + cs, y + cs);
+					qr_mc.lineTo(x, y + cs);
+					qr_mc.endFill();
+				}
+			}
+		}
+		
+		return qr_mc;
+	},
+
+	setupTimingPattern : function() {
+		
+		for (var r = 8; r < this.moduleCount - 8; r++) {
+			if (this.modules[r][6] !== null) {
+				continue;
+			}
+			this.modules[r][6] = (r % 2 === 0);
+		}
+	
+		for (var c = 8; c < this.moduleCount - 8; c++) {
+			if (this.modules[6][c] !== null) {
+				continue;
+			}
+			this.modules[6][c] = (c % 2 === 0);
+		}
+	},
+	
+	setupPositionAdjustPattern : function() {
+	
+		var pos = QRUtil.getPatternPosition(this.typeNumber);
+		
+		for (var i = 0; i < pos.length; i++) {
+		
+			for (var j = 0; j < pos.length; j++) {
+			
+				var row = pos[i];
+				var col = pos[j];
+				
+				if (this.modules[row][col] !== null) {
+					continue;
+				}
+				
+				for (var r = -2; r <= 2; r++) {
+				
+					for (var c = -2; c <= 2; c++) {
+					
+						if (Math.abs(r) === 2 || 
+                            Math.abs(c) === 2 ||
+                            (r === 0 && c === 0) ) {
+							this.modules[row + r][col + c] = true;
+						} else {
+							this.modules[row + r][col + c] = false;
+						}
+					}
+				}
+			}
+		}
+	},
+	
+	setupTypeNumber : function(test) {
+	
+		var bits = QRUtil.getBCHTypeNumber(this.typeNumber);
+        var mod;
+	
+		for (var i = 0; i < 18; i++) {
+			mod = (!test && ( (bits >> i) & 1) === 1);
+			this.modules[Math.floor(i / 3)][i % 3 + this.moduleCount - 8 - 3] = mod;
+		}
+	
+		for (var x = 0; x < 18; x++) {
+			mod = (!test && ( (bits >> x) & 1) === 1);
+			this.modules[x % 3 + this.moduleCount - 8 - 3][Math.floor(x / 3)] = mod;
+		}
+	},
+	
+	setupTypeInfo : function(test, maskPattern) {
+	
+		var data = (this.errorCorrectLevel << 3) | maskPattern;
+		var bits = QRUtil.getBCHTypeInfo(data);
+        var mod;
+	
+		// vertical		
+		for (var v = 0; v < 15; v++) {
+	
+			mod = (!test && ( (bits >> v) & 1) === 1);
+	
+			if (v < 6) {
+				this.modules[v][8] = mod;
+			} else if (v < 8) {
+				this.modules[v + 1][8] = mod;
+			} else {
+				this.modules[this.moduleCount - 15 + v][8] = mod;
+			}
+		}
+	
+		// horizontal
+		for (var h = 0; h < 15; h++) {
+	
+			mod = (!test && ( (bits >> h) & 1) === 1);
+			
+			if (h < 8) {
+				this.modules[8][this.moduleCount - h - 1] = mod;
+			} else if (h < 9) {
+				this.modules[8][15 - h - 1 + 1] = mod;
+			} else {
+				this.modules[8][15 - h - 1] = mod;
+			}
+		}
+	
+		// fixed module
+		this.modules[this.moduleCount - 8][8] = (!test);
+	
+	},
+	
+	mapData : function(data, maskPattern) {
+		
+		var inc = -1;
+		var row = this.moduleCount - 1;
+		var bitIndex = 7;
+		var byteIndex = 0;
+		
+		for (var col = this.moduleCount - 1; col > 0; col -= 2) {
+	
+			if (col === 6) col--;
+	
+			while (true) {
+	
+				for (var c = 0; c < 2; c++) {
+					
+					if (this.modules[row][col - c] === null) {
+						
+						var dark = false;
+	
+						if (byteIndex < data.length) {
+							dark = ( ( (data[byteIndex] >>> bitIndex) & 1) === 1);
+						}
+	
+						var mask = QRUtil.getMask(maskPattern, row, col - c);
+	
+						if (mask) {
+							dark = !dark;
+						}
+						
+						this.modules[row][col - c] = dark;
+						bitIndex--;
+	
+						if (bitIndex === -1) {
+							byteIndex++;
+							bitIndex = 7;
+						}
+					}
+				}
+								
+				row += inc;
+	
+				if (row < 0 || this.moduleCount <= row) {
+					row -= inc;
+					inc = -inc;
+					break;
+				}
+			}
+		}
+		
+	}
+
+};
+
+QRCode.PAD0 = 0xEC;
+QRCode.PAD1 = 0x11;
+
+QRCode.createData = function(typeNumber, errorCorrectLevel, dataList) {
+	
+	var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, errorCorrectLevel);
+	
+	var buffer = new QRBitBuffer();
+	
+	for (var i = 0; i < dataList.length; i++) {
+		var data = dataList[i];
+		buffer.put(data.mode, 4);
+		buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber) );
+		data.write(buffer);
+	}
+
+	// calc num max data.
+	var totalDataCount = 0;
+	for (var x = 0; x < rsBlocks.length; x++) {
+		totalDataCount += rsBlocks[x].dataCount;
+	}
+
+	if (buffer.getLengthInBits() > totalDataCount * 8) {
+		throw new Error("code length overflow. (" + 
+            buffer.getLengthInBits() + 
+            ">" +  
+            totalDataCount * 8 + 
+            ")");
+	}
+
+	// end code
+	if (buffer.getLengthInBits() + 4 <= totalDataCount * 8) {
+		buffer.put(0, 4);
+	}
+
+	// padding
+	while (buffer.getLengthInBits() % 8 !== 0) {
+		buffer.putBit(false);
+	}
+
+	// padding
+	while (true) {
+		
+		if (buffer.getLengthInBits() >= totalDataCount * 8) {
+			break;
+		}
+		buffer.put(QRCode.PAD0, 8);
+		
+		if (buffer.getLengthInBits() >= totalDataCount * 8) {
+			break;
+		}
+		buffer.put(QRCode.PAD1, 8);
+	}
+
+	return QRCode.createBytes(buffer, rsBlocks);
+};
+
+QRCode.createBytes = function(buffer, rsBlocks) {
+
+	var offset = 0;
+	
+	var maxDcCount = 0;
+	var maxEcCount = 0;
+	
+	var dcdata = new Array(rsBlocks.length);
+	var ecdata = new Array(rsBlocks.length);
+	
+	for (var r = 0; r < rsBlocks.length; r++) {
+
+		var dcCount = rsBlocks[r].dataCount;
+		var ecCount = rsBlocks[r].totalCount - dcCount;
+
+		maxDcCount = Math.max(maxDcCount, dcCount);
+		maxEcCount = Math.max(maxEcCount, ecCount);
+		
+		dcdata[r] = new Array(dcCount);
+		
+		for (var i = 0; i < dcdata[r].length; i++) {
+			dcdata[r][i] = 0xff & buffer.buffer[i + offset];
+		}
+		offset += dcCount;
+		
+		var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount);
+		var rawPoly = new QRPolynomial(dcdata[r], rsPoly.getLength() - 1);
+
+		var modPoly = rawPoly.mod(rsPoly);
+		ecdata[r] = new Array(rsPoly.getLength() - 1);
+		for (var x = 0; x < ecdata[r].length; x++) {
+            var modIndex = x + modPoly.getLength() - ecdata[r].length;
+			ecdata[r][x] = (modIndex >= 0)? modPoly.get(modIndex) : 0;
+		}
+
+	}
+	
+	var totalCodeCount = 0;
+	for (var y = 0; y < rsBlocks.length; y++) {
+		totalCodeCount += rsBlocks[y].totalCount;
+	}
+
+	var data = new Array(totalCodeCount);
+	var index = 0;
+
+	for (var z = 0; z < maxDcCount; z++) {
+		for (var s = 0; s < rsBlocks.length; s++) {
+			if (z < dcdata[s].length) {
+				data[index++] = dcdata[s][z];
+			}
+		}
+	}
+
+	for (var xx = 0; xx < maxEcCount; xx++) {
+		for (var t = 0; t < rsBlocks.length; t++) {
+			if (xx < ecdata[t].length) {
+				data[index++] = ecdata[t][xx];
+			}
+		}
+	}
+
+	return data;
+
+};
+
+module.exports = QRCode;
+
+};
+return require('index');})();
 const KEY='wanxiang_kyoto_cloud_P01_private';
-let state={at:'welcome',mood:'放空',visited:[],stamps:[],memories:[],history:[],detail:false};
+let state={at:'welcome',mood:'放空',nickname:'',visited:[],insights:[],stamps:[],memories:[],history:[],detail:false,rival:null};
 try{let s=localStorage.getItem(KEY);if(s){const v=JSON.parse(s);if(v&&typeof v.at==='string'&&(SCENES[v.at]||['welcome','end'].includes(v.at)))state=Object.assign(state,v);}}catch(e){}
+
+// A share record is an unsigned invitation, not a verified score. The URL contains only a nickname and optional achievement codes.
+function nameSafe(value){return Array.from(String(value??'').replace(/[\u0000-\u001f\u007f<>]/g,'').trim()).slice(0,8).join('')}
+function normalNickname(value){return nameSafe(value)||'京都旅人'}
+function sceneCode(key){let i=SCENE_IDS.indexOf(key);return i<0?'':i.toString(36)}
+function sceneKeys(code){if(typeof code!=='string'||code.length>12||!/^[0-9ab]*$/.test(code))return null;let a=[...code].map(c=>SCENE_IDS[parseInt(c,36)]);return new Set(a).size===a.length?a:null}
+function validRecord(rec){if(!rec||rec.v!==1||typeof rec.n!=='string'||rec.n.length>28||!MOODS.includes(rec.m))return null;const visited=sceneKeys(rec.p),insights=sceneKeys(rec.i);if(!visited||!insights||visited.length<1||visited[0]!=='station'||insights.some(x=>!visited.includes(x)))return null;return {v:1,n:normalNickname(rec.n),m:rec.m,p:rec.p,i:rec.i}}
+function recordNow(){let seen=[...new Set(state.visited)].filter(k=>SCENES[k]);let info=[...new Set(state.insights||[])].filter(k=>seen.includes(k));return {v:1,n:normalNickname(state.nickname),m:MOODS.includes(state.mood)?state.mood:'放空',p:seen.map(sceneCode).join(''),i:info.map(sceneCode).join('')}}
+function encodeRecord(rec){let bytes=new TextEncoder().encode(JSON.stringify(rec)),str='';for(let b of bytes)str+=String.fromCharCode(b);return btoa(str).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function decodeRecord(token){try{if(typeof token!=='string'||token.length>640||!/^[A-Za-z0-9_-]+$/.test(token))return null;let data=atob(token.replace(/-/g,'+').replace(/_/g,'/')+'='.repeat((4-token.length%4)%4));let rec=JSON.parse(new TextDecoder().decode(Uint8Array.from(data,c=>c.charCodeAt(0))));return validRecord(rec)}catch(e){return null}}
+let pendingChallenge=null;try{pendingChallenge=decodeRecord(new URLSearchParams(location.search).get('challenge'))}catch(e){}
+function clearChallengeQuery(){try{const u=new URL(location.href);u.searchParams.delete('challenge');history.replaceState(null,'',u.pathname+u.search+u.hash)}catch(e){}}
+function shareUrl(){try{const u=new URL(SHARE_URL);if(state.at==='end')u.searchParams.set('challenge',encodeRecord(recordNow()));return u.toString()}catch(e){return SHARE_URL}}
+function recVisited(rec){return sceneKeys(rec.p)||[]}
+function recInsights(rec){return sceneKeys(rec.i)||[]}
+const AWARDS=[
+{id:'river',title:'鸭川双景',test:(v,i)=>v.includes('riverSpring')&&v.includes('riverSummer')},
+{id:'culture',title:'京都风物',test:(v,i)=>v.includes('minamiza')&&v.includes('yuka')},
+{id:'alley',title:'街巷寻光',test:(v,i)=>v.includes('oldStreet')&&v.includes('streetLights')},
+{id:'night',title:'夜色归途',test:(v,i)=>v.includes('streetLights')&&v.includes('riverNight')},
+{id:'insight',title:'细节观察家',test:(v,i)=>i.length>=3},
+{id:'full',title:'十二景收藏者',test:(v,i)=>v.length===12}
+];
+function awards(rec){const v=recVisited(rec),i=recInsights(rec);return AWARDS.filter(a=>a.test(v,i))}
+function recordTitle(rec){let v=recVisited(rec),i=recInsights(rec);if(v.length===12)return '京都全景收藏者';if(i.length>=3&&v.length>=7)return '京都细节发现家';if(v.includes('oldStreet')&&v.includes('streetLights')&&v.length>=7)return '京都夜巷探索家';if(v.includes('minamiza')&&v.includes('yuka'))return '京都文化漫游者';if(v.length>=5)return '鸭川慢行者';return '京都初访者'}
+function pathSummary(rec,limit=6){const v=recVisited(rec);return v.map(k=>MEDIA[k]?.name||'京都').slice(0,limit).join(' · ') + (v.length>limit?' · …':'')}
+function markInsight(key){if(state.at==='end'||!SCENES[state.at]||key!==state.at)return;if(!Array.isArray(state.insights))state.insights=[];if(!state.insights.includes(key)){state.insights.push(key);save()}}
+function updateNickname(value){state.nickname=nameSafe(value);save()}
+function acceptChallenge(){if(!pendingChallenge)return;const rival=pendingChallenge;pendingChallenge=null;clearChallengeQuery();state.rival=rival;state.at='welcome';state.visited=[];state.insights=[];state.stamps=[];state.history=[];state.memories=[];state.detail=false;save();render();toast('挑战已开启，选择你的旅行心情出发')}
+function declineChallenge(){pendingChallenge=null;clearChallengeQuery();render()}
+function renderChallengeInvite(){const r=pendingChallenge;if(!r){render();return}let list=awards(r),name=normalNickname(r.n);app.innerHTML=`<main class="frame hero immersive">${photoBox(MEDIA.riverSpring)}${topBar()}<section class="content"><div class="eyebrow">好友挑战 · 京都云端漫游</div><div class="journal invitePanel"><div class="rewardBadge">✦ ${esc(recordTitle(r))}</div><h2>${esc(name)}的京都探索档案</h2><p class="scoreLine">探索 <strong>${recVisited(r).length}</strong>/12 景 · 了解 <strong>${recInsights(r).length}</strong> 处 · 成就 <strong>${list.length}</strong>/6</p><p class="challengePath">${esc(pathSummary(r))}</p><div class="achievementGrid">${list.length?list.map(a=>`<span class="achievement">✦ ${esc(a.title)}</span>`).join(''):'<span class="muted">尚未解锁隐藏成就</span>'}</div></div><p class="lead" style="margin:14px 0 7px">TA邀请你走一条属于自己的京都路线。你能发现更多吗？</p><div class="choices"><button class="btn gold" onclick="acceptChallenge()">开始我的京都挑战 <span class="arr">→</span></button><button class="btn secondary" onclick="declineChallenge()">先看普通试玩 <span class="arr">›</span></button></div><p class="challengeWarn">趣味分享记录由玩家自行生成，未经过服务器验证，不是正式排名或真实到访证明。</p></section></main>`}
+
 const $=s=>document.querySelector(s),app=document.getElementById('app');
 const esc=s=>String(s??'').replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
 function photoBox(a){return `<div class="photo" id="photobox"><img src="${a.src}" alt="${esc(a.name)}实景" referrerpolicy="no-referrer" onerror="imageError()"><div class="photoerror">照片暂时加载失败，请稍后刷新重试。</div></div>`}
 function imageError(){const e=$('#photobox');if(e)e.classList.add('is-error')}
 function currentPlaceId(){return state.at==='welcome'?'riverSpring':state.at==='end'?'riverNight':state.at}
-function zoom(){const id=currentPlaceId(),a=MEDIA[id]||MEDIA.riverSpring;const z=document.createElement('div');z.className='overlay photoViewer';z.innerHTML=`<button class="overlayClose" aria-label="关闭照片">✕ 关闭</button><img alt="${esc(a.name)}" src="${a.src}" referrerpolicy="no-referrer"><div class="viewerBottom"><p>${esc(a.name)}</p><button class="viewerInfoButton" type="button" aria-expanded="false">ⓘ 了解这里</button><div class="viewerIntro">${esc(PLACE_INFO[id]||'这里是京都实景漫游中的一站。')}</div></div>`;z.querySelector('.overlayClose').onclick=()=>z.remove();z.querySelector('.viewerInfoButton').onclick=()=>{const i=z.querySelector('.viewerIntro'),on=i.classList.toggle('show');z.querySelector('.viewerInfoButton').textContent=on?'收起介绍':'ⓘ 了解这里';z.querySelector('.viewerInfoButton').setAttribute('aria-expanded',String(on))};document.body.appendChild(z)}
-function showInfo(){const id=currentPlaceId(),a=MEDIA[id]||MEDIA.riverSpring;const z=document.createElement('div');z.className='infoSheetOverlay';z.innerHTML=`<div class="infoSheet" role="dialog" aria-modal="true" aria-label="地点介绍"><div class="eyebrow">京都 · 这一站</div><h2>${esc(a.name)}</h2><p>${esc(PLACE_INFO[id]||'这里是京都实景漫游中的一站。')}</p><button class="closeInfo" type="button">继续看风景</button></div>`;z.querySelector('.closeInfo').onclick=()=>z.remove();z.onclick=e=>{if(e.target===z)z.remove()};document.body.appendChild(z)}
+function zoom(){const id=currentPlaceId(),a=MEDIA[id]||MEDIA.riverSpring;const z=document.createElement('div');z.className='overlay photoViewer';z.innerHTML=`<button class="overlayClose" aria-label="关闭照片">✕ 关闭</button><img alt="${esc(a.name)}" src="${a.src}" referrerpolicy="no-referrer"><div class="viewerBottom"><p>${esc(a.name)}</p><button class="viewerInfoButton" type="button" aria-expanded="false">ⓘ 了解这里</button><div class="viewerIntro">${esc(PLACE_INFO[id]||'这里是京都实景漫游中的一站。')}</div></div>`;z.querySelector('.overlayClose').onclick=()=>z.remove();z.querySelector('.viewerInfoButton').onclick=()=>{const i=z.querySelector('.viewerIntro'),on=i.classList.toggle('show');if(on)markInsight(id);z.querySelector('.viewerInfoButton').textContent=on?'收起介绍':'ⓘ 了解这里';z.querySelector('.viewerInfoButton').setAttribute('aria-expanded',String(on))};document.body.appendChild(z)}
+function showInfo(){const id=currentPlaceId(),a=MEDIA[id]||MEDIA.riverSpring;markInsight(id);const z=document.createElement('div');z.className='infoSheetOverlay';z.innerHTML=`<div class="infoSheet" role="dialog" aria-modal="true" aria-label="地点介绍"><div class="eyebrow">京都 · 这一站</div><h2>${esc(a.name)}</h2><p>${esc(PLACE_INFO[id]||'这里是京都实景漫游中的一站。')}</p><button class="closeInfo" type="button">继续看风景</button></div>`;z.querySelector('.closeInfo').onclick=()=>z.remove();z.onclick=e=>{if(e.target===z)z.remove()};document.body.appendChild(z)}
 function topBar(inScene=false){return `<div class="topbar"><div class="brand">万象人生 · 京都</div><div class="topActions"><button class="round secondaryAction" onclick="zoom()">看全图</button><button class="round quietInfo" onclick="showInfo()">ⓘ 了解这里</button><button class="round quietToggle" onclick="toggleQuiet()">只看风景</button></div></div>`}
 function toggleQuiet(){const f=document.querySelector('.immersive');if(!f)return;const q=f.classList.toggle('quiet');const btn=f.querySelector('.quietToggle');if(btn){btn.textContent=q?'显示路线':'只看风景';btn.setAttribute('aria-pressed',String(q))}}
-function render(){if(state.at==='welcome'){renderWelcome();return}if(state.at==='end'){renderEnd();return}renderScene()}
-function renderWelcome(){const a=MEDIA.riverSpring;app.innerHTML=`<main class="frame hero immersive">${photoBox(a)}${topBar()}<section class="content"><div class="eyebrow">京都 · 鸭川与先斗町</div><h1 class="h1 introtitle">京都的<br>一次慢旅行</h1><p class="lead">沿鸭川散步，走进先斗町。按自己的节奏看一看京都。</p><div class="muted">今天想怎样旅行？</div><div class="moodgrid">${['放空','好奇','记录'].map(x=>`<button class="mood ${state.mood===x?'active':''}" aria-pressed="${state.mood===x}" onclick="setMood('${x}')">${x}</button>`).join('')}</div><button class="btn gold" onclick="begin()">进入京都 <span class="arr">→</span></button></section></main>`}
+function render(){if(pendingChallenge){renderChallengeInvite();return}if(state.at==='welcome'){renderWelcome();return}if(state.at==='end'){renderEnd();return}renderScene()}
+function renderWelcome(){const a=MEDIA.riverSpring;app.innerHTML=`<main class="frame hero immersive">${photoBox(a)}${topBar()}<section class="content"><div class="eyebrow">京都 · 鸭川与先斗町</div><h1 class="h1 introtitle">京都的<br>一次慢旅行</h1><p class="lead">沿鸭川散步，走进先斗町。按自己的节奏看一看京都。</p>${state.rival?`<div class="rewardBadge" style="margin:0 0 7px">正在挑战：${esc(normalNickname(state.rival.n))}</div>`:''}<div class="welcomeName"><label for="nickname">你的旅行昵称（可选）</label><input id="nickname" type="text" autocomplete="off" maxlength="12" placeholder="例如：山茶旅人" value="${esc(state.nickname||'')}" oninput="updateNickname(this.value)"><small>只用于你的纪念卡与主动分享的挑战链接</small></div><div class="muted">今天想怎样旅行？</div><div class="moodgrid">${['放空','好奇','记录'].map(x=>`<button class="mood ${state.mood===x?'active':''}" aria-pressed="${state.mood===x}" onclick="setMood('${x}')">${x}</button>`).join('')}</div><button class="btn gold" onclick="begin()">${state.rival?'开始挑战':'进入京都'} <span class="arr">→</span></button></section></main>`}
 function setMood(m){state.mood=m;save();render()}
-function begin(){state.at='station';state.visited=[];state.stamps=[];state.memories=[];state.history=[];state.detail=false;save();render()}
+function begin(){state.at='station';state.visited=[];state.insights=[];state.stamps=[];state.memories=[];state.history=[];state.detail=false;save();render()}
 function renderScene(){const k=state.at,s=SCENES[k],a=MEDIA[k];if(!s||!a){state.at='welcome';render();return}if(!state.visited.includes(k))state.visited.push(k);save();const old=state.visited.length;app.innerHTML=`<main class="frame immersive">${photoBox(a)}${topBar(true)}<div class="progress"><b style="width:${Math.min(100,Math.round(old/12*100))}%"></b></div><section class="content"><div class="scene-index"><div class="eyebrow">${esc(s.title.split(' · ')[0])} · 京都漫游</div><div class="muted">${old}/12 已探索</div></div><h1 class="h1">${esc(a.name)}</h1><p class="lead">${esc(SHORT[k]||s.location)}</p><div class="choices">${s.options.map((o,j)=>`<button class="btn" onclick="choose(${j})"><span>${esc(o[0])}</span><span class="arr">→</span></button>`).join('')}</div><div class="bottomnav"><button class="smallbtn" onclick="back()">← 上一站</button><button class="smallbtn" onclick="gallery()">全部影像</button></div></section></main>`}
 function toggleDetail(){state.detail=!state.detail;save();render()}
-function choose(n){let s=SCENES[state.at],o=s.options[n];if(!o)return;state.history.push(JSON.stringify({at:state.at,visited:[...state.visited],stamps:[...state.stamps],memories:[...state.memories],detail:state.detail}));if(state.history.length>20)state.history.shift();if(!state.stamps.includes(s.stamp))state.stamps.push(s.stamp);if(!state.stamps.includes(o[2]))state.stamps.push(o[2]);state.memories.push(`${s.subtitle}：${o[0]}`);if(state.memories.length>13)state.memories.shift();state.at=o[1];state.detail=false;save();render();window.scrollTo(0,0)}
-function back(){let prev=state.history.pop();if(!prev){state.at='welcome';state.detail=false}else{let s=JSON.parse(prev);state.at=s.at;state.visited=s.visited;state.stamps=s.stamps;state.memories=s.memories;state.detail=s.detail;}save();render()}
-function renderEnd(){const n=state.visited.length,st=state.stamps.length,m=state.mood,moodcopy=m==='放空'?'让城市慢一点，也让心慢一点。':m==='好奇'?'每一个转角，都有值得留意的风景。':'收藏下来的，是属于你的京都时光。';const title=REWARD_TITLES[m]||'京都云游者';const last=(state.visited.length?MEDIA[state.visited[state.visited.length-1]]:MEDIA.riverNight)?.name||'鸭川';app.innerHTML=`<main class="frame immersive">${photoBox(MEDIA.riverNight)}${topBar()}<section class="content"><div class="eyebrow">京都 · 旅程结束</div><div class="journal"><div class="rewardBadge">✦ 获得旅行称号：${esc(title)}</div><h2>把这段京都时光<br>留给自己。</h2><p class="lead">${esc(moodcopy)}</p><div class="chiprow">${state.stamps.slice(0,8).map(s=>`<span class="chip">${esc(s)}</span>`).join('')}</div><div class="muted">探索 ${n} 处影像 · 收藏 ${st} 种印记 · 最后一站：${esc(last)}</div><div class="rewardFoot">专属纪念属于本次云游，不代表实际到访。</div></div><div class="choices"><button class="btn gold" onclick="openPoster()">生成我的京都旅行海报 <span class="arr">▧</span></button></div><div class="sharePanel"><button class="btn secondary" onclick="shareLink()">分享给朋友 <span class="arr">↗</span></button><button class="btn secondary" onclick="copyLink()">复制试玩链接 <span class="arr">⧉</span></button></div><div class="sharePanel"><button class="btn secondary" onclick="review()">回看照片 <span class="arr">→</span></button><button class="btn secondary" onclick="restart()">重新出发 <span class="arr">↻</span></button></div></section></main>`}
+function choose(n){let s=SCENES[state.at],o=s.options[n];if(!o)return;state.history.push(JSON.stringify({at:state.at,visited:[...state.visited],insights:[...(state.insights||[])],stamps:[...state.stamps],memories:[...state.memories],detail:state.detail}));if(state.history.length>20)state.history.shift();if(!state.stamps.includes(s.stamp))state.stamps.push(s.stamp);if(!state.stamps.includes(o[2]))state.stamps.push(o[2]);state.memories.push(`${s.subtitle}：${o[0]}`);if(state.memories.length>13)state.memories.shift();state.at=o[1];state.detail=false;save();render();window.scrollTo(0,0)}
+function back(){let prev=state.history.pop();if(!prev){state.at='welcome';state.detail=false}else{let s=JSON.parse(prev);state.at=s.at;state.visited=s.visited;state.insights=s.insights||[];state.stamps=s.stamps;state.memories=s.memories;state.detail=s.detail;}save();render()}
+function renderEnd(){const rec=recordNow(),n=recVisited(rec).length,st=state.stamps.length,m=state.mood,info=recInsights(rec).length,earned=awards(rec),moodcopy=m==='放空'?'让城市慢一点，也让心慢一点。':m==='好奇'?'每一个转角，都有值得留意的风景。':'收藏下来的，是属于你的京都时光。',title=recordTitle(rec);const rival=validRecord(state.rival),other=rival?recVisited(rival).length:0;const comparison=rival?`<div class="rivalBox"><h3>与${esc(normalNickname(rival.n))}的趣味挑战</h3><div class="comparison"><div><span>你探索的实景</span><strong>${n}/12</strong><span>主动了解 ${info} 处</span></div><div><span>TA探索的实景</span><strong>${other}/12</strong><span>主动了解 ${recInsights(rival).length} 处</span></div></div><p class="challengeWarn">${n===other?'探索地点数打平了。':n>other?`你比TA多探索了${n-other}处实景。`:`TA比你多探索了${other-n}处实景。`} 仅供好友趣味比较。</p></div>`:'';app.innerHTML=`<main class="frame immersive">${photoBox(MEDIA.riverNight)}${topBar()}<section class="content"><div class="eyebrow">京都 · 我的旅程档案</div><div class="journal"><div class="rewardBadge">✦ ${esc(title)}</div><h2>${esc(rec.n)}，你完成了<br>自己的京都旅行。</h2><p class="lead" style="margin-bottom:7px">${esc(moodcopy)}</p><p class="scoreLine">实景探索 <strong>${n}</strong>/12 · 深度了解 <strong>${info}</strong> 处 · 成就 <strong>${earned.length}</strong>/6</p><div class="achievementGrid">${earned.length?earned.slice(0,4).map(a=>`<span class="achievement">✦ ${esc(a.title)}</span>`).join(''):'<span class="muted">试试更多路线，解锁隐藏旅行成就</span>'}</div><p class="muted">真实路线：${esc(pathSummary(rec,5))}</p>${comparison}<div class="rewardFoot">云游体验成就，不代表实际到访；无服务器排名。</div></div><div class="choices"><button class="btn gold" onclick="openPoster()">生成我的挑战海报 <span class="arr">▧</span></button></div><div class="sharePanel"><button class="btn secondary" onclick="shareLink()">分享我的挑战 <span class="arr">↗</span></button><button class="btn secondary" onclick="copyLink()">复制挑战链接 <span class="arr">⧉</span></button></div><div class="sharePanel"><button class="btn secondary" onclick="review()">回看照片 <span class="arr">→</span></button><button class="btn secondary" onclick="restart()">重走路线 <span class="arr">↻</span></button></div></section></main>`}
 
 function review(){gallery(true)}
 function gallery(visitedOnly=false){const keys=visitedOnly?state.visited:Object.keys(MEDIA);const items=keys.map(k=>MEDIA[k]).filter(Boolean);app.innerHTML=`<main class="frame library"><div class="libraryhead"><div class="eyebrow">京都 · 旅行相册</div><button class="round" onclick="render()">返回旅程</button></div><h2>${visitedOnly?'走过的地方':'全部实景'}</h2><div class="librarygrid">${items.map(a=>`<div class="libraryitem"><img src="${a.src}" alt="${esc(a.name)}" loading="lazy" referrerpolicy="no-referrer"><div>${esc(a.name)}</div></div>`).join('')}</div><button class="smallbtn" onclick="help()" style="margin-top:22px">关于这趟旅行</button></main>`}
 function help(){const entries=Object.values(MEDIA).map(a=>`<div>${esc(a.name)} · ${esc(a.author)} · ${esc(a.license)} · <a href="${a.page}" target="_blank" rel="noopener">来源与许可</a></div>`).join('');const z=document.createElement('div');z.className='overlay';z.innerHTML=`<button class="overlayClose">✕ 关闭</button><div class="credits"><h2 style="margin-top:0">关于这趟旅行</h2><p>这是一份京都实景互动内测作品，画面摄于不同时间，并非同一天的连续录像。</p><p>打开地点、选择方向，就能按自己的节奏浏览。</p><details><summary>照片署名与许可信息</summary>${entries}</details></div>`;z.querySelector('button').onclick=()=>z.remove();document.body.appendChild(z)}
-function restart(){if(confirm('确定要重新开始吗？这会清空当前路线与收集印记。')){state={at:'welcome',mood:state.mood,visited:[],stamps:[],memories:[],history:[],detail:false};save();render()}}
+function restart(){if(confirm('确定要重新开始吗？这会清空当前路线与收集印记。')){state={at:'welcome',mood:state.mood,nickname:state.nickname||'',visited:[],insights:[],stamps:[],memories:[],history:[],detail:false,rival:state.rival||null};save();render()}}
 function downloadCard(){openPoster()}
-function travelTitle(){return REWARD_TITLES[state.mood]||'京都云游者'}
+function travelTitle(){return recordTitle(recordNow())}
 function shortPath(){let names=state.visited.map(k=>MEDIA[k]?.name).filter(Boolean);return names.length?names.slice(0,5):['祇园四条站','鸭川']}
 function toast(message){document.querySelectorAll('.toast').forEach(x=>x.remove());const x=document.createElement('div');x.className='toast';x.textContent=message;document.body.appendChild(x);setTimeout(()=>x.remove(),3200)}
-function shareText(){return `我完成了《京都的一次慢旅行》实景云游，获得称号「${travelTitle()}」，探索了${state.visited.length}处京都影像。你也来选一条自己的路线吧。`}
-async function copyLink(){try{if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(SHARE_URL)}else{const x=document.createElement('textarea');x.value=SHARE_URL;x.style.position='fixed';x.style.opacity='0';document.body.appendChild(x);x.select();const ok=document.execCommand('copy');x.remove();if(!ok)throw Error('copy blocked')}toast('试玩网址已复制，可以发送给朋友')}catch(e){const x=document.getElementById('shareAddress');if(x){x.focus();x.select()}toast('复制受限，请长按下方网址复制')}}
-async function shareLink(){if(navigator.share){try{await navigator.share({title:'京都的一次慢旅行｜万象人生',text:shareText(),url:SHARE_URL});return}catch(e){if(e?.name==='AbortError')return}}await copyLink()}
+function shareText(){const rec=recordNow();return `我在《京都的一次慢旅行》探索了${recVisited(rec).length}处实景，了解了${recInsights(rec).length}个地点，解锁${awards(rec).length}项成就，获得「${recordTitle(rec)}」！点开我的京都探索档案，看看你能发现多少。`}
+async function copyLink(){const url=shareUrl();try{if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(url)}else{const x=document.createElement('textarea');x.value=url;x.style.position='fixed';x.style.opacity='0';document.body.appendChild(x);x.select();const ok=document.execCommand('copy');x.remove();if(!ok)throw Error('copy blocked')}toast('个人挑战链接已复制，可以发送给朋友')}catch(e){const x=document.getElementById('shareAddress');if(x){x.value=url;x.focus();x.select()}toast('复制受限，请长按挑战链接复制')}}
+async function shareLink(){const url=shareUrl();if(navigator.share){try{await navigator.share({title:'我的京都云游挑战｜万象人生',text:shareText(),url});return}catch(e){if(e?.name==='AbortError')return}}await copyLink()}
 function loadCanvasPhoto(url){return new Promise(resolve=>{let done=false;const im=new Image();const finish=v=>{if(!done){done=true;resolve(v)}};im.crossOrigin='anonymous';im.referrerPolicy='no-referrer';im.onload=()=>finish(im);im.onerror=()=>finish(null);im.src=url;setTimeout(()=>finish(null),4500)})}
 function textWrap(ctx,str,x,y,width,lineH,maxLines){let line='',count=0;for(const ch of str){if(ctx.measureText(line+ch).width>width && line){ctx.fillText(line,x,y+count*lineH);count++;if(count>=maxLines)return;line=ch}else{line+=ch}}if(line && count<maxLines)ctx.fillText(line,x,y+count*lineH)}
-async function makePoster(){const c=document.createElement('canvas');c.width=1080;c.height=1920;const x=c.getContext('2d');const bg=x.createLinearGradient(0,0,0,1920);bg.addColorStop(0,'#254446');bg.addColorStop(1,'#09191b');x.fillStyle=bg;x.fillRect(0,0,1080,1920);const photo=await loadCanvasPhoto(MEDIA.riverSpring.src);if(photo){const scale=Math.max(1080/photo.width,1120/photo.height),sw=1080/scale,sh=1120/scale,sx=(photo.width-sw)/2,sy=(photo.height-sh)/2;x.drawImage(photo,sx,sy,sw,sh,0,0,1080,1120)}else{const g=x.createLinearGradient(0,0,1080,1100);g.addColorStop(0,'#537074');g.addColorStop(1,'#112b2d');x.fillStyle=g;x.fillRect(0,0,1080,1120)}const v=x.createLinearGradient(0,320,0,1450);v.addColorStop(0,'rgba(8,21,23,0)');v.addColorStop(.65,'rgba(10,24,26,.72)');v.addColorStop(1,'#0b1d20');x.fillStyle=v;x.fillRect(0,0,1080,1500);x.fillStyle='#e5c58a';x.font='600 34px sans-serif';x.fillText('WANXIANG  /  KYOTO',80,130);x.fillStyle='#fffaf0';x.font='bold 90px serif';x.fillText('京都的一次',80,795);x.fillText('慢旅行',80,905);x.font='34px sans-serif';x.fillStyle='#dfede8';x.fillText('我在真实风景里，留了一段自己的时间。',80,995);x.strokeStyle='rgba(229,197,138,.75)';x.lineWidth=2;x.beginPath();x.moveTo(80,1070);x.lineTo(1000,1070);x.stroke();x.fillStyle='#e5c58a';x.font='bold 43px sans-serif';x.fillText('✦  '+travelTitle(),80,1160);x.fillStyle='#d6e6df';x.font='33px sans-serif';x.fillText(`我的心情：${state.mood}`,80,1235);x.fillText(`探索地点：${state.visited.length} 处   ·   收藏印记：${state.stamps.length} 种`,80,1290);x.fillStyle='#a5c6bc';x.font='30px sans-serif';x.fillText('我的云游路线',80,1395);x.fillStyle='#faf8ed';x.font='34px sans-serif';textWrap(x,shortPath().join('  ·  '),80,1460,920,58,3);x.fillStyle='#e5c58a';x.font='bold 31px sans-serif';x.fillText('旅行印记',80,1650);x.fillStyle='#d8e1de';x.font='29px sans-serif';textWrap(x,state.stamps.slice(0,9).join('   /   ')||'京都慢旅行',80,1715,680,46,2);const qr=await loadCanvasPhoto(QR_DATA);if(qr){x.fillStyle='#fff';x.fillRect(804,1575,228,228);x.drawImage(qr,815,1586,206,206)}x.strokeStyle='rgba(255,255,255,.27)';x.beginPath();x.moveTo(80,1815);x.lineTo(1000,1815);x.stroke();x.fillStyle='#a4b8b3';x.font='24px sans-serif';x.fillText('实景云游纪念 · 非实际到访凭证',80,1867);x.fillStyle='#e5c58a';x.font='22px sans-serif';x.fillText('扫码一起走京都',816,1867);return c}
+
+function drawChallengeQR(ctx,url,x,y,size){const qr=new QRCode(0,0);qr.addData(url);qr.make();const n=qr.getModuleCount(),cell=Math.floor(size/(n+8)),outer=(n+8)*cell,left=x+Math.floor((size-outer)/2),top=y+Math.floor((size-outer)/2);if(cell<2)throw Error('QR link exceeds poster capacity');ctx.fillStyle='#fff';ctx.fillRect(x,y,size,size);ctx.fillStyle='#08191b';for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(qr.isDark(r,c))ctx.fillRect(left+(c+4)*cell,top+(r+4)*cell,cell,cell);return true}
+async function makePoster(){const c=document.createElement('canvas');c.width=1080;c.height=1920;const x=c.getContext('2d'),rec=recordNow(),earned=awards(rec),url=shareUrl();const bg=x.createLinearGradient(0,0,0,1920);bg.addColorStop(0,'#254446');bg.addColorStop(1,'#09191b');x.fillStyle=bg;x.fillRect(0,0,1080,1920);const photo=await loadCanvasPhoto(MEDIA.riverSpring.src);if(photo){const scale=Math.max(1080/photo.width,1100/photo.height),sw=1080/scale,sh=1100/scale,sx=(photo.width-sw)/2,sy=(photo.height-sh)/2;x.drawImage(photo,sx,sy,sw,sh,0,0,1080,1100)}else{const g=x.createLinearGradient(0,0,1080,1100);g.addColorStop(0,'#537074');g.addColorStop(1,'#112b2d');x.fillStyle=g;x.fillRect(0,0,1080,1100)}const v=x.createLinearGradient(0,320,0,1480);v.addColorStop(0,'rgba(8,21,23,0)');v.addColorStop(.63,'rgba(10,24,26,.75)');v.addColorStop(1,'#0b1d20');x.fillStyle=v;x.fillRect(0,0,1080,1500);x.fillStyle='#e5c58a';x.font='600 34px sans-serif';x.fillText('WANXIANG  /  KYOTO',80,130);x.fillStyle='#fffaf0';x.font='bold 86px serif';x.fillText('我的京都探索',80,795);x.fillText('旅行档案',80,905);x.font='32px sans-serif';x.fillStyle='#dfede8';textWrap(x,`${rec.n} · ${recordTitle(rec)}`,80,991,910,46,2);x.strokeStyle='rgba(229,197,138,.75)';x.lineWidth=2;x.beginPath();x.moveTo(80,1085);x.lineTo(1000,1085);x.stroke();x.fillStyle='#e5c58a';x.font='bold 43px sans-serif';x.fillText(`✦ 探索 ${recVisited(rec).length}/12 景`,80,1175);x.fillStyle='#d6e6df';x.font='33px sans-serif';x.fillText(`深度了解 ${recInsights(rec).length} 处   ·   隐藏成就 ${earned.length}/6`,80,1242);x.fillStyle='#a5c6bc';x.font='29px sans-serif';x.fillText('我走过的京都路线',80,1340);x.fillStyle='#faf8ed';x.font='31px sans-serif';textWrap(x,pathSummary(rec,6),80,1401,930,48,2);x.fillStyle='#e5c58a';x.font='bold 30px sans-serif';x.fillText('解锁旅行成就',80,1581);x.fillStyle='#d8e1de';x.font='29px sans-serif';textWrap(x,earned.map(a=>a.title).slice(0,4).join('  /  ')||'旅途才刚开始',80,1640,610,47,2);drawChallengeQR(x,url,767,1515,277);x.strokeStyle='rgba(255,255,255,.27)';x.beginPath();x.moveTo(80,1810);x.lineTo(1000,1810);x.stroke();x.fillStyle='#a4b8b3';x.font='23px sans-serif';x.fillText('仅为虚拟旅行趣味记录 · 非到访及官方排名证明',80,1860);x.fillStyle='#e5c58a';x.font='23px sans-serif';x.fillText('扫码挑战我的路线',774,1854);return c}
 let posterFile=null,posterData=null;
-async function openPoster(){const z=document.createElement('div');z.className='overlay posterOverlay';z.innerHTML=`<div class="posterHead"><strong>我的京都旅行海报</strong><button class="overlayClose" type="button">✕ 关闭</button></div><p class="posterHelp" id="posterStatus">正在生成个人纪念海报…</p><div class="posterActions"><button class="btn" type="button" onclick="savePoster()">保存图片</button><button class="btn" type="button" onclick="sharePoster()">分享海报</button></div><button class="btn secondary" type="button" onclick="shareLink()" style="max-width:430px;justify-content:center">分享试玩链接</button><input class="posterLink" id="shareAddress" readonly aria-label="试玩网址" value="${SHARE_URL}">`;z.querySelector('.overlayClose').onclick=()=>z.remove();document.body.appendChild(z);posterFile=null;posterData=null;try{const c=await makePoster();if(!z.isConnected)return;posterData=c.toDataURL('image/png');const im=document.createElement('img');im.className='posterImage';im.alt='我的京都旅行纪念海报';im.src=posterData;im.title='手机可长按此图储存到照片';z.querySelector('.posterHead').after(im);z.querySelector('#posterStatus').textContent='长按海报图片可存入相册，再从微信朋友圈选择照片发布。';c.toBlob(blob=>{if(blob){posterFile=new File([blob],'京都慢旅行_我的云游纪念.png',{type:'image/png'})}},'image/png')}catch(e){z.querySelector('#posterStatus').textContent='海报暂未生成，请重新尝试';toast('海报生成失败，请重新尝试')}}
+async function openPoster(){const url=shareUrl(),z=document.createElement('div');z.className='overlay posterOverlay';z.innerHTML=`<div class="posterHead"><strong>我的京都挑战海报</strong><button class="overlayClose" type="button">✕ 关闭</button></div><p class="posterHelp" id="posterStatus">正在生成个人成就海报及挑战二维码…</p><div class="posterActions"><button class="btn" type="button" onclick="savePoster()">保存图片</button><button class="btn" type="button" onclick="sharePoster()">分享海报</button></div><button class="btn secondary" type="button" onclick="shareLink()" style="max-width:430px;justify-content:center">发送好友挑战链接</button><input class="posterLink" id="shareAddress" readonly aria-label="我的挑战网址" value="${esc(url)}">`;z.querySelector('.overlayClose').onclick=()=>z.remove();document.body.appendChild(z);posterFile=null;posterData=null;try{const c=await makePoster();if(!z.isConnected)return;posterData=c.toDataURL('image/png');const im=document.createElement('img');im.className='posterImage';im.alt='我的京都探索挑战海报';im.src=posterData;im.title='手机可长按此图储存到照片';z.querySelector('.posterHead').after(im);z.querySelector('#posterStatus').textContent='海报二维码指向你的个人探索档案。长按图片保存后可以发朋友圈。';c.toBlob(blob=>{if(blob){posterFile=new File([blob],'京都慢旅行_我的挑战海报.png',{type:'image/png'})}},'image/png')}catch(e){z.querySelector('#posterStatus').textContent='海报暂未生成，可以先分享个人挑战链接';toast('海报生成失败，请稍后重试')}}
 function savePoster(){if(!posterData){toast('海报还没有生成');return}const a=document.createElement('a');a.href=posterData;a.download='京都慢旅行_我的云游纪念.png';document.body.appendChild(a);a.click();a.remove();toast('如未保存，请长按海报图片，选择“储存到照片”')}
-async function sharePoster(){if(posterFile&&navigator.share&&navigator.canShare?.({files:[posterFile]})){try{await navigator.share({files:[posterFile],title:'我的京都旅行纪念',text:'这是我完成的一次京都实景云游。'});return}catch(e){if(e?.name==='AbortError')return}}toast('请长按海报保存到相册，再选择微信朋友圈或发送给朋友')}
+async function sharePoster(){if(posterFile&&navigator.share&&navigator.canShare?.({files:[posterFile]})){try{await navigator.share({files:[posterFile],title:'我的京都云游挑战',text:shareText()});return}catch(e){if(e?.name==='AbortError')return}}toast('请长按海报保存到相册，再从微信朋友圈选择照片发布')}
 
 render();
 </script></body></html>
