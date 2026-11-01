@@ -1,19 +1,19 @@
 # 《夜楼档案》G01-E 阶段交接单｜V0.9.2
 
-日期：2026-11-01。状态：**独立修复分支候选，PR 待审核；未合并 main、未部署。**
+日期：2026-11-01。状态：**用户批准，PR #2 已合并 main；源码/构建核验通过，GitHub Pages 部署出现并发冲突，失败作业已发起一次重试（结果待核验）；真实 iPhone Safari/微信仍未验收。**
 本批仅修复跨幕滚动位置与 320px 顶栏装饰层点击遮挡，不是视觉改版或玩法升级。
 
 ## 1. 当前成果、提交与回退
 
 - 仓库：`d7gkdrs4pk-gif/roompath-game`。
 - 分支：`fix/g01-e-v092-scroll-and-topbar`，从最新 main `da9b55bdced2e9f6645807c9aec1e82493db75e0` 创建；main 中已有的无关页面保持原样，不进入本批改动。
-- 本分支唯一当前候选：`ye-lou-act2-puzzle-v092.html`，V0.9.2。
+- G01-E 当前 `main` 唯一研发试玩工作母版：`ye-lou-act2-puzzle-v092.html`，V0.9.2；**已合并源码，但官网发布未确认**。
 - 候选 SHA-256：`7135e0b820ae02a67006ec0d4dcb6cd9a46dc9a3a71807ad99a2649149cf7731`。
 - 候选 Git Blob：`b4c5bdc28bb785a2569324aa57bd580a8a055876`。
 - 实现及回归脚本提交：`7c3be4ad5c770dc60820fd0a393608f27a41c0de`。管理记录随本文件所在提交更新；最终 HEAD 以对应 PR 为准，避免将文档自身提交 SHA 写成自引用。
-- PR 审核入口：[main 与本修复分支比较](https://github.com/d7gkdrs4pk-gif/roompath-game/compare/main...fix/g01-e-v092-scroll-and-topbar)；对应 PR 不得自动合并。
-- 候选源码：[分支文件](https://github.com/d7gkdrs4pk-gif/roompath-game/blob/fix/g01-e-v092-scroll-and-topbar/ye-lou-act2-puzzle-v092.html)。**这不是已发布的游戏网址；本轮没有 V0.9.2 公网试玩页。**
-- 已发布及回退母版仍为 `ye-lou-act2-puzzle-v091.html`，其原文件完整保留；Blob `11775607dc78a2ff8afda5f7d80d2be215d324cd`，SHA-256 `5757bb07084d9b588d456832a55d0d82b31ae364715ba0e24c33046eda28e398`。
+- PR：[#2 V0.9.2 定点修复](https://github.com/d7gkdrs4pk-gif/roompath-game/pull/2)，已 Closed/Merged；合并提交 `367f024a1814fef824320187e3e72efbacd0c2d9`。
+- 当前源码：[main 的 V0.9.2 文件](https://github.com/d7gkdrs4pk-gif/roompath-game/blob/main/ye-lou-act2-puzzle-v092.html)。预定 Pages 路径为 `https://d7gkdrs4pk-gif.github.io/roompath-game/ye-lou-act2-puzzle-v092.html?v=0.9.2`，**该公网地址尚未成功独立验证，发布失败时不作为已上线成果宣传**。
+- 上一已发布并保留的回退母版为 `ye-lou-act2-puzzle-v091.html`，其原文件完整保留；Blob `11775607dc78a2ff8afda5f7d80d2be215d324cd`，SHA-256 `5757bb07084d9b588d456832a55d0d82b31ae364715ba0e24c33046eda28e398`。
 - V0.9.1 已有试玩：[原发布地址](https://d7gkdrs4pk-gif.github.io/roompath-game/ye-lou-act2-puzzle-v091.html?v=0.9.1)。继续保留 [V0.9.1 交接单](./HANDOFF_G01-E_V0.9.1.md) 供回退核对，但它不再是本分支候选的执行入口。
 - G01 正式稳定母版 `index.html` 仍为 V0.6、20关/60星，Blob `6527bf699df1a3714de82c2eb64bc0d8cc0d3a2f`，不覆盖。
 
@@ -76,11 +76,11 @@ python tests/g01-e-v092-act2.py --url http://127.0.0.1:8872/ye-lou-act2-puzzle-v
 - 冻结原20关/60星、六幕剧情与分支、档案碎片/徽章/奖励、好友排名、分享及所有原存档键和数据结构。
 - `act2-workshop-v090.js` 不改，Blob `8efc304900e25d82889369408c89545aa0715e70`，SHA-256 `09b6053bb40cb00f00c1f1ac0de477c0d4e5342c6aba69b04ef4f0281f0482ad`。
 - Anthropic 官方 Skill 原文及 Apache-2.0 文件不改，既有技能接入和模型验证状态不在本轮重新处理。
-- **真实 iPhone Safari/微信未验证。** Chromium 的触控/视口模拟不代表真机验收；V0.9.2 公网页面也未验证，因为本候选尚未部署。
-- 没有合并 main、改 Pages 配置、触发发布或生成新素材。本地测试 HTTP 服务不是网站发布；不得给出候选已上线的结论。
+- **真实 iPhone Safari/微信未验证。** Chromium 的触控/视口模拟不代表真机验收；V0.9.2 公网 HTTPS 页面本环境无法独立取得响应，不声称真机通过。
+- **合并后部署核验：** PR #2 已合并；`main` 上 V0.9.2 Git Blob 为 `b4c5bdc28bb785a2569324aa57bd580a8a055876`；V0.9.1 及原20关/机关模块 Blob 不变。Pages Actions 运行 [41288195540](https://github.com/d7gkdrs4pk-gif/roompath-game/actions/runs/41288195540)：`build` 与状态上报成功，但 `deploy` 因上一版本 `f967e877da0f94bd7dd519eb32bb58a6dc3e620a` 部署并发锁返回 HTTP 400，**不是游戏编译失败**。已仅对失败作业发起一次重试，记录时为 queued；禁止将其当成部署成功。此后只做状态文件同步，不变更游戏文件；状态同步可能再次触发 GitHub Pages 工作流，应按实际结果区分。
 
 ## 5. 下一轮唯一任务与接续指令
 
-只审核本修复 PR，并在用户批准使用候选后补做真实 iPhone Safari/微信对两项缺陷及同幕返回的验收。未经进一步批准不合并、不部署、不扩展玩法、不处理独立插画缺口。
+**先确认 GitHub Pages V0.9.2 自动部署/重试是否成功并核验真实 HTTPS 页面**；部署成功后，在真实 iPhone Safari/微信核对跨幕起始位置、同幕返回及 320px 顶栏档案按钮。若部署仍受并发锁阻塞，登记平台问题，不扩大代码修改。未完成真机验收前不得认定游戏全面验收通过；不扩展玩法或独立插画。
 
-> 继续《夜楼档案》G01-E V0.9.2 定点修复审核：先读修复分支 PROJECT_STATUS.md 与 HANDOFF_G01-E_V0.9.2.md，以 ye-lou-act2-puzzle-v092.html 为唯一候选，V0.9.1 原文件仅作回退。核对候选 SHA、只复核滚动复位和顶栏点击及受影响共用流程，保留所有冻结内容；记录真机未验证项，不自动合并、发布或继续开发。
+> 继续《夜楼档案》G01-E V0.9.2：先读 main 的 PROJECT_STATUS.md 和 HANDOFF_G01-E_V0.9.2.md，以 ye-lou-act2-puzzle-v092.html 为唯一当前研发试玩母版，V0.9.1 仅作回退。先核验 Actions 41288195540 和当前 Pages 部署结果；网页可访问后再在真实 iPhone Safari/微信验收两个缺陷。保留所有冻结内容，不重复修复、不启动视觉改版。
